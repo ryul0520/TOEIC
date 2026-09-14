@@ -85,53 +85,6 @@
             display: flex; gap: 10px; margin-top: 10px;
         }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 2000;
-            display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .modal-overlay.visible { display: flex; opacity: 1; }
-        .modal-box {
-            background: white; width: 95%; max-width: 600px; height: 85%;
-            border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-            transform: scale(0.9); transition: transform 0.3s;
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-        .modal-overlay.visible .modal-box { transform: scale(1); }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; border-bottom: 1px solid #eee; background: white;
-        }
-        .modal-header h3 { margin: 0; font-size: 1.1rem; }
-        .modal-header button { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888; }
-        .modal-content {
-            flex: 1; overflow-y: auto; padding: 15px 20px;
-            touch-action: pan-y; -webkit-user-select: text; user-select: text;
-        }
-
-        .rich-editor {
-            width: 100%; min-height: 200px; padding: 10px; border-radius: 8px;
-            border: 1px solid #ccc; font-family: sans-serif; font-size: 14px;
-            overflow-y: auto; margin-bottom: 10px; outline: none; line-height: 1.5;
-            background: white;
-        }
-        .rich-editor:focus { border-color: var(--primary); }
-        
-        .img-wrapper { display: inline-block; position: relative; border: 2px dashed #cbd5e1; padding: 2px; max-width: 100%; vertical-align: middle; margin: 5px 0; min-width: 50px; min-height: 50px; user-select: none; -webkit-user-select: none; }
-        .img-wrapper:hover, .img-wrapper:focus-within { border-color: var(--primary); }
-        .img-wrapper img { width: 100%; height: auto; display: block; pointer-events: none; }
-        .resize-handle { position: absolute; width: 20px; height: 20px; right: -2px; bottom: -2px; background: var(--primary); border-radius: 50%; cursor: nwse-resize; z-index: 100; touch-action: none; }
-        .delete-img-btn { position: absolute; top: -8px; right: -8px; width: 20px; height: 20px; background: #DC2626; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 101; }
-        .reorder-handle { position: absolute; top: -10px; left: -10px; width: 28px; height: 28px; background: #10B981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: move; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 101; touch-action: none; }
-
-        .edit-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
-        .edit-row input { flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; outline: none; min-width: 0; }
-        .edit-row input:focus { border-color: var(--primary); }
-        .delete-btn { background: #FEE2E2; color: #DC2626; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; flex-shrink: 0; }
-        .list-star-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; padding: 0 5px; flex-shrink: 0; transition: transform 0.1s; }
-        .list-star-btn:active { transform: scale(1.2); }
-
         .overlay-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 3000;
@@ -152,7 +105,6 @@
         .modal-action-btn.primary { background: var(--primary); color: white; }
         .modal-action-btn.secondary { background: #f1f5f9; color: #334155; }
         .modal-action-btn.danger { background: #FEE2E2; color: #DC2626; }
-        .modal-action-btn.success { background: #10B981; color: white; }
 
         #game-page { touch-action: none; }
         .game-container { 
@@ -183,15 +135,11 @@
         .star-toggle { position: absolute; top: 20px; right: 20px; font-size: 2.2rem; color: #E2E8F0; z-index: 100; padding: 10px; cursor: pointer; }
         .star-toggle.active { color: var(--star-color); }
         
-        .edit-card-btn { position: absolute; top: 20px; left: 20px; font-size: 1.2rem; z-index: 100; padding: 10px; cursor: pointer; transition: transform 0.1s; }
-        .edit-card-btn:active { transform: scale(0.9); }
-        .card-front .edit-card-btn { color: #94A3B8; } 
-        .card-back .edit-card-btn { color: #CBD5E1; opacity: 0.8; } 
-
-        .delete-card-btn { position: absolute; top: 20px; left: 65px; font-size: 1.2rem; z-index: 100; padding: 10px; cursor: pointer; transition: transform 0.1s; }
-        .delete-card-btn:active { transform: scale(0.9); }
-        .card-front .delete-card-btn { color: #EF5350; } 
-        .card-back .delete-card-btn { color: #EF5350; opacity: 0.8; }
+        /* TTS 발음 듣기 버튼 */
+        .tts-btn { position: absolute; top: 20px; left: 20px; font-size: 1.6rem; z-index: 100; padding: 10px; cursor: pointer; transition: transform 0.1s; }
+        .tts-btn:active { transform: scale(0.9); }
+        .card-front .tts-btn { color: var(--primary); }
+        .card-back .tts-btn { color: white; opacity: 0.9; }
 
         .swipe-hint { position: absolute; bottom: 100px; display: flex; gap: 30px; z-index: 10; pointer-events: none; }
         .hint-pill { display: flex; align-items: center; gap: 6px; background: white; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 700; color: #94a3b8; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
@@ -205,9 +153,6 @@
         .nav-btn:active { transform: scale(0.95); }
         .nav-btn.ok:active { background: #8BC34A; color: white; }
         .nav-btn.no:active { background: #EF5350; color: white; }
-        
-        textarea#add-word-input { width: 100%; height: 150px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: sans-serif; font-size: 14px; resize: vertical; margin-bottom: 10px; outline: none; line-height: 1.5; }
-        textarea#add-word-input:focus { border-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -234,7 +179,6 @@
 
                 <button class="tool-btn" onclick="document.getElementById('import-deck-upload').click()">📂 백업 불러오기</button>
                 <button class="tool-btn highlight" onclick="exportAllDecks()" style="background:#FFFBEB; border-color:#FDE68A; color:#D97706;">📦 통합 백업 다운</button>
-                <button class="tool-btn highlight" onclick="openAllPdfModal()" style="background:#ECFDF5; border-color:#A7F3D0; color:#059669;">🖨️ 통합 인쇄</button>
                 <input type="file" id="import-deck-upload" accept=".json" style="display: none;" onchange="importDeck(event)">
             </div>
 
@@ -332,18 +276,7 @@
             </div>
 
             <div class="tool-btn-group">
-                <button class="tool-btn highlight" onclick="startFavorites()">⭐ 선택 시트 즐겨찾기 복습</button>
-                <button class="tool-btn" onclick="openEditModal()">✏️ 전체 목록 수정</button>
-            </div>
-            
-            <div class="tool-btn-group" style="margin-top: 15px;">
-                <button class="tool-btn" onclick="openAddWordModal()">➕ 대량 단어 추가</button>
-                <button class="tool-btn" onclick="openPdfModal()">📄 현재 단어장 인쇄</button>
-            </div>
-
-            <div class="tool-btn-group" style="margin-top: 15px;">
-                <button class="tool-btn highlight" onclick="openDeckTrashModal()" style="background:#FEE2E2; border-color:#FCA5A5; color:#DC2626; padding: 16px 10px;">🗑️ 쓰레기통 (<span id="deck-trash-count">0</span>)</button>
-                <button class="tool-btn" onclick="clearDeckData()" style="color:#DC2626; padding: 16px 10px;">🗑️ 단어장 비우기</button>
+                <button class="tool-btn highlight full-width" onclick="startFavorites()">⭐ 선택 시트 즐겨찾기 복습</button>
             </div>
         </div>
     </div>
@@ -365,16 +298,16 @@
             
             <div class="card-wrapper" id="cardWrapper">
                 <div class="card-inner" id="cardInner">
+                    <!-- 카드 앞면 -->
                     <div class="card-face card-front">
-                        <div class="edit-card-btn" onclick="openSingleEditModal(event)">✏️</div>
-                        <div class="delete-card-btn" onclick="deleteCurrentCard(event)">🗑️</div>
+                        <div class="tts-btn" onclick="playTTS(event)" title="영어 발음 듣기">🔊</div>
                         <div class="star-toggle" id="starFront" onclick="toggleStar(event)">☆</div>
                         <div class="word" id="jpWord">단어</div>
                         <div style="margin-top:15px; color:#CBD5E1; font-size:0.8rem;">Tap to flip</div>
                     </div>
+                    <!-- 카드 뒷면 -->
                     <div class="card-face card-back">
-                        <div class="edit-card-btn" onclick="openSingleEditModal(event)">✏️</div>
-                        <div class="delete-card-btn" onclick="deleteCurrentCard(event)">🗑️</div>
+                        <div class="tts-btn" onclick="playTTS(event)" title="영어 발음 듣기">🔊</div>
                         <div class="star-toggle" id="starBack" onclick="toggleStar(event)">☆</div>
                         <div class="meaning" id="krMeaning">의미</div>
                     </div>
@@ -394,97 +327,6 @@
     </div>
 
     <!-- 모달들 -->
-    <div id="single-edit-modal" class="overlay-modal">
-        <div class="modal-card" style="padding: 25px 20px;">
-            <h2 style="font-size: 1.3rem; margin-bottom: 20px;">단어 수정</h2>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom: 20px;">
-                <input type="text" id="single-edit-jp" placeholder="영어 단어" style="padding:12px; border:1px solid #e2e8f0; border-radius:8px; font-size:1rem; width:100%; outline:none;">
-                <input type="text" id="single-edit-kr" placeholder="의미 (한국어)" style="padding:12px; border:1px solid #e2e8f0; border-radius:8px; font-size:1rem; width:100%; outline:none;">
-            </div>
-            <div style="display:flex; gap:10px;">
-                <button class="modal-action-btn secondary" style="margin-bottom:0;" onclick="closeSingleEditModal()">취소</button>
-                <button class="modal-action-btn primary" style="margin-bottom:0;" onclick="saveSingleEdit()">저장</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="edit-modal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>✏️ 단어 및 메모 수정</h3>
-                <button onclick="closeEditModal()">✕</button>
-            </div>
-            <div class="modal-content">
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <h4 style="margin: 0; color: var(--primary);">📝 요약 메모</h4>
-                        <button class="tool-btn highlight" style="padding: 6px 12px; font-size: 0.85rem; margin:0;" onclick="document.getElementById('memo-img-upload').click()">🖼️ 사진 넣기</button>
-                        <input type="file" id="memo-img-upload" accept="image/*" style="display: none;" onchange="insertImage(this)">
-                    </div>
-                    <p style="font-size:0.75rem; color:#94a3b8; margin:0 0 10px 0;">※ 추가된 사진은 드래그로 크기 변경 및 초록색 버튼(✥)으로 위치 이동 가능.</p>
-                    <div id="edit-memo-input" class="rich-editor" contenteditable="true" placeholder="여기에 메모를 작성하거나 사진을 추가하세요..."></div>
-                </div>
-                <h4 style="margin: 0 0 10px 0; color: var(--primary);">📚 단어 목록 (★ 클릭 시 즐겨찾기)</h4>
-                <div id="edit-words-container"></div>
-            </div>
-            <div style="padding: 15px; background: white; border-top: 1px solid #eee;">
-                <button class="modal-action-btn success" style="margin-bottom:0;" onclick="saveEdits()">💾 변경사항 저장</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 쓰레기통 모달 -->
-    <div id="trash-modal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>🗑️ 이 단어장 쓰레기통</h3>
-                <button onclick="closeTrashModal()">✕</button>
-            </div>
-            <div class="modal-content" id="trash-list-container">
-                <!-- 삭제된 단어 리스트 렌더링 영역 -->
-            </div>
-            <div style="padding: 15px; background: white; border-top: 1px solid #eee; display: flex; gap: 10px;">
-                <button class="modal-action-btn danger" style="margin-bottom:0; flex:1;" onclick="emptyDeckTrash()">🗑️ 전체 영구 삭제</button>
-                <button class="modal-action-btn secondary" style="margin-bottom:0; flex:1;" onclick="closeTrashModal()">닫기</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="add-word-modal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>➕ 대량 단어 추가</h3>
-                <button onclick="closeAddWordModal()">✕</button>
-            </div>
-            <div class="modal-content">
-                <p style="font-size:0.85rem; color:#64748b; margin-top:0;">
-                    형식: <b>영어단어|한국어의미</b> (여러 개 입력 시 줄바꿈)<br>
-                    예: <code style="background:#f1f5f9; padding:2px 4px;">apple|사과</code>
-                </p>
-                <textarea id="add-word-input" placeholder="apple|사과&#10;banana|바나나"></textarea>
-                <button class="modal-action-btn primary" onclick="processAddWords()">저장하기</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="pdf-modal" class="overlay-modal">
-        <div class="modal-card">
-            <h2 style="font-size: 1.4rem; margin-bottom: 10px;">📄 현재 단어장 인쇄</h2>
-            <button class="modal-action-btn primary" onclick="executePrint('all')">📚 전체 단어 + 메모</button>
-            <button class="modal-action-btn" style="background:#FFFBEB; color:#D97706; border:1px solid #FDE68A;" onclick="executePrint('fav')">⭐ 즐겨찾기만 + 메모</button>
-            <button class="modal-action-btn secondary" style="margin-top:5px;" onclick="closePdfModal()">취소</button>
-        </div>
-    </div>
-
-    <div id="all-pdf-modal" class="overlay-modal">
-        <div class="modal-card">
-            <h2 style="font-size: 1.4rem; margin-bottom: 10px;">📄 전체 묶음 통합 인쇄</h2>
-            <button class="modal-action-btn primary" onclick="executeAllPrint('all')">📚 전체 단어 + 메모</button>
-            <button class="modal-action-btn" style="background:#FFFBEB; color:#D97706; border:1px solid #FDE68A;" onclick="executeAllPrint('fav')">⭐ 즐겨찾기만 + 메모</button>
-            <button class="modal-action-btn secondary" style="margin-top:5px;" onclick="closeAllPdfModal()">취소</button>
-        </div>
-    </div>
-
     <div id="complete-modal" class="overlay-modal">
         <div class="modal-card">
             <div class="emoji">🎉</div>
@@ -510,7 +352,6 @@
             const file = event.target.files[0];
             if (!file) return;
             
-            // 파일명에서 확장자를 제거하여 단어장 이름으로 사용
             let deckName = file.name.replace(/\.[^/.]+$/, "");
             if (!deckName) deckName = "새 엑셀 단어장";
 
@@ -518,14 +359,12 @@
             reader.onload = function(e) {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
-
                 const isKorean = (str) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(str);
                 
                 let allWords = [];
                 let importedSheetCount = 0;
 
                 workbook.SheetNames.forEach(sheetName => {
-                    // Test 단어가 포함된 시트는 건너뛰기
                     if (sheetName.toLowerCase().includes('test')) return;
 
                     const sheet = workbook.Sheets[sheetName];
@@ -539,13 +378,12 @@
                             let cell2 = row[i+1] ? String(row[i+1]).trim() : '';
 
                             if (cell1 && cell2) {
-                                // 앞 셀이 영어(단어), 뒷 셀이 한글(뜻)인 구조를 찾음
                                 if (isNaN(cell1) && !isKorean(cell1) && isKorean(cell2)) {
                                     allWords.push({
                                         id: 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                                        jp: cell1, // 호환성 유지를 위해 변수명 jp 사용 (실제는 영어)
+                                        jp: cell1, // 영어 단어 저장 필드
                                         kr: cell2,
-                                        category: sheetName // 시트명을 카테고리(Day)로 저장
+                                        category: sheetName // 시트명(Day) 저장
                                     });
                                     sheetWordsCount++;
                                     i++; 
@@ -556,14 +394,12 @@
                     if (sheetWordsCount > 0) importedSheetCount++;
                 });
 
-                // 단어가 하나라도 있으면 "단일 단어장" 1개로 저장
                 if (allWords.length > 0) {
                     let newDeck = {
                         id: 'deck_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                        name: deckName, // 엑셀 파일명
+                        name: deckName, 
                         words: allWords,
                         stars: [],
-                        memo: `엑셀에서 ${importedSheetCount}개의 시트(Day)가 추출되었습니다.`,
                         session: null,
                         trash: []
                     };
@@ -576,15 +412,7 @@
                 }
             };
             reader.readAsArrayBuffer(file);
-            event.target.value = ''; // Input 초기화
-        }
-
-        function getFontSize(text, defaultSize) {
-            if (!text) return defaultSize;
-            let len = text.length;
-            if (len >= 15) return "9.5px";
-            if (len > 8) return "11.5px";
-            return defaultSize;
+            event.target.value = ''; 
         }
 
         // --- 데이터 관리 ---
@@ -602,7 +430,6 @@
                         name: '내 기본 단어장',
                         words: parsedWords,
                         stars: JSON.parse(localStorage.getItem('jpStarsFlat') || '[]'),
-                        memo: localStorage.getItem('jpMemoRich') || '',
                         session: JSON.parse(localStorage.getItem('jpSession') || 'null'),
                         trash: []
                     };
@@ -776,7 +603,7 @@
             if (!deck) return [];
 
             const checkboxes = document.querySelectorAll('input[name="selected-categories"]:checked');
-            if (checkboxes.length === 0) return []; // 선택된 카테고리가 없으면 빈 배열
+            if (checkboxes.length === 0) return []; 
 
             const selectedCats = Array.from(checkboxes).map(cb => cb.value);
 
@@ -884,7 +711,6 @@
                 btnContinue.style.display = 'block';
                 btnContinue.innerText = `▶ 이어서 학습하기 (${deck.session.queue.length}개 남음)`;
             } else { btnContinue.style.display = 'none'; }
-            updateDeckTrashCountUI();
         }
 
         function openDeck(index) {
@@ -895,11 +721,10 @@
             currentDeckIndex = -1; renderHomeUI(); showPage('home-page');
         }
 
-        // --- 기타 로직 유지 ---
         function createNewDeck() {
             let name = prompt("새 단어장의 이름을 입력하세요:", "새 단어장");
             if (name && name.trim() !== "") {
-                let newDeck = { id: 'deck_' + Date.now(), name: name.trim(), words: [], stars: [], memo: '', session: null, trash: [] };
+                let newDeck = { id: 'deck_' + Date.now(), name: name.trim(), words: [], stars: [], session: null, trash: [] };
                 appData.unshift(newDeck); saveAppData(); renderHomeUI();
             }
         }
@@ -912,80 +737,12 @@
             if (confirm(`'${appData[index].name}' 단어장을 정말 삭제하시겠습니까?\n이 단어장 데이터는 전부 영구 삭제됩니다.`)) { appData.splice(index, 1); saveAppData(); renderHomeUI(); }
         }
 
-        function clearDeckData() {
-            if(confirm("단어장의 모든 단어와 시트 정보가 지워집니다. 진행하시겠습니까? (휴지통으로 이동)")) {
-                const deck = getDeck();
-                if (deck.words && deck.words.length > 0) {
-                    if (!deck.trash) deck.trash = [];
-                    deck.words.forEach(w => deck.trash.push({ id: w.id, jp: w.jp, kr: w.kr, deletedAt: Date.now() }));
-                }
-                deck.words = []; deck.stars = []; deck.memo = ""; deck.session = null;
-                saveAppData(); updateLobbyUI();
-            }
-        }
-
-        function deleteCurrentCard(e) {
-            e.stopPropagation();
-            if (activeQueue.length === 0) return;
-            const card = activeQueue[0]; const wordToDisplay = isKrFirst ? card.kr : card.jp;
-            const deck = isGlobalMode ? getDeckByCardId(card.id) : getDeck();
-            if (!deck) return;
-
-            if (!confirm(`'${wordToDisplay}' 단어를 단어장('${deck.name}')의 쓰레기통으로 버리시겠습니까?`)) return;
-
-            if (!deck.trash) deck.trash = [];
-            deck.trash.push({ id: card.id, jp: card.jp, kr: card.kr, deletedAt: Date.now() });
-            deck.words = deck.words.filter(w => w.id !== card.id);
-            deck.stars = deck.stars.filter(id => id !== card.id);
-            saveAppData();
-
-            activeQueue.shift(); totalCount = Math.max(0, totalCount - 1);
-            saveSessionState(); updateProgress(); animateCardChange('ok');
-        }
-
-        function openDeckTrashModal() { renderDeckTrashUI(); const modal = document.getElementById('trash-modal'); modal.style.display = 'flex'; setTimeout(() => modal.classList.add('visible'), 10); }
-        function closeTrashModal() { const modal = document.getElementById('trash-modal'); modal.classList.remove('visible'); setTimeout(() => modal.style.display = 'none', 300); }
-        function renderDeckTrashUI() {
-            const container = document.getElementById('trash-list-container'); container.innerHTML = '';
-            const deck = getDeck(); if (!deck) return; const trash = deck.trash || [];
-            if (trash.length === 0) { container.innerHTML = '<div style="text-align:center; padding: 40px 10px; color:#94a3b8;">쓰레기통이 비어 있습니다.</div>'; return; }
-            trash.forEach((item, index) => {
-                const row = document.createElement('div'); row.className = 'edit-row'; row.style.borderBottom = '1px solid #e2e8f0'; row.style.paddingBottom = '10px';
-                row.innerHTML = `
-                    <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
-                        <span style="font-weight:bold; color:#1e293b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.jp}</span>
-                        <span style="font-size:0.85rem; color:#64748b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.kr}</span>
-                    </div>
-                    <button class="modal-action-btn success" style="margin-bottom:0; width:auto; padding:6px 12px; font-size:0.8rem; flex-shrink:0;" onclick="restoreDeckTrashItem(${index})">복구</button>
-                    <button class="modal-action-btn danger" style="margin-bottom:0; width:auto; padding:6px 12px; font-size:0.8rem; flex-shrink:0;" onclick="permanentlyDeleteDeckTrashItem(${index})">삭제</button>
-                `;
-                container.appendChild(row);
-            });
-            updateDeckTrashCountUI();
-        }
-        function restoreDeckTrashItem(index) {
-            const deck = getDeck(); const trash = deck.trash || []; const item = trash[index];
-            deck.words.push({ id: item.id, jp: item.jp, kr: item.kr }); trash.splice(index, 1);
-            saveAppData(); renderDeckTrashUI(); updateLobbyUI();
-        }
-        function permanentlyDeleteDeckTrashItem(index) {
-            const deck = getDeck();
-            if (confirm("영구히 삭제하시겠습니까?")) { deck.trash.splice(index, 1); saveAppData(); renderDeckTrashUI(); updateLobbyUI(); }
-        }
-        function emptyDeckTrash() {
-            const deck = getDeck(); if (deck.trash.length === 0) return;
-            if (confirm("이 단어장 쓰레기통을 비우시겠습니까?")) { deck.trash = []; saveAppData(); renderDeckTrashUI(); updateLobbyUI(); }
-        }
-        function updateDeckTrashCountUI() {
-            const deck = getDeck(); const countSpan = document.getElementById('deck-trash-count');
-            if (countSpan) countSpan.innerText = deck && deck.trash ? deck.trash.length : 0;
-        }
-
         function moveDeck(index, direction) {
             if (index + direction < 0 || index + direction >= appData.length) return;
             const temp = appData[index]; appData[index] = appData[index + direction]; appData[index + direction] = temp;
             saveAppData(); renderHomeUI();
         }
+        
         function exportDeck(index) {
             const deck = appData[index]; const dataStr = JSON.stringify(deck, null, 2); const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url;
@@ -1016,7 +773,7 @@
             let newDeck = {
                 id: 'deck_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), name: defaultName,
                 words: Array.isArray(data.words) ? data.words : [], stars: Array.isArray(data.stars) ? data.stars : [],
-                memo: data.memo || '', session: null, trash: Array.isArray(data.trash) ? data.trash : []
+                session: null, trash: Array.isArray(data.trash) ? data.trash : []
             };
             const idMap = {};
             newDeck.words = newDeck.words.map((w, idx) => {
@@ -1114,208 +871,27 @@
             document.getElementById('stage-info').innerText = "통합 학습 이어하기"; initGame();
         }
 
-        // --- 기타 모달/데이터 편집기 ---
-        function openSingleEditModal(e) {
-            e.stopPropagation(); 
+        // --- 학습 시 UI 업데이트 & TTS 기능 ---
+        function playTTS(e) {
+            e.stopPropagation(); // 스와이프/플립 방지
             if (activeQueue.length === 0) return;
-            const currentCard = activeQueue[0];
-            document.getElementById('single-edit-jp').value = currentCard.jp;
-            document.getElementById('single-edit-kr').value = currentCard.kr;
-            document.getElementById('single-edit-modal').classList.add('visible');
-        }
-        function closeSingleEditModal() { document.getElementById('single-edit-modal').classList.remove('visible'); }
-        function saveSingleEdit() {
-            if (activeQueue.length === 0) return;
-            const newJp = document.getElementById('single-edit-jp').value.trim(); const newKr = document.getElementById('single-edit-kr').value.trim();
-            if (newJp === "") return alert("단어를 입력해주세요.");
             
-            const currentId = activeQueue[0].id;
-            activeQueue[0].jp = newJp; activeQueue[0].kr = newKr;
-            const deck = isGlobalMode ? getDeckByCardId(currentId) : getDeck();
-            if (deck) {
-                const targetIndex = deck.words.findIndex(w => w.id === currentId);
-                if (targetIndex > -1) { deck.words[targetIndex].jp = newJp; deck.words[targetIndex].kr = newKr; saveAppData(); }
-            }
-            saveSessionState(); updateCard(); closeSingleEditModal();
-        }
-
-        function openEditModal() {
-            const deck = getDeck();
-            document.getElementById('edit-memo-input').innerHTML = deck.memo;
-            const container = document.getElementById('edit-words-container'); container.innerHTML = '';
-            if (deck.words.length === 0) container.innerHTML = '<p style="color:#94a3b8; font-size:0.9rem; text-align:center;">등록된 단어가 없습니다.</p>';
-            else {
-                deck.words.forEach((w) => {
-                    const isStar = deck.stars.includes(w.id);
-                    const starColor = isStar ? 'var(--star-color)' : '#ccc';
-                    const starChar = isStar ? '★' : '☆';
-                    const row = document.createElement('div'); row.className = 'edit-row';
-                    row.innerHTML = `
-                        <button type="button" class="list-star-btn" onclick="toggleEditListStar('${w.id}', this)" style="color:${starColor}">${starChar}</button>
-                        <input type="text" class="edit-jp" value="${w.jp}" data-id="${w.id}">
-                        <input type="text" class="edit-kr" value="${w.kr}">
-                        <button class="delete-btn" onclick="this.parentElement.remove()">✕</button>
-                    `;
-                    container.appendChild(row);
-                });
-            }
-            const editModal = document.getElementById('edit-modal'); editModal.style.display = 'flex'; setTimeout(() => editModal.classList.add('visible'), 10);
-        }
-        function closeEditModal() { const editModal = document.getElementById('edit-modal'); editModal.classList.remove('visible'); setTimeout(() => editModal.style.display = 'none', 300); }
-        function toggleEditListStar(id, btnElement) {
-            const deck = getDeck(); const idx = deck.stars.indexOf(id);
-            if (idx > -1) { deck.stars.splice(idx, 1); btnElement.innerText = '☆'; btnElement.style.color = '#ccc'; } 
-            else { deck.stars.push(id); btnElement.innerText = '★'; btnElement.style.color = 'var(--star-color)'; }
-            saveAppData(); updateLobbyUI();
-        }
-        function saveEdits() {
-            const deck = getDeck();
-            try { deck.memo = document.getElementById('edit-memo-input').innerHTML; } catch(e) { return alert("메모 저장 실패!"); }
+            // 영어 단어 추출 (변수명 jp에 영어 단어가 할당되어 있음)
+            const textToSpeak = activeQueue[0].jp;
             
-            const rows = document.querySelectorAll('.edit-row'); let newData = [];
-            rows.forEach(row => {
-                const jpInput = row.querySelector('.edit-jp'); const krInput = row.querySelector('.edit-kr');
-                const id = jpInput.getAttribute('data-id');
-                if(jpInput && jpInput.value.trim() !== '') {
-                    // 기존 category 유지
-                    const existingWord = deck.words.find(w => w.id === id);
-                    const cat = existingWord ? (existingWord.category || "기본 단어") : "기본 단어";
-                    newData.push({ jp: jpInput.value.trim(), kr: krInput.value.trim(), id: id, category: cat });
-                }
-            });
-            const deletedWords = deck.words.filter(pw => !newData.map(w => w.id).includes(pw.id));
-            if (deletedWords.length > 0) {
-                if (!deck.trash) deck.trash = [];
-                deletedWords.forEach(w => deck.trash.push({ id: w.id, jp: w.jp, kr: w.kr, deletedAt: Date.now() }));
+            if (!('speechSynthesis' in window)) {
+                alert("현재 브라우저는 음성 읽기(TTS) 기능을 지원하지 않습니다.");
+                return;
             }
-            deck.words = newData;
-            deck.stars = deck.stars.filter(id => deck.words.map(w => w.id).includes(id));
-            clearSessionState(); alert("저장 완료!"); closeEditModal(); renderHomeUI();
+            
+            window.speechSynthesis.cancel(); // 진행 중인 음성 멈춤
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'en-US'; // 오직 영어 발음 설정
+            utterance.rate = 1.0;
+            
+            window.speechSynthesis.speak(utterance);
         }
 
-        function openAddWordModal() { document.getElementById('add-word-input').value = ''; const addWordModal = document.getElementById('add-word-modal'); addWordModal.style.display = 'flex'; setTimeout(() => addWordModal.classList.add('visible'), 10); }
-        function closeAddWordModal() { const addWordModal = document.getElementById('add-word-modal'); addWordModal.classList.remove('visible'); setTimeout(() => addWordModal.style.display = 'none', 300); }
-        function processAddWords() {
-            const input = document.getElementById('add-word-input').value; const lines = input.split('\n'); let addedCount = 0; const deck = getDeck();
-            lines.forEach(line => {
-                const parts = line.split('|').map(s => s.trim());
-                if (parts.length === 2 && parts[0] !== '') {
-                    deck.words.push({ jp: parts[0], kr: parts[1], id: 'w_' + Date.now() + '_' + addedCount, category: "직접 추가" }); addedCount++;
-                }
-            });
-            if (addedCount > 0) { saveAppData(); updateLobbyUI(); alert(`${addedCount}개 추가됨!`); closeAddWordModal(); } else alert("형식 확인 (예: apple|사과)");
-        }
-
-        // --- 인쇄 기능 ---
-        function openAllPdfModal() { document.getElementById('all-pdf-modal').classList.add('visible'); }
-        function closeAllPdfModal() { document.getElementById('all-pdf-modal').classList.remove('visible'); }
-        function executeAllPrint(mode) { closeAllPdfModal(); printAllDecks(mode); }
-        
-        function openPdfModal() { document.getElementById('pdf-modal').classList.add('visible'); }
-        function closePdfModal() { document.getElementById('pdf-modal').classList.remove('visible'); }
-        function executePrint(mode) { closePdfModal(); printSingleDeck(mode); }
-
-        function printSingleDeck(mode = 'all') {
-            const deck = getDeck();
-            let targetData = mode === 'fav' ? deck.words.filter(w => deck.stars.includes(w.id)) : deck.words;
-            runPrintHtml(`📘 ${deck.name} ${mode === 'fav' ? '(즐겨찾기)' : ''} 📘`, targetData, deck.memo ? [{name: deck.name, memo: deck.memo}] : [], deck.stars);
-        }
-        function printAllDecks(mode = 'all') {
-            if (appData.length === 0) { alert("인쇄할 단어장이 없습니다."); return; }
-            let allWords = []; let memos = []; let allStars = [];
-            appData.forEach(deck => {
-                if (deck.words) {
-                    let mappedWords = deck.words.map(w => ({...w, isStar: deck.stars.includes(w.id)}));
-                    if (mode === 'fav') mappedWords = mappedWords.filter(w => w.isStar);
-                    allWords = allWords.concat(mappedWords);
-                    allStars = allStars.concat(deck.stars);
-                }
-                if (deck.memo && deck.memo.trim() !== '') memos.push({ name: deck.name, memo: deck.memo });
-            });
-            runPrintHtml(`📘 다중 단어장 통합 인쇄 📘${mode === 'fav' ? ' (즐겨찾기)' : ''}`, allWords, memos, allStars);
-        }
-
-        function runPrintHtml(titleText, wordsArr, memosArr, starsArr) {
-            let printHtml = `
-            <html><head><title>단어장 인쇄</title>
-            <style>
-                @page { size: A4; margin: 15mm; }
-                body { font-family: 'Malgun Gothic', sans-serif; margin: 0; color: #1e293b; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-                table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-bottom: 20px; page-break-after: auto; }
-                th { font-size: 18px; color: var(--primary, #2563EB); border: none; border-bottom: 2px solid var(--primary, #2563EB); padding-bottom: 10px; margin-bottom: 10px; }
-                th, td { border: 1px solid #cbd5e1; padding: 6px 8px; vertical-align: middle; word-break: break-word; }
-                .jp { font-weight: bold; width: 20%; background-color: #f8fafc !important; }
-                .kr { width: 30%; }
-                .highlight-star { background-color: #fef08a !important; padding: 2px 4px; border-radius: 4px; display: inline-block; white-space: nowrap; }
-                .cat-label { font-size: 10px; color: #94a3b8; display: block; margin-bottom: 2px; }
-                .memo-section { display: block; clear: both; margin-top: 30px; padding: 15px; border-top: 2px dashed #cbd5e1; background: #fff !important; }
-                .memo-section * { max-width: 100%; word-break: break-all; }
-                .memo-section h3 { margin: 0 0 10px 0; color: var(--primary, #2563EB); font-size: 14px; page-break-after: avoid; }
-                .memo-deck-title { font-size: 13px; font-weight: bold; color: #1e293b; margin: 25px 0 5px 0; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; page-break-after: avoid; }
-                .img-wrapper { display: block !important; margin: 15px 0 !important; text-align: left; border: none !important; page-break-inside: avoid; }
-                .img-wrapper img { max-width: 100% !important; height: auto !important; display: block; margin: 0; }
-                .resize-handle, .delete-img-btn, .reorder-handle { display: none !important; }
-            </style>
-            </head><body>`;
-
-            if(wordsArr.length === 0) { 
-                printHtml += `<table><thead><tr><th colspan="4">${titleText}</th></tr></thead><tbody><tr><td colspan="4" style="text-align:center;">조건에 해당하는 단어가 없습니다.</td></tr></tbody></table>`;
-            } else {
-                const PAGE_SIZE = 62; const ROWS_PER_PAGE = 31;
-                let pagesCount = Math.ceil(wordsArr.length / PAGE_SIZE);
-                for (let p = 0; p < pagesCount; p++) {
-                    printHtml += `<table><thead><tr><th colspan="4">${titleText} ${pagesCount > 1 ? `(${p+1}/${pagesCount})` : ''}</th></tr></thead><tbody>`;
-                    let pageData = wordsArr.slice(p * PAGE_SIZE, (p + 1) * PAGE_SIZE);
-                    let maxRows = ROWS_PER_PAGE; let rightOffset = ROWS_PER_PAGE;
-                    if (p === pagesCount - 1 && pageData.length < PAGE_SIZE) {
-                        maxRows = Math.ceil(pageData.length / 2); rightOffset = maxRows;
-                    }
-                    for (let r = 0; r < maxRows; r++) {
-                        let w1 = pageData[r]; let w2 = pageData[r + rightOffset];
-                        printHtml += `<tr>`;
-                        if (w1) { 
-                            let jpSize = getFontSize(w1.jp, "13px"); let krSize = getFontSize(w1.kr, "12px");
-                            let isS = w1.isStar !== undefined ? w1.isStar : starsArr.includes(w1.id);
-                            printHtml += `<td class="jp" style="font-size:${jpSize};"><span class="cat-label">[${w1.category||'기본'}]</span><span class="${isS?'highlight-star':''}">${w1.jp}${isS?' ⭐':''}</span></td><td class="kr" style="font-size:${krSize};">${w1.kr}</td>`; 
-                        } else printHtml += `<td class="jp"></td><td class="kr"></td>`; 
-                        if (w2) { 
-                            let jpSize = getFontSize(w2.jp, "13px"); let krSize = getFontSize(w2.kr, "12px");
-                            let isS = w2.isStar !== undefined ? w2.isStar : starsArr.includes(w2.id);
-                            printHtml += `<td class="jp" style="font-size:${jpSize};"><span class="cat-label">[${w2.category||'기본'}]</span><span class="${isS?'highlight-star':''}">${w2.jp}${isS?' ⭐':''}</span></td><td class="kr" style="font-size:${krSize};">${w2.kr}</td>`; 
-                        } else printHtml += `<td class="jp"></td><td class="kr"></td>`; 
-                        printHtml += `</tr>`;
-                    }
-                    printHtml += `</tbody></table>`;
-                }
-            }
-            printHtml += `<div style="clear:both;"></div>`;
-            if (memosArr.length > 0) { 
-                printHtml += `<div class="memo-section"><h3>📝 요약 메모</h3>`;
-                memosArr.forEach(m => { printHtml += `<div class="memo-deck-title">[${m.name}] 단어장 메모</div><div>${m.memo}</div>`; });
-                printHtml += `</div>`;
-            }
-            printHtml += `</body></html>`;
-            const printWin = window.open('', '_blank'); printWin.document.open(); printWin.document.write(printHtml); printWin.document.close();
-            setTimeout(() => { printWin.focus(); printWin.print(); }, 1500);
-        }
-
-        // --- 이미지 드래그 처리 ---
-        function handleImageFile(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas'); let w = img.width, h = img.height;
-                    if(w>800){h=Math.round((h*800)/w); w=800;}
-                    canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h);
-                    const html = `<div class="img-wrapper" style="width:200px"><img src="${canvas.toDataURL('image/jpeg', 0.7)}"><div class="resize-handle"></div><div class="reorder-handle">✥</div><div class="delete-img-btn" onclick="this.parentElement.remove()">✕</div></div>&nbsp;`;
-                    document.getElementById('edit-memo-input').focus(); document.execCommand('insertHTML', false, html);
-                }; img.src = e.target.result;
-            }; reader.readAsDataURL(file);
-        }
-        function insertImage(input) { if (input.files && input.files[0]) handleImageFile(input.files[0]); input.value = ''; }
-
-        // --- 학습 기능 (UI 업데이트) ---
         function adjustFontSize(element, text, isFront) {
             const len = text.length;
             if (isFront) { if (len >= 15) element.style.fontSize = "1.4rem"; else if (len > 8) element.style.fontSize = "1.9rem"; else element.style.fontSize = "2.5rem"; } 
@@ -1328,13 +904,16 @@
             document.getElementById('progressFill').style.width = (totalCount > 0 ? (done / totalCount) * 100 : 0) + '%';
             document.getElementById('queue-count').innerText = `${remaining} left`;
         }
+        
         function updateCard() {
             if (activeQueue.length === 0) { clearSessionState(); showComplete(); return; }
             const card = activeQueue[0]; const deck = isGlobalMode ? getDeckByCardId(card.id) : getDeck();
             if (!deck) { activeQueue.shift(); totalCount--; updateCard(); return; }
+            
             const frontEl = document.getElementById('jpWord'); const backEl = document.getElementById('krMeaning');
             if (isKrFirst) { frontEl.innerText = card.kr; backEl.innerText = card.jp; } 
             else { frontEl.innerText = card.jp; backEl.innerText = card.kr; }
+            
             adjustFontSize(frontEl, frontEl.innerText, true); adjustFontSize(backEl, backEl.innerText, false);
             
             const isS = deck.stars.includes(card.id);
@@ -1368,8 +947,15 @@
         // --- 스와이프 애니메이션 ---
         const cw = document.getElementById('cardWrapper'); const ci = document.getElementById('cardInner'); const bgOverlay = document.getElementById('bg-overlay'); const bgIcon = document.getElementById('bg-icon');
         let startX = 0, currentX = 0, isDragging = false;
+        
         document.getElementById('touchArea').addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-        cw.addEventListener('touchstart', e => { if(e.target.closest('.star-toggle') || e.target.closest('.nav-btn') || e.target.closest('.edit-card-btn') || e.target.closest('.delete-card-btn')) return; isDragging = true; startX = e.touches[0].clientX; currentX = startX; cw.style.transition = 'none'; }, { passive: false });
+        
+        cw.addEventListener('touchstart', e => { 
+            // 별 버튼이나 tts(소리) 버튼 클릭시 카드 넘어가는 걸 방지
+            if(e.target.closest('.star-toggle') || e.target.closest('.nav-btn') || e.target.closest('.tts-btn')) return; 
+            isDragging = true; startX = e.touches[0].clientX; currentX = startX; cw.style.transition = 'none'; 
+        }, { passive: false });
+        
         cw.addEventListener('touchmove', e => {
             if (!isDragging) return; e.preventDefault(); currentX = e.touches[0].clientX; let dx = currentX - startX;
             cw.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
@@ -1377,17 +963,20 @@
             if (dx > 0) { bgOverlay.style.backgroundColor = `rgba(139, 195, 74, ${prog * 0.8})`; bgIcon.innerText = "O"; } else { bgOverlay.style.backgroundColor = `rgba(239, 83, 80, ${prog * 0.8})`; bgIcon.innerText = "X"; }
             bgIcon.style.transform = `scale(${0.5 + prog * 0.5})`;
         }, { passive: false });
+        
         cw.addEventListener('touchend', e => {
             bgOverlay.style.opacity = 0; bgIcon.style.transform = 'scale(0.5)';
             if (!isDragging) return; isDragging = false; let dx = currentX - startX;
             if (Math.abs(dx) < 15) { isFlipped = !isFlipped; ci.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'; ci.classList.toggle('flipped', isFlipped); cw.style.transition = 'transform 0.3s'; cw.style.transform = 'translateX(0) rotate(0)'; return; }
             if (Math.abs(dx) > 80) { if (dx > 0) markOk(); else markNo(); } else { cw.style.transition = 'transform 0.3s'; cw.style.transform = 'translateX(0) rotate(0)'; }
         });
+        
         function animateCardChange(type) {
             const destX = type === 'ok' ? window.innerWidth + 200 : -window.innerWidth - 200;
             cw.style.transition = 'transform 0.25s ease-out'; cw.style.transform = `translateX(${destX}px) rotate(${type==='ok'?30:-30}deg)`;
             setTimeout(() => updateCard(), 250);
         }
+        
         function resetCardUI() {
             isFlipped = false; ci.style.transition = 'none'; ci.classList.remove('flipped');
             cw.style.transition = 'none'; cw.style.transform = 'translateX(0) rotate(0)'; void cw.offsetWidth; 
