@@ -91,6 +91,7 @@
         body.dark-mode .modal-action-btn.secondary { background: #1C2C4E; color: #FFFFFF; }
         body.dark-mode .hint-pill { background: #131F3B; color: #94A3B8; }
         body.dark-mode .speed-btn { background: #381B10 !important; color: #FF9466 !important; border-color: #FC4E00 !important; }
+        body.dark-mode .enhance-badge-btn { background: #381E11 !important; border-color: #FC4E00 !important; }
 
         /* --- 기본 UI --- */
         #intro-screen {
@@ -141,6 +142,15 @@
             cursor: pointer; transition: background-color 0.2s, transform 0.1s;
         }
         .speed-btn:active { transform: scale(0.95); }
+
+        .enhance-badge-btn {
+            background: #FFF7ED; color: #EA580C;
+            border: 1px solid #FDBA74; border-radius: 12px;
+            padding: 4px 8px; font-weight: 800; font-size: 0.8rem;
+            cursor: pointer; display: flex; align-items: center; gap: 4px;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        .enhance-badge-btn:active { transform: scale(0.95); }
 
         .auth-container {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -198,24 +208,28 @@
 
         .overlay-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 3000;
+            background: rgba(0,0,0,0.65); z-index: 3000;
             display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(3px);
         }
         .overlay-modal.visible { display: flex; }
         .modal-card {
-            background: var(--card-bg); width: 85%; max-width: 380px;
-            border-radius: 24px; padding: 36px 28px; text-align: center;
+            background: var(--card-bg); width: 88%; max-width: 400px;
+            border-radius: 24px; padding: 30px 24px; text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: background-color 0.3s;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh; overflow-y: auto;
         }
         @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-card .emoji { font-size: 4rem; margin-bottom: 12px; }
-        .modal-card h2 { margin: 0 0 8px; font-size: 1.6rem; color: var(--text-main); }
-        .modal-card p { color: var(--text-sub); font-size: 0.95rem; margin: 0 0 24px; }
-        .modal-action-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-size: 1rem; font-weight: 800; cursor: pointer; margin-bottom: 10px; transition: background-color 0.3s; }
+        .modal-card .emoji { font-size: 3.5rem; margin-bottom: 8px; }
+        .modal-card h2 { margin: 0 0 8px; font-size: 1.5rem; color: var(--text-main); }
+        .modal-card p { color: var(--text-sub); font-size: 0.95rem; margin: 0 0 20px; }
+        .modal-action-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-size: 1rem; font-weight: 800; cursor: pointer; margin-bottom: 10px; transition: background-color 0.3s, transform 0.1s; }
+        .modal-action-btn:active { transform: scale(0.98); }
         .modal-action-btn.primary { background: var(--primary); color: white; }
         .modal-action-btn.secondary { background: #F3F4F6; color: #1F2937; }
         .modal-action-btn.danger { background: #FEE2E2; color: #DC2626; }
+        .modal-action-btn.enhance { background: linear-gradient(135deg, #FC4E00 0%, #EA580C 100%); color: white; box-shadow: 0 4px 15px rgba(252,78,0,0.4); }
 
         #game-page { touch-action: none; }
         .game-container { 
@@ -267,6 +281,66 @@
         .nav-btn:active { transform: scale(0.95); }
         .nav-btn.ok:active { background: #10B981; color: white; }
         .nav-btn.no:active { background: #EF4444; color: white; }
+
+        /* =========================================================
+           🔥 유니폼 뒷면(icon.png) 강화 시스템 전용 스타일
+        ========================================================= */
+        .jersey-stage-box {
+            position: relative; width: 170px; height: 170px; margin: 15px auto;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 24px; background: rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+        body.dark-mode .jersey-stage-box { background: rgba(255,255,255,0.04); }
+
+        .jersey-img {
+            width: 130px; height: 130px; object-fit: contain;
+            transition: all 0.4s ease; border-radius: 12px;
+        }
+
+        /* 0~2강: 루키 */
+        .glow-tier-0 { filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15)); }
+        /* 3~4강: 1군 엔트리 (오렌지 림라이트) */
+        .glow-tier-1 { filter: drop-shadow(0 0 12px #FC4E00); transform: scale(1.03); }
+        /* 5~6강: 주전 라인업 (실버 + 펄스) */
+        .glow-tier-2 { filter: drop-shadow(0 0 16px #38BDF8) contrast(1.1); transform: scale(1.06); animation: pulseGlow 2s infinite alternate; }
+        /* 7~8강: 올스타 (황금빛 골드 오라) */
+        .glow-tier-3 { filter: drop-shadow(0 0 22px #F59E0B) drop-shadow(0 0 8px #FDE047) brightness(1.08); transform: scale(1.09); animation: goldGlow 1.8s infinite alternate; }
+        /* 9강: 시즌 MVP (타오르는 불꽃 오라) */
+        .glow-tier-4 { filter: drop-shadow(0 0 25px #EF4444) drop-shadow(0 0 14px #FC4E00) brightness(1.12); transform: scale(1.12); animation: fireGlow 1.2s infinite alternate; }
+        /* 10강 (MAX): 영구결번 레전드 (무지개 다이아몬드 오라) */
+        .glow-tier-5 { filter: drop-shadow(0 0 28px #A855F7) drop-shadow(0 0 16px #38BDF8) brightness(1.18); transform: scale(1.15); animation: rainbowGlow 2s infinite linear; }
+
+        @keyframes pulseGlow { 0% { filter: drop-shadow(0 0 10px #38BDF8); } 100% { filter: drop-shadow(0 0 20px #0284C7); } }
+        @keyframes goldGlow { 0% { filter: drop-shadow(0 0 14px #F59E0B); } 100% { filter: drop-shadow(0 0 26px #FBBF24); } }
+        @keyframes fireGlow { 0% { filter: drop-shadow(0 0 16px #FC4E00); transform: scale(1.1); } 100% { filter: drop-shadow(0 0 30px #DC2626); transform: scale(1.14); } }
+        @keyframes rainbowGlow {
+            0% { filter: drop-shadow(0 0 25px #EC4899) drop-shadow(0 0 12px #3B82F6) brightness(1.2); }
+            50% { filter: drop-shadow(0 0 30px #F59E0B) drop-shadow(0 0 14px #10B981) brightness(1.25); }
+            100% { filter: drop-shadow(0 0 25px #EC4899) drop-shadow(0 0 12px #3B82F6) brightness(1.2); }
+        }
+
+        .level-badge {
+            position: absolute; bottom: 8px; right: 12px;
+            background: linear-gradient(135deg, #FC4E00, #BA3800); color: white;
+            padding: 3px 10px; border-radius: 20px; font-weight: 900; font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white;
+        }
+
+        .shake-animation { animation: upgradeShake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes upgradeShake {
+            10%, 90% { transform: translate3d(-3px, 0, 0) scale(1.05); }
+            20%, 80% { transform: translate3d(5px, 0, 0) scale(1.05); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0) scale(1.08); }
+            40%, 60% { transform: translate3d(6px, 0, 0) scale(1.08); }
+        }
+
+        .inventory-panel {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0;
+            background: #F9FAFB; padding: 10px; border-radius: 14px; border: 1px solid var(--border-color);
+        }
+        body.dark-mode .inventory-panel { background: #0A1124; }
+        .inv-item { font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
     </style>
 </head>
 <body>
@@ -311,7 +385,11 @@
     <div id="home-page" class="page">
         <div class="header">
             <span style="color:var(--primary); font-size:1.1rem;">내 단어장 목록</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="enhance-badge-btn" onclick="openEnhanceModal()" title="유니폼 강화소 입장">
+                    <span id="header-jersey-badge">👕 +0강</span>
+                    <span id="header-ticket-badge" style="font-size:0.75rem; opacity:0.9;">(⚡0)</span>
+                </button>
                 <button id="auth-btn" onclick="toggleAuth()" style="background:#DC2626; color:white; border:none; border-radius:8px; padding:6px 10px; font-weight:bold; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
                     로그아웃
                 </button>
@@ -331,6 +409,18 @@
                 <button class="tool-btn" onclick="document.getElementById('import-deck-upload').click()">📂 백업 불러오기</button>
                 <button class="tool-btn highlight" onclick="exportAllDecks()" style="background:#FFFBEB; border-color:#FDE68A; color:#D97706;">📦 통합 백업 다운</button>
                 <input type="file" id="import-deck-upload" accept=".json" style="display: none;" onchange="importDeck(event)">
+            </div>
+
+            <!-- 유니폼 강화소 퀵 배너 -->
+            <div onclick="openEnhanceModal()" style="background:linear-gradient(135deg, #FC4E00 0%, #BA3800 100%); color:white; border-radius:14px; padding:12px 16px; margin-bottom:15px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(252,78,0,0.25);">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="icon.png" style="width:36px; height:36px; object-fit:contain; border-radius:6px; background:rgba(255,255,255,0.2); padding:2px;">
+                    <div>
+                        <div style="font-weight:900; font-size:0.95rem;">⚾ 한화 이글스 유니폼 강화소</div>
+                        <div style="font-size:0.75rem; opacity:0.9;">25단어 완주 시 ⚡강화권 / 50단어 시 🛡️보호권 지급!</div>
+                    </div>
+                </div>
+                <div style="font-weight:900; font-size:1.1rem;">🔥 입장 →</div>
             </div>
 
             <!-- 글로벌 다중 묶음 학습 UI -->
@@ -380,13 +470,16 @@
     <div id="lobby-page" class="page">
         <div class="header">
             <button onclick="goHome()" style="background:none; border:none; font-size:1.2rem; color:var(--text-sub); padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
-            <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:35%;">단어장</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:30%;">단어장</span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="enhance-badge-btn" onclick="openEnhanceModal()" title="유니폼 강화소">
+                    <span class="header-jersey-badge-clone">👕 +0강</span>
+                </button>
                 <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
                 <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
                 <button onclick="toggleFullScreen()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="전체화면">⛶</button>
-                <span id="total-stars" style="color:var(--star-color); background:#FFFBEB; padding:4px 10px; border-radius:20px; font-size:0.9rem;">⭐ 0</span>
+                <span id="total-stars" style="color:var(--star-color); background:#FFFBEB; padding:4px 8px; border-radius:20px; font-size:0.85rem;">⭐ 0</span>
             </div>
         </div>
         <div class="content-area">
@@ -482,16 +575,81 @@
         </div>
     </div>
 
-    <!-- 모달들 -->
+    <!-- 🔥 유니폼 강화소 모달 -->
+    <div id="enhance-modal" class="overlay-modal">
+        <div class="modal-card" style="max-width: 390px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                <h2 style="margin:0; font-size:1.3rem; color:var(--primary); display:flex; align-items:center; gap:6px;">
+                    <span>⚾</span> 이글스 유니폼 강화소
+                </h2>
+                <button onclick="closeEnhanceModal()" style="background:none; border:none; font-size:1.5rem; color:var(--text-sub); cursor:pointer; padding:0 5px;">✕</button>
+            </div>
+
+            <!-- 유니폼 전시 스테이지 -->
+            <div class="jersey-stage-box" id="jerseyStageBox">
+                <img src="icon.png" id="enhanceJerseyImg" class="jersey-img glow-tier-0" alt="한화 유니폼">
+                <div class="level-badge" id="enhanceLevelBadge">+0강</div>
+            </div>
+
+            <h3 id="enhanceTitle" style="margin: 6px 0 2px 0; font-size: 1.15rem; color: var(--text-main);">[+0] 육성선수 유니폼</h3>
+            <p id="enhanceDesc" style="font-size:0.85rem; color:var(--text-sub); margin:0 0 10px 0;">완주 학습을 통해 전설의 영구결번 유니폼을 완성하세요!</p>
+
+            <!-- 보유 재화 인벤토리 -->
+            <div class="inventory-panel">
+                <div class="inv-item" style="color:var(--primary);">
+                    <span>⚡ 강화권:</span>
+                    <span id="inv-tickets" style="font-size:1rem;">0장</span>
+                </div>
+                <div class="inv-item" style="color:#0284C7;">
+                    <span>🛡️ 보호권:</span>
+                    <span id="inv-shields" style="font-size:1rem;">0장</span>
+                </div>
+            </div>
+
+            <!-- 강화 정보 & 확률 박스 -->
+            <div style="background:#F9FAFB; padding:10px; border-radius:12px; border:1px solid var(--border-color); margin-bottom:12px; font-size:0.85rem; text-align:left;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="color:var(--text-sub);">성공 확률:</span>
+                    <strong id="enhance-prob-rate" style="color:#10B981;">100%</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="color:var(--text-sub);">실패 시 페널티:</span>
+                    <span id="enhance-penalty-desc" style="color:var(--text-sub); font-weight:700;">하락 없음 (안전)</span>
+                </div>
+                <div style="border-top:1px dashed var(--border-color); margin:8px 0; padding-top:6px; display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-weight:800; color:#0284C7;">
+                        <input type="checkbox" id="use-shield-cb" style="accent-color:#0284C7; width:16px; height:16px;">
+                        🛡️ 강화보호권 사용 (하락 방지)
+                    </label>
+                </div>
+            </div>
+
+            <div id="enhance-result-msg" style="min-height:22px; font-size:0.9rem; font-weight:800; margin-bottom:8px;"></div>
+
+            <button id="btn-do-enhance" class="modal-action-btn enhance" onclick="doEnhance()">🔥 유니폼 강화하기 (⚡ 1장 소모)</button>
+            <button class="modal-action-btn secondary" style="margin-bottom:0;" onclick="closeEnhanceModal()">닫기</button>
+        </div>
+    </div>
+
+    <!-- 학습 완료 모달 -->
     <div id="complete-modal" class="overlay-modal">
         <div class="modal-card">
             <div class="emoji">🎉</div>
             <h2>학습 완료!</h2>
-            <p id="complete-msg">모든 카드를 학습했습니다!</p>
+            <p id="complete-msg" style="margin-bottom: 12px;">모든 카드를 학습했습니다!</p>
+            
+            <!-- 보상 획득 배너 -->
+            <div id="reward-banner" style="background:#FFF7ED; border:1px solid #FDBA74; border-radius:14px; padding:12px; margin-bottom:18px; text-align:center;">
+                <div style="font-weight:900; color:#EA580C; font-size:0.95rem; margin-bottom:4px;">🎁 학습 완주 특별 보상!</div>
+                <div id="reward-detail" style="font-size:0.85rem; color:#9A3412; font-weight:700;"></div>
+            </div>
+
+            <button id="btn-complete-enhance" class="modal-action-btn enhance" onclick="openEnhanceModalFromComplete()">🔥 유니폼 강화하러 가기 ⚾</button>
             <button class="modal-action-btn primary" onclick="goBackAndClearSession()">← 메뉴로 돌아가기</button>
         </div>
     </div>
 
+    <!-- 일시정지 모달 -->
     <div id="pause-modal" class="overlay-modal">
         <div class="modal-card">
             <div class="emoji">⏸</div>
@@ -516,6 +674,27 @@
         let autoPlaySpeed = parseFloat(localStorage.getItem('jpMasterAutoSpeed')) || 1.0;
         const SPEED_LEVELS = [0.8, 1.0, 1.25, 1.5, 2.0];
 
+        // --- ⚾ 유니폼 강화 데이터 관리 ---
+        let userEnhance = {
+            level: 0,
+            tickets: 0,
+            shields: 0
+        };
+
+        const ENHANCE_CONFIG = [
+            { level: 0,  name: "육성선수 유니폼",        rate: 1.00, dropRate: 0.00, titleTier: 0, desc: "아직 무광의 신인 유니폼입니다." },
+            { level: 1,  name: "루키 유니폼",            rate: 0.90, dropRate: 0.00, titleTier: 0, desc: "프로 무대 첫 발걸음을 뗐습니다." },
+            { level: 2,  name: "유망주 유니폼",          rate: 0.80, dropRate: 0.00, titleTier: 0, desc: "가능성을 인정받기 시작했습니다." },
+            { level: 3,  name: "1군 엔트리 유니폼",      rate: 0.65, dropRate: 0.00, titleTier: 1, desc: "주황색 빛이 은은하게 맴돕니다." },
+            { level: 4,  name: "선발 백업 유니폼",       rate: 0.50, dropRate: 0.15, titleTier: 1, desc: "여기서부터 실패 시 단계가 하락할 수 있습니다!" },
+            { level: 5,  name: "주전 야수 유니폼",       rate: 0.40, dropRate: 0.20, titleTier: 2, desc: "메탈릭 실버 광채가 유니폼을 감쌉니다." },
+            { level: 6,  name: "클러치 히터 유니폼",     rate: 0.30, dropRate: 0.25, titleTier: 2, desc: "결정적인 순간 승리를 이끄는 힘!" },
+            { level: 7,  name: "KBO 올스타 유니폼",     rate: 0.20, dropRate: 0.30, titleTier: 3, desc: "황금빛 오라가 뿜어져 나옵니다." },
+            { level: 8,  name: "골든글러브 유니폼",     rate: 0.12, dropRate: 0.40, titleTier: 3, desc: "리그 정상급 클래스를 증명하는 유니폼!" },
+            { level: 9,  name: "시즌 MVP 유니폼",        rate: 0.05, dropRate: 0.50, titleTier: 4, desc: "타오르는 불꽃 오라! 최고 존엄에 도전하세요." },
+            { level: 10, name: "🦅 이글스 영구결번 유니폼", rate: 0.00, dropRate: 0.00, titleTier: 5, desc: "신화가 된 전설의 무지개 다이아몬드 유니폼!" }
+        ];
+
         function applySettings() {
             if(isDarkMode) {
                 document.body.classList.add('dark-mode');
@@ -526,6 +705,16 @@
             }
             document.querySelectorAll('.accent-btn').forEach(btn => btn.innerText = currentAccent === 'en-US' ? '🇺🇸' : '🇬🇧');
             document.querySelectorAll('.speed-btn').forEach(btn => btn.innerText = `⚡ ${autoPlaySpeed}x`);
+            updateHeaderEnhanceBadge();
+        }
+
+        function updateHeaderEnhanceBadge() {
+            const hBadge = document.getElementById('header-jersey-badge');
+            const tBadge = document.getElementById('header-ticket-badge');
+            const clones = document.querySelectorAll('.header-jersey-badge-clone');
+            if (hBadge) hBadge.innerText = `👕 +${userEnhance.level}강`;
+            if (tBadge) tBadge.innerText = `(⚡${userEnhance.tickets}${userEnhance.shields > 0 ? `/🛡️${userEnhance.shields}` : ''})`;
+            clones.forEach(el => el.innerText = `👕 +${userEnhance.level}강 (⚡${userEnhance.tickets})`);
         }
 
         function toggleDarkMode() {
@@ -620,30 +809,32 @@
                 const name = user.displayName ? user.displayName.split(' ')[0] : '회원';
                 if (authBtn) authBtn.innerHTML = `👋 ${name} (로그아웃)`;
                 
-                // ⚡ 1단계: 브라우저 로컬 캐시에서 0초 즉시 렌더링!
+                // ⚡ 1단계: 브라우저 로컬 캐시에서 즉시 렌더링
                 const localCache = localStorage.getItem('toeicAppData_' + currentUser.uid);
+                const localEnhance = localStorage.getItem('toeicEnhance_' + currentUser.uid);
                 if (localCache) {
-                    try {
-                        appData = JSON.parse(localCache);
-                        renderHomeUI();
-                        applySettings();
-                        showPage('home-page');
-                    } catch(e) {}
+                    try { appData = JSON.parse(localCache); } catch(e) {}
                 }
-                
-                // ⚡ 2단계: 백그라운드에서 최신 클라우드 데이터 동기화
-                loadDataFromFirebase();
+                if (localEnhance) {
+                    try { userEnhance = JSON.parse(localEnhance); } catch(e) {}
+                }
+                renderHomeUI();
+                applySettings();
                 showPage('home-page');
+                
+                // ⚡ 2단계: 백그라운드 클라우드 데이터 동기화
+                loadDataFromFirebase();
             } else {
                 currentUser = null;
                 appData = [];
+                userEnhance = { level: 0, tickets: 0, shields: 0 };
                 currentDeckIndex = -1;
                 hideLoading();
                 showPage('login-page');
             }
         });
 
-        // --- 💾 파이어베이스 데이터 로드 & 초고속 캐시 저장 ---
+        // --- 💾 데이터 로드 & 저장 ---
         async function loadDataFromFirebase() {
             if (!currentUser) return;
             if (appData.length === 0) showLoading("단어장을 불러오는 중...");
@@ -651,9 +842,17 @@
                 const docRef = db.collection("users").doc(currentUser.uid);
                 const docSnap = await docRef.get();
                 if (docSnap.exists) {
-                    appData = docSnap.data().appData || [];
-                    // 로컬 스토리지에 캐시 백업
+                    const data = docSnap.data();
+                    appData = data.appData || [];
+                    if (data.userEnhance) {
+                        userEnhance = {
+                            level: data.userEnhance.level || 0,
+                            tickets: data.userEnhance.tickets || 0,
+                            shields: data.userEnhance.shields || 0
+                        };
+                    }
                     localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
+                    localStorage.setItem('toeicEnhance_' + currentUser.uid, JSON.stringify(userEnhance));
                 } else {
                     appData = [];
                 }
@@ -668,16 +867,17 @@
 
         function saveAppData() { 
             if (!currentUser) return;
-            // 로컬 캐시 즉시 업데이트
             localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
+            localStorage.setItem('toeicEnhance_' + currentUser.uid, JSON.stringify(userEnhance));
             
-            // 클라우드 비동기 저장
             db.collection("users").doc(currentUser.uid).set({
                 appData: appData,
+                userEnhance: userEnhance,
                 lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
             }).catch(error => {
                 console.error("클라우드 저장 실패:", error);
             });
+            updateHeaderEnhanceBadge();
         }
 
         function getDeck() { return appData[currentDeckIndex]; }
@@ -777,7 +977,7 @@
             }, 100);
         }
 
-        // --- 글로벌 다중 단어장 선택 로직 (메인 홈) ---
+        // --- 글로벌 다중 단어장 선택 로직 ---
         function getGlobalSelectedWords() {
             const checkedBoxes = document.querySelectorAll('input[name="selected-global-decks"]:checked');
             const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
@@ -855,7 +1055,7 @@
             });
         }
 
-        // --- 로비(단어장 내부) Day 다중 선택 기능 ---
+        // --- 로비 Day 다중 선택 기능 ---
         function getLobbySelectedWords() {
             const deck = getDeck(); if (!deck) return [];
             const checkboxes = document.querySelectorAll('input[name="selected-categories"]:checked');
@@ -923,6 +1123,7 @@
             if (deck.session && deck.session.queue && deck.session.queue.length > 0) {
                 btnContinue.style.display = 'block'; btnContinue.innerText = `▶ 이어서 학습하기 (${deck.session.queue.length}개 남음)`;
             } else { btnContinue.style.display = 'none'; }
+            updateHeaderEnhanceBadge();
         }
 
         function openDeck(index) { isGlobalMode = false; currentDeckIndex = index; updateLobbyUI(); showPage('lobby-page'); }
@@ -1071,8 +1272,6 @@
 
         function autoPlaySequence(card) {
             clearAutoPlay();
-            
-            // 배속에 비례한 딜레이 계산
             const waitBeforeFlip = Math.max(180, Math.round(380 / autoPlaySpeed));
             const waitAfterFlip = Math.max(380, Math.round(1150 / autoPlaySpeed));
             const fallbackTimeout = Math.max(1500, Math.round(3800 / autoPlaySpeed));
@@ -1118,7 +1317,12 @@
         
         function updateCard() {
             clearAutoPlay();
-            if (activeQueue.length === 0) { clearSessionState(); showComplete(); return; }
+            if (activeQueue.length === 0) { 
+                const finishedCount = totalCount;
+                clearSessionState(); 
+                showComplete(finishedCount); 
+                return; 
+            }
             const card = activeQueue[0]; const deck = isGlobalMode ? getDeckByCardId(card.id) : getDeck();
             if (!deck) { activeQueue.shift(); totalCount--; updateCard(); return; }
             
@@ -1143,7 +1347,43 @@
             resetCardUI();
         }
 
-        function showComplete() { document.getElementById('complete-msg').innerText = `총 ${totalCount}개 학습 완료! 🦅`; document.getElementById('complete-modal').classList.add('visible'); }
+        // --- 🏆 학습 완료 시 보상 지급 로직 ---
+        function showComplete(learnedCount) {
+            document.getElementById('complete-msg').innerText = `총 ${learnedCount}개 단어 완주 성공! 🦅`;
+            
+            const banner = document.getElementById('reward-banner');
+            const detail = document.getElementById('reward-detail');
+            const btnEnhance = document.getElementById('btn-complete-enhance');
+            
+            let gotTicket = false;
+            let gotShield = false;
+
+            if (learnedCount >= 50) {
+                userEnhance.tickets += 1;
+                userEnhance.shields += 1;
+                gotTicket = true;
+                gotShield = true;
+                detail.innerHTML = `🌟 대단합니다! (50단어 이상 돌파)<br>⚡ <strong>강화권 +1장</strong> & 🛡️ <strong>강화보호권 +1장</strong> 획득!`;
+                banner.style.display = 'block';
+                btnEnhance.style.display = 'block';
+            } else if (learnedCount >= 25) {
+                userEnhance.tickets += 1;
+                gotTicket = true;
+                detail.innerHTML = `🔥 25단어 이상 완주 성공 보상!<br>⚡ <strong>강화권 +1장</strong> 획득!`;
+                banner.style.display = 'block';
+                btnEnhance.style.display = 'block';
+            } else {
+                banner.style.display = 'none';
+                btnEnhance.style.display = 'none';
+            }
+
+            if (gotTicket) {
+                saveAppData();
+            }
+
+            document.getElementById('complete-modal').classList.add('visible');
+        }
+
         function openPauseModal() { clearAutoPlay(); saveSessionState(); document.getElementById('pause-modal').classList.add('visible'); }
         function closePauseModal() { document.getElementById('pause-modal').classList.remove('visible'); if(isAutoMode) updateCard(); }
         function markOk() { clearAutoPlay(); if (activeQueue.length === 0) return; activeQueue.shift(); saveSessionState(); updateProgress(); animateCardChange('ok'); }
@@ -1165,6 +1405,151 @@
 
         function goBackAndClearSession() { clearAutoPlay(); document.getElementById('complete-modal').classList.remove('visible'); clearSessionState(); if (isGlobalMode) { renderHomeUI(); showPage('home-page'); } else showPage('lobby-page'); }
         function goBackToLobby() { clearAutoPlay(); document.getElementById('pause-modal').classList.remove('visible'); if (isGlobalMode) { renderHomeUI(); showPage('home-page'); } else { updateLobbyUI(); showPage('lobby-page'); } }
+
+        function openEnhanceModalFromComplete() {
+            document.getElementById('complete-modal').classList.remove('visible');
+            clearSessionState();
+            if (isGlobalMode) renderHomeUI(); else updateLobbyUI();
+            openEnhanceModal();
+        }
+
+        // =========================================================
+        // 🔥 유니폼 뒷면(icon.png) 강화소 UI & 로직
+        // =========================================================
+        let isEnhancing = false;
+
+        function openEnhanceModal() {
+            updateEnhanceUI();
+            document.getElementById('enhance-result-msg').innerText = '';
+            document.getElementById('enhance-modal').classList.add('visible');
+        }
+
+        function closeEnhanceModal() {
+            if (isEnhancing) return;
+            document.getElementById('enhance-modal').classList.remove('visible');
+            if (currentDeckIndex === -1) {
+                renderHomeUI();
+                showPage('home-page');
+            } else {
+                updateLobbyUI();
+                showPage('lobby-page');
+            }
+        }
+
+        function updateEnhanceUI() {
+            const currentLv = userEnhance.level;
+            const currentConfig = ENHANCE_CONFIG[currentLv];
+            
+            // 배지 & 레벨
+            document.getElementById('enhanceLevelBadge').innerText = `+${currentLv}강`;
+            document.getElementById('enhanceTitle').innerText = `[+${currentLv}] ${currentConfig.name}`;
+            document.getElementById('enhanceDesc').innerText = currentConfig.desc;
+            
+            // 재화
+            document.getElementById('inv-tickets').innerText = `${userEnhance.tickets}장`;
+            document.getElementById('inv-shields').innerText = `${userEnhance.shields}장`;
+            
+            // 유니폼 이미지 글로우 클래스 교체
+            const img = document.getElementById('enhanceJerseyImg');
+            img.className = `jersey-img glow-tier-${currentConfig.titleTier}`;
+
+            // 확률 정보
+            const nextLv = currentLv + 1;
+            const btn = document.getElementById('btn-do-enhance');
+            const shieldCb = document.getElementById('use-shield-cb');
+
+            if (currentLv >= 10) {
+                document.getElementById('enhance-prob-rate').innerText = '최대 달성 (MAX)';
+                document.getElementById('enhance-penalty-desc').innerText = '영구결번 완성!';
+                btn.disabled = true;
+                btn.innerText = '👑 최고 등급 달성 (+10강 MAX)';
+                btn.style.opacity = '0.6';
+                shieldCb.disabled = true;
+            } else {
+                const nextProb = (currentConfig.rate * 100).toFixed(0);
+                document.getElementById('enhance-prob-rate').innerText = `${nextProb}%`;
+                
+                if (currentConfig.dropRate > 0) {
+                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#DC2626;">실패 시 -1강 하락 (${(currentConfig.dropRate*100).toFixed(0)}%)</span>`;
+                } else {
+                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#10B981;">하락 없음 (안전 구간)</span>`;
+                }
+
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.innerText = `🔥 유니폼 강화하기 (⚡ 1장 소모)`;
+                shieldCb.disabled = (userEnhance.shields <= 0 || currentConfig.dropRate === 0);
+                if (userEnhance.shields <= 0 || currentConfig.dropRate === 0) shieldCb.checked = false;
+            }
+            updateHeaderEnhanceBadge();
+        }
+
+        function doEnhance() {
+            if (isEnhancing) return;
+            if (userEnhance.level >= 10) { alert("이미 최고 강화 등급(+10강 영구결번)입니다!"); return; }
+            if (userEnhance.tickets <= 0) {
+                alert("강화권이 부족합니다!\n25단어 이상 학습을 완료하면 강화권을 획득할 수 있습니다. 🦅");
+                return;
+            }
+
+            const currentLv = userEnhance.level;
+            const config = ENHANCE_CONFIG[currentLv];
+            const useShield = document.getElementById('use-shield-cb').checked;
+
+            if (useShield && userEnhance.shields <= 0) {
+                alert("보유한 강화보호권이 없습니다.");
+                return;
+            }
+
+            // 재화 차감
+            isEnhancing = true;
+            userEnhance.tickets -= 1;
+            if (useShield) userEnhance.shields -= 1;
+            
+            const btn = document.getElementById('btn-do-enhance');
+            const stageBox = document.getElementById('jerseyStageBox');
+            const resultMsg = document.getElementById('enhance-result-msg');
+            
+            btn.disabled = true;
+            resultMsg.innerText = "🔥 유니폼 강화 시도 중...";
+            resultMsg.style.color = "var(--primary)";
+            stageBox.classList.add('shake-animation');
+
+            setTimeout(() => {
+                stageBox.classList.remove('shake-animation');
+                
+                const rand = Math.random();
+                if (rand < config.rate) {
+                    // 🎉 강화 성공!
+                    userEnhance.level += 1;
+                    resultMsg.innerText = `🎉 강화 대성공! [+${userEnhance.level}강 달성!] 🦅`;
+                    resultMsg.style.color = "#10B981";
+                } else {
+                    // 💥 강화 실패
+                    if (config.dropRate > 0 && !useShield) {
+                        const dropRand = Math.random();
+                        if (dropRand < (config.dropRate / (1 - config.rate))) {
+                            userEnhance.level = Math.max(0, userEnhance.level - 1);
+                            resultMsg.innerText = `💥 강화 실패... 등급이 하락했습니다. (-1강)`;
+                            resultMsg.style.color = "#DC2626";
+                        } else {
+                            resultMsg.innerText = `⚠️ 강화 실패! 다행히 등급은 유지되었습니다.`;
+                            resultMsg.style.color = "#D97706";
+                        }
+                    } else if (useShield) {
+                        resultMsg.innerText = `🛡️ 강화 실패했으나 [보호권]으로 하락 방지!`;
+                        resultMsg.style.color = "#0284C7";
+                    } else {
+                        resultMsg.innerText = `⚠️ 강화 실패! (안전 구간으로 등급 유지)`;
+                        resultMsg.style.color = "#D97706";
+                    }
+                }
+
+                saveAppData();
+                updateEnhanceUI();
+                isEnhancing = false;
+            }, 750);
+        }
 
         // --- 스와이프 애니메이션 ---
         const cw = document.getElementById('cardWrapper'); const ci = document.getElementById('cardInner'); const bgOverlay = document.getElementById('bg-overlay'); const bgIcon = document.getElementById('bg-icon');
