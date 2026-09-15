@@ -1,4 +1,4 @@
-const CACHE_NAME = 'toeic-master-cache-v4';
+const CACHE_NAME = 'toeic-master-cache-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -31,6 +31,7 @@ self.addEventListener('activate', event => {
 // 네트워크 요청 가로채기 (Firebase 인증/DB API는 캐시 제외)
 self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) return;
+
   if (
     event.request.url.includes('googleapis.com') ||
     event.request.url.includes('identitytoolkit') ||
@@ -38,9 +39,29 @@ self.addEventListener('fetch', event => {
   ) {
     return;
   }
+
+  // HTML 페이지는 항상 최신 버전을 먼저 확인
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const responseClone = response.clone();
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put('./index.html', responseClone);
+          });
+
+          return response;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // 나머지 파일은 기존 캐시 우선 방식
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
-      return cachedResponse || fetch(event.request).catch(() => caches.match('./index.html'));
+      return cachedResponse || fetch(event.request);
     })
   );
 });
