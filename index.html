@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -194,6 +193,7 @@
         }
         .tool-btn:active { transform: scale(0.98); }
         .tool-btn.highlight { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+        .tool-btn.danger-soft { background: #FEF2F2; border-color: #FECACA; color: #DC2626; }
         .tool-btn.full-width { grid-column: 1 / -1; font-size: 1.1rem; padding: 18px 10px; }
         .tool-btn.continue { background: #10B981; color: white; border: none; display: none; } 
 
@@ -393,9 +393,7 @@
         body.dark-mode .inventory-panel { background: #0A1124; }
         .inv-item { font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-        /* =========================================================
-           💥 화면 팝업 배너 (SUCCESS / FAIL / CRITICAL)
-        ========================================================= */
+        /* 💥 화면 팝업 배너 (SUCCESS / FAIL / CRITICAL) */
         .enhance-splash-banner {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0);
@@ -536,6 +534,8 @@
                 <button class="tool-btn" onclick="document.getElementById('import-deck-upload').click()">📂 백업 불러오기</button>
                 <button class="tool-btn highlight" onclick="exportAllDecks()" style="background:#FFFBEB; border-color:#FDE68A; color:#D97706;">📦 통합 백업 다운</button>
                 <input type="file" id="import-deck-upload" accept=".json" style="display: none;" onchange="importDeck(event)">
+                
+                <button class="tool-btn danger-soft" onclick="resetAllAccountData()">⚠️ 계정 완전 초기화</button>
             </div>
 
             <!-- 유니폼 강화소 전용 배너 -->
@@ -544,7 +544,7 @@
                     <img src="icon.png" style="width:40px; height:40px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.2); padding:2px;">
                     <div>
                         <div style="font-weight:900; font-size:1rem;">⚾ 한화 이글스 유니폼 강화소 (0~99강)</div>
-                        <div style="font-size:0.8rem; opacity:0.9;">25단어 시 ⚡강화권 5장 / 50단어 시 🛡️보호권 2장 지급!</div>
+                        <div style="font-size:0.8rem; opacity:0.9;">25단어 완주 시 ⚡강화권 5장 / 50단어 시 🛡️보호권 2장!</div>
                     </div>
                 </div>
                 <div style="font-weight:900; font-size:1.1rem;">입장 →</div>
@@ -702,7 +702,7 @@
         </div>
     </div>
 
-    <!-- 4. 🔥 유니폼 강화소 독립 전용 페이지 (iPad/가로 최적화 2열 + 배너 애니메이션) -->
+    <!-- 4. 🔥 유니폼 강화소 독립 전용 페이지 -->
     <div id="enhance-page" class="page">
         <div class="header">
             <button onclick="leaveEnhancePage()" style="background:none; border:none; font-size:1.2rem; color:var(--text-sub); padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
@@ -716,7 +716,7 @@
         <div class="content-area" style="max-width: 960px;">
             <div class="enhance-layout-container">
                 
-                <!-- 👈 왼쪽 컬럼: 유니폼 쇼케이스 & 결과 팝업 배너 오버레이 -->
+                <!-- 👈 왼쪽 컬럼: 유니폼 쇼케이스 & 결과 팝업 배너 -->
                 <div style="text-align:center; position:relative;">
                     <div class="jersey-stage-box" id="jerseyStageBox">
                         <img src="icon.png" id="enhanceJerseyImg" class="jersey-img glow-tier-0" alt="한화 유니폼">
@@ -845,6 +845,7 @@
         };
 
         let enhancePreviousPage = 'home-page';
+        let isDataLoaded = false; // 🔒 데이터 동기화 완료 여부 플래그
 
         function applySettings() {
             if(isDarkMode) {
@@ -970,6 +971,7 @@
                         userEnhance = Object.assign({ level: 0, tickets: 0, shields: 0, bonusProb: 0 }, JSON.parse(localEnhance)); 
                     } catch(e) {}
                 }
+                isDataLoaded = true;
                 renderHomeUI();
                 applySettings();
                 showPage('home-page');
@@ -980,12 +982,13 @@
                 appData = [];
                 userEnhance = { level: 0, tickets: 0, shields: 0, bonusProb: 0 };
                 currentDeckIndex = -1;
+                isDataLoaded = false;
                 hideLoading();
                 showPage('login-page');
             }
         });
 
-        // --- 💾 데이터 로드 & 저장 ---
+        // --- 💾 데이터 로드 & 완벽 저장 ---
         async function loadDataFromFirebase() {
             if (!currentUser) return;
             if (appData.length === 0) showLoading("단어장을 불러오는 중...");
@@ -1008,6 +1011,7 @@
                 } else {
                     appData = [];
                 }
+                isDataLoaded = true;
                 renderHomeUI();
                 applySettings();
             } catch (error) {
@@ -1018,7 +1022,7 @@
         }
 
         function saveAppData() { 
-            if (!currentUser) return;
+            if (!currentUser || !isDataLoaded) return;
             localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
             localStorage.setItem('toeicEnhance_' + currentUser.uid, JSON.stringify(userEnhance));
             
@@ -1026,10 +1030,49 @@
                 appData: appData,
                 userEnhance: userEnhance,
                 lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-            }).catch(error => {
+            }, { merge: true }).catch(error => {
                 console.error("클라우드 저장 실패:", error);
             });
             updateHeaderEnhanceBadge();
+        }
+
+        // ⚠️ 계정 완전 초기화 (단어장 + 강화 + 레벨 전체 영구 리셋)
+        async function resetAllAccountData() {
+            if (!currentUser) return;
+            
+            const firstConfirm = confirm("⚠️ 경고: 모든 단어장, 즐겨찾기, 유니폼 강화 레벨(0강 리셋), 보유 강화권/보호권이 전부 영구 삭제됩니다.\n\n정말로 계정을 초기화하시겠습니까?");
+            if (!firstConfirm) return;
+
+            const secondConfirm = prompt("계정을 완전히 초기화하려면 아래 입력창에 '초기화'를 정확히 입력하세요:");
+            if (secondConfirm !== "초기화") {
+                alert("초기화가 취소되었습니다.");
+                return;
+            }
+
+            showLoading("계정 데이터를 완전히 초기화하고 있습니다...");
+            try {
+                appData = [];
+                userEnhance = { level: 0, tickets: 0, shields: 0, bonusProb: 0 };
+                
+                localStorage.removeItem('toeicAppData_' + currentUser.uid);
+                localStorage.removeItem('toeicEnhance_' + currentUser.uid);
+                localStorage.removeItem('jpMasterGlobalSession');
+
+                await db.collection("users").doc(currentUser.uid).set({
+                    appData: [],
+                    userEnhance: { level: 0, tickets: 0, shields: 0, bonusProb: 0 },
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                renderHomeUI();
+                applySettings();
+                hideLoading();
+                alert("계정이 성공적으로 완전 초기화되었습니다!");
+            } catch (err) {
+                hideLoading();
+                console.error("초기화 실패:", err);
+                alert("초기화 중 오류가 발생했습니다: " + err.message);
+            }
         }
 
         function getDeck() { return appData[currentDeckIndex]; }
@@ -1669,9 +1712,7 @@
             }
         }
 
-        // =========================================================
         // 💥 화면 배너 연출 제어 함수 (SUCCESS / FAIL / CRITICAL)
-        // =========================================================
         let bannerTimeout = null;
 
         function showSplashBanner(type, mainTitle, subTitle) {
@@ -1681,8 +1722,8 @@
             if (!banner || !mainTitleEl || !subTitleEl) return;
 
             clearTimeout(bannerTimeout);
-            banner.className = 'enhance-splash-banner'; // 초기화
-            void banner.offsetWidth; // 리플로우 강제 트리거
+            banner.className = 'enhance-splash-banner';
+            void banner.offsetWidth;
 
             mainTitleEl.innerText = mainTitle;
             subTitleEl.innerText = subTitle;
@@ -1694,7 +1735,7 @@
         }
 
         // =========================================================
-        // 🔥 0~99강 유니폼 강화소 11단계 비주얼 & 로직
+        // 🔥 0~99강 유니폼 강화소 11단계 비주얼 & 긴장감 확률 로직
         // =========================================================
         let isEnhancing = false;
 
@@ -1734,7 +1775,7 @@
             } else if (level >= 30) {
                 tierName = "1군 엔트리 유니폼"; visualTier = 3;
                 baseRate = 0.55 - ((level - 30) * 0.007);
-                desc = "오렌지 림라이트 가동! (여기서부터 실패 시 -1강 하락)"; canDrop = true;
+                desc = "오렌지 림라이트 가동! (여기서부터 실패 시 1강 하락 위험)"; canDrop = true;
             } else if (level >= 20) {
                 tierName = "유망주 유니폼"; visualTier = 2;
                 baseRate = 0.70 - ((level - 20) * 0.01);
@@ -1807,7 +1848,7 @@
                 document.getElementById('enhance-final-prob').innerText = `${finalProb}%`;
                 
                 if (info.canDrop) {
-                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#DC2626;">실패 시 1레벨 하락 (-1강)</span>`;
+                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#DC2626;">실패 시 1레벨 하락 (-1강 / 하락률 90%)</span>`;
                 } else {
                     document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#10B981;">하락 없음 (안전 구간)</span>`;
                 }
@@ -1842,6 +1883,10 @@
         }
 
         function doEnhance() {
+            if (!isDataLoaded) {
+                alert("데이터 동기화 중입니다. 잠시 후 다시 시도해주세요.");
+                return;
+            }
             if (isEnhancing) return;
             if (userEnhance.level >= 99) { alert("이미 최고 등급(+99강 영구결번)입니다!"); return; }
             if (userEnhance.tickets <= 0) {
@@ -1886,7 +1931,7 @@
                     const gainLevel = isCritical ? 2 : 1;
                     
                     userEnhance.level = Math.min(99, userEnhance.level + gainLevel);
-                    userEnhance.bonusProb = 0; // 보너스 확률 리셋
+                    userEnhance.bonusProb = 0;
 
                     if (isCritical) {
                         resultMsg.innerHTML = `💥 <strong>대박! 5% 크리티컬 잭팟!</strong> [+${userEnhance.level}강 (+2) 대성공!] 👑`;
@@ -1903,11 +1948,14 @@
                     img.classList.add('success-flash-anim');
                     setTimeout(() => img.classList.remove('success-flash-anim'), 650);
                 } else {
-                    // 💥 강화 실패 (파괴/폭발 연출 & FAIL 팝업)
+                    // 💥 강화 실패 (하락률 90%로 대폭 상향 / 유지 10%)
                     triggerExplosion();
                     userEnhance.bonusProb = Math.min(10, (userEnhance.bonusProb || 0) + 1);
 
-                    if (info.canDrop && !useShield) {
+                    const dropRoll = Math.random();
+                    const isDropped = info.canDrop && !useShield && (dropRoll < 0.90);
+
+                    if (isDropped) {
                         userEnhance.level = Math.max(0, userEnhance.level - 1);
                         resultMsg.innerText = `💥 강화 실패! (-1강 하락 / 보정치 +1% 누적)`;
                         resultMsg.style.color = "#DC2626";
@@ -1917,12 +1965,13 @@
                         resultMsg.style.color = "#0284C7";
                         showSplashBanner('fail', 'FAILED...', `🛡️ LEVEL PRESERVED (+${userEnhance.level}강)`);
                     } else {
-                        resultMsg.innerText = `⚠️ 강화 실패! (안전 구간 유지 / 보정치 +1% 누적)`;
+                        resultMsg.innerText = `⚠️ 강화 실패! (등급 유지 / 보정치 +1% 누적)`;
                         resultMsg.style.color = "#D97706";
                         showSplashBanner('fail', 'FAILED...', `LEVEL PRESERVED (+${userEnhance.level}강)`);
                     }
                 }
 
+                // 💾 즉시 완벽 저장
                 saveAppData();
                 updateEnhancePageUI();
                 isEnhancing = false;
