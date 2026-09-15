@@ -79,6 +79,7 @@
         body.dark-mode .modal-action-btn.secondary { background: #334155; color: #F8FAFC; }
         body.dark-mode .modal-action-btn[style*="background:#E0F2FE"] { background: #0C4A6E !important; border-color: #0284C7 !important; color: #38BDF8 !important; }
         body.dark-mode .hint-pill { background: #1E293B; color: #94A3B8; }
+        body.dark-mode .speed-btn { background: #312E81 !important; color: #A5B4FC !important; border-color: #4338CA !important; }
 
         /* --- 기본 CSS --- */
         #intro-screen {
@@ -107,6 +108,15 @@
             max-width: 900px; margin: 0 auto; width: 100%; 
             touch-action: pan-y;
         }
+
+        /* 속도 조절 버튼 스타일 */
+        .speed-btn {
+            background: #EEF2FF; color: #4F46E5;
+            border: 1px solid #C7D2FE; border-radius: 8px;
+            padding: 4px 7px; font-weight: 800; font-size: 0.78rem;
+            cursor: pointer; transition: background-color 0.2s, transform 0.1s;
+        }
+        .speed-btn:active { transform: scale(0.95); }
 
         /* 로그인 전용 카드 */
         .auth-container {
@@ -242,11 +252,12 @@
         <div style="font-size: 2rem; font-weight: 900;">TOEIC MASTER</div>
     </div>
 
-    <!-- 0. 로그인 전용 화면 (미로그인 시 잠금) -->
+    <!-- 0. 로그인 전용 화면 -->
     <div id="login-page" class="page active">
         <div class="header">
             <span style="color:var(--primary)">TOEIC MASTER</span>
             <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
                 <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
             </div>
@@ -273,6 +284,7 @@
                 <button id="auth-btn" onclick="toggleAuth()" style="background:#DC2626; color:white; border:none; border-radius:8px; padding:6px 10px; font-weight:bold; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
                     로그아웃
                 </button>
+                <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
                 <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
                 <button onclick="toggleFullScreen()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="전체화면">⛶</button>
@@ -337,8 +349,9 @@
     <div id="lobby-page" class="page">
         <div class="header">
             <button onclick="goHome()" style="background:none; border:none; font-size:1.2rem; color:#64748B; padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
-            <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:40%;">단어장</span>
+            <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:35%;">단어장</span>
             <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
                 <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
                 <button onclick="toggleFullScreen()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="전체화면">⛶</button>
@@ -393,9 +406,10 @@
     <!-- 3. 게임(학습) -->
     <div id="game-page" class="page">
         <div class="header">
-            <button onclick="openPauseModal()" style="background:none; border:none; font-size:1.4rem; color:#64748B; padding:0 10px;">⏸</button>
-            <div id="stage-info" style="font-size:1rem;">단어 학습</div>
+            <button onclick="openPauseModal()" style="background:none; border:none; font-size:1.4rem; color:#64748B; padding:0 10px; cursor:pointer;">⏸</button>
+            <div id="stage-info" style="font-size:0.95rem; font-weight:800;">단어 학습</div>
             <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
                 <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
                 <button onclick="toggleFullScreen()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="전체화면">⛶</button>
@@ -465,9 +479,11 @@
             });
         }
 
-        // --- ⚙️ 설정 & 테마 (다크모드 & 발음) ---
+        // --- ⚙️ 설정 & 테마 (다크모드, 발음 & 자동재생 속도) ---
         let currentAccent = localStorage.getItem('jpMasterAccent') || 'en-US';
         let isDarkMode = localStorage.getItem('jpMasterDarkMode') === 'true';
+        let autoPlaySpeed = parseFloat(localStorage.getItem('jpMasterAutoSpeed')) || 1.0;
+        const SPEED_LEVELS = [0.8, 1.0, 1.25, 1.5, 2.0];
 
         function applySettings() {
             if(isDarkMode) {
@@ -478,6 +494,7 @@
                 document.querySelectorAll('.dark-mode-btn').forEach(btn => btn.innerText = '🌙');
             }
             document.querySelectorAll('.accent-btn').forEach(btn => btn.innerText = currentAccent === 'en-US' ? '🇺🇸' : '🇬🇧');
+            document.querySelectorAll('.speed-btn').forEach(btn => btn.innerText = `⚡ ${autoPlaySpeed}x`);
         }
 
         function toggleDarkMode() {
@@ -492,6 +509,18 @@
             currentAccent = currentAccent === 'en-US' ? 'en-GB' : 'en-US';
             document.querySelectorAll('.accent-btn').forEach(btn => btn.innerText = currentAccent === 'en-US' ? '🇺🇸' : '🇬🇧');
             localStorage.setItem('jpMasterAccent', currentAccent);
+        }
+
+        function toggleAutoSpeed() {
+            let idx = SPEED_LEVELS.indexOf(autoPlaySpeed);
+            if (idx === -1) idx = 1;
+            idx = (idx + 1) % SPEED_LEVELS.length;
+            autoPlaySpeed = SPEED_LEVELS[idx];
+            localStorage.setItem('jpMasterAutoSpeed', autoPlaySpeed);
+            applySettings();
+            if (isAutoMode && activeQueue.length > 0) {
+                updateCard();
+            }
         }
 
         // --- 🔥 Firebase 설정 및 로그인 제어 ---
@@ -953,31 +982,42 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(activeQueue[0].jp);
             utterance.lang = currentAccent;
-            utterance.rate = 1.0;
+            utterance.rate = autoPlaySpeed;
             window.speechSynthesis.speak(utterance);
         }
 
         function autoPlaySequence(card) {
             clearAutoPlay();
-            if (!('speechSynthesis' in window)) { setTimeout(() => { markOk(); }, 2000); return; }
+            
+            // 배속에 따른 전환 및 대기 시간 계산
+            const waitBeforeFlip = Math.max(200, Math.round(400 / autoPlaySpeed));
+            const waitAfterFlip = Math.max(400, Math.round(1200 / autoPlaySpeed));
+            const fallbackTimeout = Math.max(1500, Math.round(4000 / autoPlaySpeed));
+
+            if (!('speechSynthesis' in window)) { 
+                setTimeout(() => { markOk(); }, waitAfterFlip + waitBeforeFlip); 
+                return; 
+            }
             
             const utterance = new SpeechSynthesisUtterance(card.jp);
-            utterance.lang = currentAccent; utterance.rate = 1.0;
+            utterance.lang = currentAccent; 
+            utterance.rate = autoPlaySpeed;
             
             const proceedToFlip = () => {
                 clearTimeout(autoPlayFallback);
                 autoPlayTimer1 = setTimeout(() => {
                     isFlipped = true;
                     const ci = document.getElementById('cardInner');
-                    ci.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                    ci.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
                     ci.classList.add('flipped');
                     
-                    autoPlayTimer2 = setTimeout(() => { markOk(); }, 1200);
-                }, 400);
+                    autoPlayTimer2 = setTimeout(() => { markOk(); }, waitAfterFlip);
+                }, waitBeforeFlip);
             };
 
-            utterance.onend = proceedToFlip; utterance.onerror = proceedToFlip;
-            autoPlayFallback = setTimeout(proceedToFlip, 4000); 
+            utterance.onend = proceedToFlip; 
+            utterance.onerror = proceedToFlip;
+            autoPlayFallback = setTimeout(proceedToFlip, fallbackTimeout); 
 
             window.speechSynthesis.speak(utterance);
         }
