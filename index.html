@@ -55,7 +55,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- 🦅 한화 다크 모드 (딥 네이비 + 한화 오렌지 + 화이트) --- */
+        /* --- 🦅 한화 다크 모드 --- */
         body.dark-mode {
             --bg: #0A1124;
             --card-bg: #131F3B;
@@ -102,7 +102,6 @@
         }
         #intro-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* 🔥 로딩 인디케이터 오버레이 */
         #loading-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 17, 36, 0.7); backdrop-filter: blur(4px); z-index: 9999;
@@ -283,64 +282,124 @@
         .nav-btn.no:active { background: #EF4444; color: white; }
 
         /* =========================================================
-           🔥 유니폼 뒷면(icon.png) 강화 시스템 전용 스타일
+           🔥 유니폼 뒷면(icon.png) 강화 시스템 전용 11단계 비주얼 스타일
         ========================================================= */
         .jersey-stage-box {
-            position: relative; width: 170px; height: 170px; margin: 15px auto;
+            position: relative; width: 230px; height: 230px; margin: 15px auto;
             display: flex; justify-content: center; align-items: center;
-            border-radius: 24px; background: rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
+            border-radius: 28px; background: rgba(0,0,0,0.03);
+            transition: all 0.3s ease; overflow: visible;
         }
         body.dark-mode .jersey-stage-box { background: rgba(255,255,255,0.04); }
 
         .jersey-img {
-            width: 130px; height: 130px; object-fit: contain;
-            transition: all 0.4s ease; border-radius: 12px;
+            width: 165px; height: 165px; object-fit: contain;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 12px;
         }
 
-        /* 0~2강: 루키 */
-        .glow-tier-0 { filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15)); }
-        /* 3~4강: 1군 엔트리 (오렌지 림라이트) */
-        .glow-tier-1 { filter: drop-shadow(0 0 12px #FC4E00); transform: scale(1.03); }
-        /* 5~6강: 주전 라인업 (실버 + 펄스) */
-        .glow-tier-2 { filter: drop-shadow(0 0 16px #38BDF8) contrast(1.1); transform: scale(1.06); animation: pulseGlow 2s infinite alternate; }
-        /* 7~8강: 올스타 (황금빛 골드 오라) */
-        .glow-tier-3 { filter: drop-shadow(0 0 22px #F59E0B) drop-shadow(0 0 8px #FDE047) brightness(1.08); transform: scale(1.09); animation: goldGlow 1.8s infinite alternate; }
-        /* 9강: 시즌 MVP (타오르는 불꽃 오라) */
-        .glow-tier-4 { filter: drop-shadow(0 0 25px #EF4444) drop-shadow(0 0 14px #FC4E00) brightness(1.12); transform: scale(1.12); animation: fireGlow 1.2s infinite alternate; }
-        /* 10강 (MAX): 영구결번 레전드 (무지개 다이아몬드 오라) */
-        .glow-tier-5 { filter: drop-shadow(0 0 28px #A855F7) drop-shadow(0 0 16px #38BDF8) brightness(1.18); transform: scale(1.15); animation: rainbowGlow 2s infinite linear; }
+        /* 0~9강: 육성선수 */
+        .glow-tier-0 { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15)); }
+        
+        /* 10~19강: 루키 (소프트 화이트 글로우) */
+        .glow-tier-1 { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 4px #FC4E00); transform: scale(1.02); }
 
-        @keyframes pulseGlow { 0% { filter: drop-shadow(0 0 10px #38BDF8); } 100% { filter: drop-shadow(0 0 20px #0284C7); } }
-        @keyframes goldGlow { 0% { filter: drop-shadow(0 0 14px #F59E0B); } 100% { filter: drop-shadow(0 0 26px #FBBF24); } }
-        @keyframes fireGlow { 0% { filter: drop-shadow(0 0 16px #FC4E00); transform: scale(1.1); } 100% { filter: drop-shadow(0 0 30px #DC2626); transform: scale(1.14); } }
-        @keyframes rainbowGlow {
-            0% { filter: drop-shadow(0 0 25px #EC4899) drop-shadow(0 0 12px #3B82F6) brightness(1.2); }
-            50% { filter: drop-shadow(0 0 30px #F59E0B) drop-shadow(0 0 14px #10B981) brightness(1.25); }
-            100% { filter: drop-shadow(0 0 25px #EC4899) drop-shadow(0 0 12px #3B82F6) brightness(1.2); }
+        /* 20~29강: 유망주 (스파클 반짝임) */
+        .glow-tier-2 { filter: drop-shadow(0 0 12px #FED7AA) drop-shadow(0 0 6px #FB923C); animation: sparkleAnim 2s infinite ease-in-out; }
+        @keyframes sparkleAnim {
+            0%, 100% { filter: drop-shadow(0 0 10px #FED7AA) drop-shadow(0 0 4px #FB923C); transform: scale(1.03); }
+            50% { filter: drop-shadow(0 0 18px #FDBA74) drop-shadow(0 0 8px #EA580C) brightness(1.08); transform: scale(1.05); }
+        }
+
+        /* 30~39강: 1군 엔트리 (오렌지 림라이트) */
+        .glow-tier-3 { filter: drop-shadow(0 0 16px #FC4E00); animation: pulseOrange 1.8s infinite alternate; }
+        @keyframes pulseOrange {
+            0% { filter: drop-shadow(0 0 12px #FC4E00); transform: scale(1.04); }
+            100% { filter: drop-shadow(0 0 22px #EA580C) drop-shadow(0 0 6px #FFEDD5); transform: scale(1.07); }
+        }
+
+        /* 40~49강: 선발 로테이션 (네온 오렌지 에너지 파동) */
+        .glow-tier-4 { filter: drop-shadow(0 0 20px #FC4E00) drop-shadow(0 0 8px #F97316) contrast(1.08); animation: neonWave 1.6s infinite alternate; }
+        @keyframes neonWave {
+            0% { filter: drop-shadow(0 0 15px #FC4E00); transform: scale(1.05); }
+            100% { filter: drop-shadow(0 0 26px #FF3B00) drop-shadow(0 0 12px #FDE047); transform: scale(1.08); }
+        }
+
+        /* 50~59강: 주전 야수 (메탈릭 실버 & 펄스 스카이블루) */
+        .glow-tier-5 { filter: drop-shadow(0 0 20px #38BDF8) contrast(1.15); animation: pulseSky 2s infinite alternate; }
+        @keyframes pulseSky {
+            0% { filter: drop-shadow(0 0 14px #38BDF8); transform: scale(1.06); }
+            100% { filter: drop-shadow(0 0 26px #0284C7) drop-shadow(0 0 8px #BAE6FD); transform: scale(1.09); }
+        }
+
+        /* 60~69강: 클러치 히터 (번개 스파크 라이트닝) */
+        .glow-tier-6 { filter: drop-shadow(0 0 22px #06B6D4) drop-shadow(0 0 10px #22D3EE); animation: lightningAnim 1.2s infinite; }
+        @keyframes lightningAnim {
+            0%, 100% { filter: drop-shadow(0 0 18px #06B6D4); transform: scale(1.07); }
+            45% { filter: drop-shadow(0 0 28px #67E8F9) brightness(1.2); transform: scale(1.10) rotate(-1deg); }
+            55% { filter: drop-shadow(0 0 32px #A5F3FC) brightness(1.25); transform: scale(1.10) rotate(1deg); }
+        }
+
+        /* 70~79강: KBO 올스타 (황금빛 골드 오라) */
+        .glow-tier-7 { filter: drop-shadow(0 0 25px #F59E0B) drop-shadow(0 0 12px #FDE047) brightness(1.1); animation: goldGlowAnim 1.7s infinite alternate; }
+        @keyframes goldGlowAnim {
+            0% { filter: drop-shadow(0 0 18px #F59E0B); transform: scale(1.08); }
+            100% { filter: drop-shadow(0 0 32px #FBBF24) drop-shadow(0 0 14px #FEF08A); transform: scale(1.12); }
+        }
+
+        /* 80~89강: 골든글러브 (다이아몬드 & 골드 림라이트) */
+        .glow-tier-8 { filter: drop-shadow(0 0 28px #F59E0B) drop-shadow(0 0 15px #E0E7FF) brightness(1.15); animation: diamondGold 1.5s infinite alternate; }
+        @keyframes diamondGold {
+            0% { filter: drop-shadow(0 0 22px #F59E0B) drop-shadow(0 0 10px #E0E7FF); transform: scale(1.10); }
+            100% { filter: drop-shadow(0 0 36px #FDE047) drop-shadow(0 0 18px #C7D2FE) brightness(1.22); transform: scale(1.14); }
+        }
+
+        /* 90~98강: 시즌 MVP (타오르는 이글스 파이어 오라) */
+        .glow-tier-9 { filter: drop-shadow(0 0 30px #EF4444) drop-shadow(0 0 18px #FC4E00) brightness(1.18); animation: eagleFire 1.1s infinite alternate; }
+        @keyframes eagleFire {
+            0% { filter: drop-shadow(0 0 20px #FC4E00) drop-shadow(0 0 10px #EF4444); transform: scale(1.12); }
+            100% { filter: drop-shadow(0 0 40px #DC2626) drop-shadow(0 0 22px #F97316) brightness(1.25); transform: scale(1.16); }
+        }
+
+        /* 99강(MAX): 🦅 이글스 영구결번 레전드 (무지개 오로라 폭풍) */
+        .glow-tier-10 { filter: drop-shadow(0 0 35px #EC4899) drop-shadow(0 0 20px #3B82F6) brightness(1.25); animation: auroraRainbow 2.2s infinite linear; }
+        @keyframes auroraRainbow {
+            0% { filter: drop-shadow(0 0 30px #EC4899) drop-shadow(0 0 18px #3B82F6) brightness(1.2); transform: scale(1.15); }
+            33% { filter: drop-shadow(0 0 38px #F59E0B) drop-shadow(0 0 20px #10B981) brightness(1.28); transform: scale(1.18); }
+            66% { filter: drop-shadow(0 0 38px #8B5CF6) drop-shadow(0 0 20px #06B6D4) brightness(1.28); transform: scale(1.18); }
+            100% { filter: drop-shadow(0 0 30px #EC4899) drop-shadow(0 0 18px #3B82F6) brightness(1.2); transform: scale(1.15); }
         }
 
         .level-badge {
-            position: absolute; bottom: 8px; right: 12px;
+            position: absolute; bottom: 8px; right: 10px;
             background: linear-gradient(135deg, #FC4E00, #BA3800); color: white;
-            padding: 3px 10px; border-radius: 20px; font-weight: 900; font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white;
+            padding: 4px 12px; border-radius: 20px; font-weight: 900; font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid white;
+            z-index: 5;
         }
 
-        .shake-animation { animation: upgradeShake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+        /* 스파크 & 실패 흔들림 애니메이션 */
+        .shake-animation { animation: upgradeShake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes upgradeShake {
-            10%, 90% { transform: translate3d(-3px, 0, 0) scale(1.05); }
-            20%, 80% { transform: translate3d(5px, 0, 0) scale(1.05); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0) scale(1.08); }
-            40%, 60% { transform: translate3d(6px, 0, 0) scale(1.08); }
+            10%, 90% { transform: translate3d(-4px, 0, 0) scale(1.04); }
+            20%, 80% { transform: translate3d(6px, 0, 0) scale(1.04); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0) scale(1.07); }
+            40%, 60% { transform: translate3d(8px, 0, 0) scale(1.07); }
+        }
+
+        .success-flash-anim { animation: successPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+        @keyframes successPop {
+            0% { transform: scale(0.85); filter: brightness(2) drop-shadow(0 0 35px #10B981); }
+            50% { transform: scale(1.22); filter: brightness(1.5) drop-shadow(0 0 45px #F59E0B); }
+            100% { transform: scale(1); }
         }
 
         .inventory-panel {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0;
-            background: #F9FAFB; padding: 10px; border-radius: 14px; border: 1px solid var(--border-color);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;
+            background: #F9FAFB; padding: 12px; border-radius: 14px; border: 1px solid var(--border-color);
         }
         body.dark-mode .inventory-panel { background: #0A1124; }
-        .inv-item { font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .inv-item { font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
     </style>
 </head>
 <body>
@@ -386,7 +445,7 @@
         <div class="header">
             <span style="color:var(--primary); font-size:1.1rem;">내 단어장 목록</span>
             <div style="display: flex; align-items: center; gap: 6px;">
-                <button class="enhance-badge-btn" onclick="openEnhanceModal()" title="유니폼 강화소 입장">
+                <button class="enhance-badge-btn" onclick="goToEnhancePage('home-page')" title="유니폼 강화소 입장">
                     <span id="header-jersey-badge">👕 +0강</span>
                     <span id="header-ticket-badge" style="font-size:0.75rem; opacity:0.9;">(⚡0)</span>
                 </button>
@@ -411,16 +470,16 @@
                 <input type="file" id="import-deck-upload" accept=".json" style="display: none;" onchange="importDeck(event)">
             </div>
 
-            <!-- 유니폼 강화소 퀵 배너 -->
-            <div onclick="openEnhanceModal()" style="background:linear-gradient(135deg, #FC4E00 0%, #BA3800 100%); color:white; border-radius:14px; padding:12px 16px; margin-bottom:15px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(252,78,0,0.25);">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <img src="icon.png" style="width:36px; height:36px; object-fit:contain; border-radius:6px; background:rgba(255,255,255,0.2); padding:2px;">
+            <!-- 유니폼 강화소 전용 배너 -->
+            <div onclick="goToEnhancePage('home-page')" style="background:linear-gradient(135deg, #FC4E00 0%, #BA3800 100%); color:white; border-radius:14px; padding:14px 18px; margin-bottom:15px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(252,78,0,0.25);">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <img src="icon.png" style="width:40px; height:40px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.2); padding:2px;">
                     <div>
-                        <div style="font-weight:900; font-size:0.95rem;">⚾ 한화 이글스 유니폼 강화소</div>
-                        <div style="font-size:0.75rem; opacity:0.9;">25단어 완주 시 ⚡강화권 / 50단어 시 🛡️보호권 지급!</div>
+                        <div style="font-weight:900; font-size:1rem;">⚾ 한화 이글스 유니폼 강화소 (0~99강)</div>
+                        <div style="font-size:0.8rem; opacity:0.9;">25단어 완주 시 ⚡강화권 5장 / 50단어 시 🛡️보호권 2장!</div>
                     </div>
                 </div>
-                <div style="font-weight:900; font-size:1.1rem;">🔥 입장 →</div>
+                <div style="font-weight:900; font-size:1.1rem;">입장 →</div>
             </div>
 
             <!-- 글로벌 다중 묶음 학습 UI -->
@@ -472,7 +531,7 @@
             <button onclick="goHome()" style="background:none; border:none; font-size:1.2rem; color:var(--text-sub); padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
             <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:30%;">단어장</span>
             <div style="display: flex; align-items: center; gap: 6px;">
-                <button class="enhance-badge-btn" onclick="openEnhanceModal()" title="유니폼 강화소">
+                <button class="enhance-badge-btn" onclick="goToEnhancePage('lobby-page')" title="유니폼 강화소">
                     <span class="header-jersey-badge-clone">👕 +0강</span>
                 </button>
                 <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
@@ -575,59 +634,78 @@
         </div>
     </div>
 
-    <!-- 🔥 유니폼 강화소 모달 -->
-    <div id="enhance-modal" class="overlay-modal">
-        <div class="modal-card" style="max-width: 390px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                <h2 style="margin:0; font-size:1.3rem; color:var(--primary); display:flex; align-items:center; gap:6px;">
-                    <span>⚾</span> 이글스 유니폼 강화소
-                </h2>
-                <button onclick="closeEnhanceModal()" style="background:none; border:none; font-size:1.5rem; color:var(--text-sub); cursor:pointer; padding:0 5px;">✕</button>
+    <!-- 4. 🔥 유니폼 강화소 전용 독립 페이지 -->
+    <div id="enhance-page" class="page">
+        <div class="header">
+            <button onclick="leaveEnhancePage()" style="background:none; border:none; font-size:1.2rem; color:var(--text-sub); padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
+            <span style="color:var(--primary); font-size:1.1rem; font-weight:900;">⚾ 이글스 유니폼 강화소</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="dark-mode-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="다크 모드">🌙</button>
+                <button onclick="toggleFullScreen()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="전체화면">⛶</button>
             </div>
+        </div>
 
+        <div class="content-area" style="max-width: 500px; text-align: center;">
+            
             <!-- 유니폼 전시 스테이지 -->
             <div class="jersey-stage-box" id="jerseyStageBox">
                 <img src="icon.png" id="enhanceJerseyImg" class="jersey-img glow-tier-0" alt="한화 유니폼">
                 <div class="level-badge" id="enhanceLevelBadge">+0강</div>
             </div>
 
-            <h3 id="enhanceTitle" style="margin: 6px 0 2px 0; font-size: 1.15rem; color: var(--text-main);">[+0] 육성선수 유니폼</h3>
-            <p id="enhanceDesc" style="font-size:0.85rem; color:var(--text-sub); margin:0 0 10px 0;">완주 학습을 통해 전설의 영구결번 유니폼을 완성하세요!</p>
+            <h2 id="enhanceTitle" style="margin: 8px 0 2px 0; font-size: 1.4rem; color: var(--text-main);">[+0] 육성선수 유니폼</h2>
+            <p id="enhanceDesc" style="font-size:0.9rem; color:var(--text-sub); margin:0 0 14px 0;">완주 학습을 통해 전설의 +99강 영구결번 유니폼을 완성하세요!</p>
 
             <!-- 보유 재화 인벤토리 -->
             <div class="inventory-panel">
                 <div class="inv-item" style="color:var(--primary);">
                     <span>⚡ 강화권:</span>
-                    <span id="inv-tickets" style="font-size:1rem;">0장</span>
+                    <strong id="inv-tickets" style="font-size:1.15rem;">0장</strong>
                 </div>
                 <div class="inv-item" style="color:#0284C7;">
                     <span>🛡️ 보호권:</span>
-                    <span id="inv-shields" style="font-size:1rem;">0장</span>
+                    <strong id="inv-shields" style="font-size:1.15rem;">0장</strong>
                 </div>
             </div>
 
+            <!-- 티켓 교환소 박스 -->
+            <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="text-align:left;">
+                    <div style="font-weight:800; font-size:0.9rem; color:var(--text-main);">🔄 티켓 교환소</div>
+                    <div style="font-size:0.75rem; color:var(--text-sub);">⚡ 강화권 10장 ➔ 🛡️ 보호권 1장</div>
+                </div>
+                <button onclick="exchangeTickets()" style="background:#0284C7; color:white; border:none; border-radius:8px; padding:8px 12px; font-weight:800; font-size:0.85rem; cursor:pointer;">교환하기</button>
+            </div>
+
             <!-- 강화 정보 & 확률 박스 -->
-            <div style="background:#F9FAFB; padding:10px; border-radius:12px; border:1px solid var(--border-color); margin-bottom:12px; font-size:0.85rem; text-align:left;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="color:var(--text-sub);">성공 확률:</span>
-                    <strong id="enhance-prob-rate" style="color:#10B981;">100%</strong>
+            <div style="background:var(--card-bg); padding:14px; border-radius:14px; border:1px solid var(--border-color); margin-bottom:15px; font-size:0.9rem; text-align:left;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="color:var(--text-sub);">기본 성공 확률:</span>
+                    <span id="enhance-base-prob" style="font-weight:700;">100%</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="color:var(--text-sub);">실패 보정 누적 (+1%/회):</span>
+                    <span id="enhance-bonus-prob" style="color:var(--primary); font-weight:800;">+0% (최대 +10%)</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-top:1px dashed var(--border-color); padding-top:6px;">
+                    <span style="color:var(--text-main); font-weight:800;">최종 성공 확률:</span>
+                    <strong id="enhance-final-prob" style="color:#10B981; font-size:1.1rem;">100%</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                     <span style="color:var(--text-sub);">실패 시 페널티:</span>
-                    <span id="enhance-penalty-desc" style="color:var(--text-sub); font-weight:700;">하락 없음 (안전)</span>
+                    <span id="enhance-penalty-desc" style="font-weight:700;">하락 없음 (안전)</span>
                 </div>
-                <div style="border-top:1px dashed var(--border-color); margin:8px 0; padding-top:6px; display:flex; align-items:center; justify-content:space-between;">
-                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-weight:800; color:#0284C7;">
-                        <input type="checkbox" id="use-shield-cb" style="accent-color:#0284C7; width:16px; height:16px;">
-                        🛡️ 강화보호권 사용 (하락 방지)
+                <div style="border-top:1px dashed var(--border-color); margin-top:8px; padding-top:8px; display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:800; color:#0284C7;">
+                        <input type="checkbox" id="use-shield-cb" style="accent-color:#0284C7; width:18px; height:18px;">
+                        🛡️ 강화보호권 사용 (실패 시 -1강 하락 방지)
                     </label>
                 </div>
             </div>
 
-            <div id="enhance-result-msg" style="min-height:22px; font-size:0.9rem; font-weight:800; margin-bottom:8px;"></div>
+            <div id="enhance-result-msg" style="min-height:24px; font-size:1rem; font-weight:900; margin-bottom:12px;"></div>
 
-            <button id="btn-do-enhance" class="modal-action-btn enhance" onclick="doEnhance()">🔥 유니폼 강화하기 (⚡ 1장 소모)</button>
-            <button class="modal-action-btn secondary" style="margin-bottom:0;" onclick="closeEnhanceModal()">닫기</button>
+            <button id="btn-do-enhance" class="modal-action-btn enhance" style="font-size:1.1rem; padding:16px;" onclick="doEnhance()">🔥 유니폼 강화하기 (⚡ 1장 소모)</button>
         </div>
     </div>
 
@@ -640,11 +718,11 @@
             
             <!-- 보상 획득 배너 -->
             <div id="reward-banner" style="background:#FFF7ED; border:1px solid #FDBA74; border-radius:14px; padding:12px; margin-bottom:18px; text-align:center;">
-                <div style="font-weight:900; color:#EA580C; font-size:0.95rem; margin-bottom:4px;">🎁 학습 완주 특별 보상!</div>
+                <div style="font-weight:900; color:#EA580C; font-size:0.95rem; margin-bottom:4px;">🎁 학습 완주 특별 보상 지급!</div>
                 <div id="reward-detail" style="font-size:0.85rem; color:#9A3412; font-weight:700;"></div>
             </div>
 
-            <button id="btn-complete-enhance" class="modal-action-btn enhance" onclick="openEnhanceModalFromComplete()">🔥 유니폼 강화하러 가기 ⚾</button>
+            <button id="btn-complete-enhance" class="modal-action-btn enhance" onclick="openEnhancePageFromComplete()">🔥 유니폼 강화소 바로가기 ⚾</button>
             <button class="modal-action-btn primary" onclick="goBackAndClearSession()">← 메뉴로 돌아가기</button>
         </div>
     </div>
@@ -668,32 +746,21 @@
             });
         }
 
-        // --- ⚙️ 설정 & 테마 (다크모드, 발음 & 자동재생 속도) ---
+        // --- ⚙️ 설정 & 테마 (8단계 정밀 배속: 0.25x ~ 2.0x) ---
         let currentAccent = localStorage.getItem('jpMasterAccent') || 'en-US';
         let isDarkMode = localStorage.getItem('jpMasterDarkMode') === 'true';
         let autoPlaySpeed = parseFloat(localStorage.getItem('jpMasterAutoSpeed')) || 1.0;
-        const SPEED_LEVELS = [0.8, 1.0, 1.25, 1.5, 2.0];
+        const SPEED_LEVELS = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 
-        // --- ⚾ 유니폼 강화 데이터 관리 ---
+        // --- ⚾ 유니폼 0~99강 강화 데이터 관리 ---
         let userEnhance = {
             level: 0,
             tickets: 0,
-            shields: 0
+            shields: 0,
+            bonusProb: 0 // 실패 누적 보너스 확률 (최대 10%)
         };
 
-        const ENHANCE_CONFIG = [
-            { level: 0,  name: "육성선수 유니폼",        rate: 1.00, dropRate: 0.00, titleTier: 0, desc: "아직 무광의 신인 유니폼입니다." },
-            { level: 1,  name: "루키 유니폼",            rate: 0.90, dropRate: 0.00, titleTier: 0, desc: "프로 무대 첫 발걸음을 뗐습니다." },
-            { level: 2,  name: "유망주 유니폼",          rate: 0.80, dropRate: 0.00, titleTier: 0, desc: "가능성을 인정받기 시작했습니다." },
-            { level: 3,  name: "1군 엔트리 유니폼",      rate: 0.65, dropRate: 0.00, titleTier: 1, desc: "주황색 빛이 은은하게 맴돕니다." },
-            { level: 4,  name: "선발 백업 유니폼",       rate: 0.50, dropRate: 0.15, titleTier: 1, desc: "여기서부터 실패 시 단계가 하락할 수 있습니다!" },
-            { level: 5,  name: "주전 야수 유니폼",       rate: 0.40, dropRate: 0.20, titleTier: 2, desc: "메탈릭 실버 광채가 유니폼을 감쌉니다." },
-            { level: 6,  name: "클러치 히터 유니폼",     rate: 0.30, dropRate: 0.25, titleTier: 2, desc: "결정적인 순간 승리를 이끄는 힘!" },
-            { level: 7,  name: "KBO 올스타 유니폼",     rate: 0.20, dropRate: 0.30, titleTier: 3, desc: "황금빛 오라가 뿜어져 나옵니다." },
-            { level: 8,  name: "골든글러브 유니폼",     rate: 0.12, dropRate: 0.40, titleTier: 3, desc: "리그 정상급 클래스를 증명하는 유니폼!" },
-            { level: 9,  name: "시즌 MVP 유니폼",        rate: 0.05, dropRate: 0.50, titleTier: 4, desc: "타오르는 불꽃 오라! 최고 존엄에 도전하세요." },
-            { level: 10, name: "🦅 이글스 영구결번 유니폼", rate: 0.00, dropRate: 0.00, titleTier: 5, desc: "신화가 된 전설의 무지개 다이아몬드 유니폼!" }
-        ];
+        let enhancePreviousPage = 'home-page';
 
         function applySettings() {
             if(isDarkMode) {
@@ -733,7 +800,7 @@
 
         function toggleAutoSpeed() {
             let idx = SPEED_LEVELS.indexOf(autoPlaySpeed);
-            if (idx === -1) idx = 1;
+            if (idx === -1) idx = 3; // 기본값 1.0x
             idx = (idx + 1) % SPEED_LEVELS.length;
             autoPlaySpeed = SPEED_LEVELS[idx];
             localStorage.setItem('jpMasterAutoSpeed', autoPlaySpeed);
@@ -809,25 +876,27 @@
                 const name = user.displayName ? user.displayName.split(' ')[0] : '회원';
                 if (authBtn) authBtn.innerHTML = `👋 ${name} (로그아웃)`;
                 
-                // ⚡ 1단계: 브라우저 로컬 캐시에서 즉시 렌더링
+                // 로컬 캐시 즉시 렌더링
                 const localCache = localStorage.getItem('toeicAppData_' + currentUser.uid);
                 const localEnhance = localStorage.getItem('toeicEnhance_' + currentUser.uid);
                 if (localCache) {
                     try { appData = JSON.parse(localCache); } catch(e) {}
                 }
                 if (localEnhance) {
-                    try { userEnhance = JSON.parse(localEnhance); } catch(e) {}
+                    try { 
+                        userEnhance = Object.assign({ level: 0, tickets: 0, shields: 0, bonusProb: 0 }, JSON.parse(localEnhance)); 
+                    } catch(e) {}
                 }
                 renderHomeUI();
                 applySettings();
                 showPage('home-page');
                 
-                // ⚡ 2단계: 백그라운드 클라우드 데이터 동기화
+                // 백그라운드 클라우드 데이터 동기화
                 loadDataFromFirebase();
             } else {
                 currentUser = null;
                 appData = [];
-                userEnhance = { level: 0, tickets: 0, shields: 0 };
+                userEnhance = { level: 0, tickets: 0, shields: 0, bonusProb: 0 };
                 currentDeckIndex = -1;
                 hideLoading();
                 showPage('login-page');
@@ -848,7 +917,8 @@
                         userEnhance = {
                             level: data.userEnhance.level || 0,
                             tickets: data.userEnhance.tickets || 0,
-                            shields: data.userEnhance.shields || 0
+                            shields: data.userEnhance.shields || 0,
+                            bonusProb: data.userEnhance.bonusProb || 0
                         };
                     }
                     localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
@@ -1272,9 +1342,9 @@
 
         function autoPlaySequence(card) {
             clearAutoPlay();
-            const waitBeforeFlip = Math.max(180, Math.round(380 / autoPlaySpeed));
-            const waitAfterFlip = Math.max(380, Math.round(1150 / autoPlaySpeed));
-            const fallbackTimeout = Math.max(1500, Math.round(3800 / autoPlaySpeed));
+            const waitBeforeFlip = Math.max(160, Math.round(380 / autoPlaySpeed));
+            const waitAfterFlip = Math.max(300, Math.round(1150 / autoPlaySpeed));
+            const fallbackTimeout = Math.max(1500, Math.round(4200 / autoPlaySpeed));
 
             if (!('speechSynthesis' in window)) { 
                 setTimeout(() => { markOk(); }, waitAfterFlip + waitBeforeFlip); 
@@ -1355,21 +1425,19 @@
             const detail = document.getElementById('reward-detail');
             const btnEnhance = document.getElementById('btn-complete-enhance');
             
-            let gotTicket = false;
-            let gotShield = false;
+            let gotReward = false;
 
             if (learnedCount >= 50) {
-                userEnhance.tickets += 1;
-                userEnhance.shields += 1;
-                gotTicket = true;
-                gotShield = true;
-                detail.innerHTML = `🌟 대단합니다! (50단어 이상 돌파)<br>⚡ <strong>강화권 +1장</strong> & 🛡️ <strong>강화보호권 +1장</strong> 획득!`;
+                userEnhance.tickets += 5;
+                userEnhance.shields += 2;
+                gotReward = true;
+                detail.innerHTML = `🌟 대단합니다! (50단어 이상 완주)<br>⚡ <strong>강화권 5장</strong> & 🛡️ <strong>강화보호권 2장</strong> 지급!`;
                 banner.style.display = 'block';
                 btnEnhance.style.display = 'block';
             } else if (learnedCount >= 25) {
-                userEnhance.tickets += 1;
-                gotTicket = true;
-                detail.innerHTML = `🔥 25단어 이상 완주 성공 보상!<br>⚡ <strong>강화권 +1장</strong> 획득!`;
+                userEnhance.tickets += 5;
+                gotReward = true;
+                detail.innerHTML = `🔥 25단어 이상 완주 성공 보상!<br>⚡ <strong>강화권 5장</strong> 지급!`;
                 banner.style.display = 'block';
                 btnEnhance.style.display = 'block';
             } else {
@@ -1377,7 +1445,7 @@
                 btnEnhance.style.display = 'none';
             }
 
-            if (gotTicket) {
+            if (gotReward) {
                 saveAppData();
             }
 
@@ -1406,71 +1474,127 @@
         function goBackAndClearSession() { clearAutoPlay(); document.getElementById('complete-modal').classList.remove('visible'); clearSessionState(); if (isGlobalMode) { renderHomeUI(); showPage('home-page'); } else showPage('lobby-page'); }
         function goBackToLobby() { clearAutoPlay(); document.getElementById('pause-modal').classList.remove('visible'); if (isGlobalMode) { renderHomeUI(); showPage('home-page'); } else { updateLobbyUI(); showPage('lobby-page'); } }
 
-        function openEnhanceModalFromComplete() {
+        function openEnhancePageFromComplete() {
             document.getElementById('complete-modal').classList.remove('visible');
             clearSessionState();
-            if (isGlobalMode) renderHomeUI(); else updateLobbyUI();
-            openEnhanceModal();
+            goToEnhancePage(isGlobalMode ? 'home-page' : 'lobby-page');
         }
 
         // =========================================================
-        // 🔥 유니폼 뒷면(icon.png) 강화소 UI & 로직
+        // 🔥 0~99강 유니폼 강화소 11단계 비주얼 & 로직
         // =========================================================
         let isEnhancing = false;
 
-        function openEnhanceModal() {
-            updateEnhanceUI();
-            document.getElementById('enhance-result-msg').innerText = '';
-            document.getElementById('enhance-modal').classList.add('visible');
+        function getEnhanceInfo(level) {
+            let tierName = "육성선수 유니폼";
+            let visualTier = 0;
+            let baseRate = 1.0;
+            let desc = "기본 신인 유니폼입니다.";
+            let canDrop = false;
+
+            if (level >= 99) {
+                tierName = "🦅 이글스 영구결번 유니폼"; visualTier = 10; baseRate = 0.0; desc = "신화가 된 영구결번 최고 존엄 유니폼!"; canDrop = false;
+            } else if (level >= 90) {
+                tierName = "시즌 MVP 유니폼"; visualTier = 9;
+                baseRate = 0.04 - ((level - 90) * 0.003); // 4% ~ 1.6%
+                desc = "활활 타오르는 불꽃 오라! 리그를 지배하는 MVP!"; canDrop = true;
+            } else if (level >= 80) {
+                tierName = "골든글러브 유니폼"; visualTier = 8;
+                baseRate = 0.09 - ((level - 80) * 0.004); // 9% ~ 5.4%
+                desc = "다이아몬드 크리스탈과 골드 림라이트의 조화!"; canDrop = true;
+            } else if (level >= 70) {
+                tierName = "KBO 올스타 유니폼"; visualTier = 7;
+                baseRate = 0.15 - ((level - 70) * 0.005); // 15% ~ 10.5%
+                desc = "별들의 무대를 밝히는 찬란한 황금빛 오라!"; canDrop = true;
+            } else if (level >= 60) {
+                tierName = "클러치 히터 유니폼"; visualTier = 6;
+                baseRate = 0.25 - ((level - 60) * 0.007); // 25% ~ 18.7%
+                desc = "찌릿찌릿 번개 스파크가 뿜어져 나오는 승부사!"; canDrop = true;
+            } else if (level >= 50) {
+                tierName = "주전 야수 유니폼"; visualTier = 5;
+                baseRate = 0.35 - ((level - 50) * 0.007); // 35% ~ 28.7%
+                desc = "시원한 스카이블루 펄스와 메탈릭 실버 광택!"; canDrop = true;
+            } else if (level >= 40) {
+                tierName = "선발 로테이션 유니폼"; visualTier = 4;
+                baseRate = 0.45 - ((level - 40) * 0.007); // 45% ~ 38.7%
+                desc = "네온 오렌지 에너지 파동이 감도는 선발 라인업!"; canDrop = true;
+            } else if (level >= 30) {
+                tierName = "1군 엔트리 유니폼"; visualTier = 3;
+                baseRate = 0.55 - ((level - 30) * 0.007); // 55% ~ 48.7%
+                desc = "오렌지 림라이트 가동! (여기서부터 실패 시 -1강 하락)"; canDrop = true;
+            } else if (level >= 20) {
+                tierName = "유망주 유니폼"; visualTier = 2;
+                baseRate = 0.70 - ((level - 20) * 0.01); // 70% ~ 61%
+                desc = "반짝반짝 별빛 크리스탈이 빛나는 유망주! (하락 없음)"; canDrop = false;
+            } else if (level >= 10) {
+                tierName = "루키 유니폼"; visualTier = 1;
+                baseRate = 0.85 - ((level - 10) * 0.01); // 85% ~ 76%
+                desc = "은은한 햇살 광채를 머금은 루키 유니폼! (하락 없음)"; canDrop = false;
+            } else {
+                tierName = "육성선수 유니폼"; visualTier = 0;
+                baseRate = 1.00 - (level * 0.01); // 100% ~ 91%
+                desc = "신인 육성선수 유니폼입니다. (하락 없음)"; canDrop = false;
+            }
+
+            return { tierName, visualTier, baseRate: Math.max(0.01, baseRate), desc, canDrop };
         }
 
-        function closeEnhanceModal() {
+        function goToEnhancePage(fromPage = 'home-page') {
+            enhancePreviousPage = fromPage;
+            updateEnhancePageUI();
+            document.getElementById('enhance-result-msg').innerText = '';
+            showPage('enhance-page');
+        }
+
+        function leaveEnhancePage() {
             if (isEnhancing) return;
-            document.getElementById('enhance-modal').classList.remove('visible');
-            if (currentDeckIndex === -1) {
-                renderHomeUI();
-                showPage('home-page');
-            } else {
+            if (enhancePreviousPage === 'lobby-page' && currentDeckIndex !== -1) {
                 updateLobbyUI();
                 showPage('lobby-page');
+            } else {
+                renderHomeUI();
+                showPage('home-page');
             }
         }
 
-        function updateEnhanceUI() {
+        function updateEnhancePageUI() {
             const currentLv = userEnhance.level;
-            const currentConfig = ENHANCE_CONFIG[currentLv];
+            const info = getEnhanceInfo(currentLv);
             
-            // 배지 & 레벨
             document.getElementById('enhanceLevelBadge').innerText = `+${currentLv}강`;
-            document.getElementById('enhanceTitle').innerText = `[+${currentLv}] ${currentConfig.name}`;
-            document.getElementById('enhanceDesc').innerText = currentConfig.desc;
+            document.getElementById('enhanceTitle').innerText = `[+${currentLv}] ${info.tierName}`;
+            document.getElementById('enhanceDesc').innerText = info.desc;
             
-            // 재화
             document.getElementById('inv-tickets').innerText = `${userEnhance.tickets}장`;
             document.getElementById('inv-shields').innerText = `${userEnhance.shields}장`;
             
-            // 유니폼 이미지 글로우 클래스 교체
             const img = document.getElementById('enhanceJerseyImg');
-            img.className = `jersey-img glow-tier-${currentConfig.titleTier}`;
+            img.className = `jersey-img glow-tier-${info.visualTier}`;
 
-            // 확률 정보
-            const nextLv = currentLv + 1;
             const btn = document.getElementById('btn-do-enhance');
             const shieldCb = document.getElementById('use-shield-cb');
 
-            if (currentLv >= 10) {
-                document.getElementById('enhance-prob-rate').innerText = '최대 달성 (MAX)';
+            if (currentLv >= 99) {
+                document.getElementById('enhance-base-prob').innerText = '-';
+                document.getElementById('enhance-bonus-prob').innerText = '-';
+                document.getElementById('enhance-final-prob').innerText = '최대 달성 (MAX)';
                 document.getElementById('enhance-penalty-desc').innerText = '영구결번 완성!';
                 btn.disabled = true;
-                btn.innerText = '👑 최고 등급 달성 (+10강 MAX)';
+                btn.innerText = '👑 최고 등급 달성 (+99강 MAX)';
                 btn.style.opacity = '0.6';
                 shieldCb.disabled = true;
+                shieldCb.checked = false;
             } else {
-                const nextProb = (currentConfig.rate * 100).toFixed(0);
-                document.getElementById('enhance-prob-rate').innerText = `${nextProb}%`;
+                const baseProbPct = (info.baseRate * 100).toFixed(1);
+                const bonusPct = (userEnhance.bonusProb || 0);
+                const finalProb = Math.min(100, (info.baseRate * 100) + bonusPct).toFixed(1);
+
+                document.getElementById('enhance-base-prob').innerText = `${baseProbPct}%`;
+                document.getElementById('enhance-bonus-prob').innerText = `+${bonusPct}% (최대 +10%)`;
+                document.getElementById('enhance-final-prob').innerText = `${finalProb}%`;
                 
-                if (currentConfig.dropRate > 0) {
-                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#DC2626;">실패 시 -1강 하락 (${(currentConfig.dropRate*100).toFixed(0)}%)</span>`;
+                if (info.canDrop) {
+                    document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#DC2626;">실패 시 1레벨 하락 (-1강)</span>`;
                 } else {
                     document.getElementById('enhance-penalty-desc').innerHTML = `<span style="color:#10B981;">하락 없음 (안전 구간)</span>`;
                 }
@@ -1478,26 +1602,49 @@
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.innerText = `🔥 유니폼 강화하기 (⚡ 1장 소모)`;
-                shieldCb.disabled = (userEnhance.shields <= 0 || currentConfig.dropRate === 0);
-                if (userEnhance.shields <= 0 || currentConfig.dropRate === 0) shieldCb.checked = false;
+                
+                // 🛡️ 보호권 체크박스 제어: 보호권이 있으면 자유롭게 체크 가능
+                if (userEnhance.shields <= 0) {
+                    shieldCb.disabled = true;
+                    shieldCb.checked = false;
+                } else {
+                    shieldCb.disabled = false;
+                }
             }
             updateHeaderEnhanceBadge();
         }
 
+        // 🔄 강화권 10장 ➔ 보호권 1장 교환
+        function exchangeTickets() {
+            if (userEnhance.tickets < 10) {
+                alert("강화권이 부족합니다! (최소 10장 필요)");
+                return;
+            }
+            if (confirm("⚡ 강화권 10장을 🛡️ 보호권 1장으로 교환하시겠습니까?")) {
+                userEnhance.tickets -= 10;
+                userEnhance.shields += 1;
+                saveAppData();
+                updateEnhancePageUI();
+                alert("🛡️ 강화보호권 1장을 성공적으로 교환했습니다!");
+            }
+        }
+
         function doEnhance() {
             if (isEnhancing) return;
-            if (userEnhance.level >= 10) { alert("이미 최고 강화 등급(+10강 영구결번)입니다!"); return; }
+            if (userEnhance.level >= 99) { alert("이미 최고 등급(+99강 영구결번)입니다!"); return; }
             if (userEnhance.tickets <= 0) {
-                alert("강화권이 부족합니다!\n25단어 이상 학습을 완료하면 강화권을 획득할 수 있습니다. 🦅");
+                alert("강화권이 부족합니다!\n25단어 이상 학습을 완료하여 강화권을 획득하세요! 🦅");
                 return;
             }
 
             const currentLv = userEnhance.level;
-            const config = ENHANCE_CONFIG[currentLv];
-            const useShield = document.getElementById('use-shield-cb').checked;
+            const info = getEnhanceInfo(currentLv);
+            const shieldCb = document.getElementById('use-shield-cb');
+            const useShield = shieldCb.checked;
 
             if (useShield && userEnhance.shields <= 0) {
                 alert("보유한 강화보호권이 없습니다.");
+                shieldCb.checked = false;
                 return;
             }
 
@@ -1505,50 +1652,54 @@
             isEnhancing = true;
             userEnhance.tickets -= 1;
             if (useShield) userEnhance.shields -= 1;
-            
+
             const btn = document.getElementById('btn-do-enhance');
             const stageBox = document.getElementById('jerseyStageBox');
+            const img = document.getElementById('enhanceJerseyImg');
             const resultMsg = document.getElementById('enhance-result-msg');
-            
+
             btn.disabled = true;
-            resultMsg.innerText = "🔥 유니폼 강화 시도 중...";
+            resultMsg.innerText = "⚡ 유니폼에 에너지를 집중하는 중...";
             resultMsg.style.color = "var(--primary)";
             stageBox.classList.add('shake-animation');
 
             setTimeout(() => {
                 stageBox.classList.remove('shake-animation');
                 
+                const finalRate = Math.min(1.0, info.baseRate + ((userEnhance.bonusProb || 0) / 100));
                 const rand = Math.random();
-                if (rand < config.rate) {
+
+                if (rand < finalRate) {
                     // 🎉 강화 성공!
                     userEnhance.level += 1;
+                    userEnhance.bonusProb = 0; // 보너스 확률 리셋
                     resultMsg.innerText = `🎉 강화 대성공! [+${userEnhance.level}강 달성!] 🦅`;
                     resultMsg.style.color = "#10B981";
+
+                    img.classList.add('success-flash-anim');
+                    setTimeout(() => img.classList.remove('success-flash-anim'), 600);
                 } else {
                     // 💥 강화 실패
-                    if (config.dropRate > 0 && !useShield) {
-                        const dropRand = Math.random();
-                        if (dropRand < (config.dropRate / (1 - config.rate))) {
-                            userEnhance.level = Math.max(0, userEnhance.level - 1);
-                            resultMsg.innerText = `💥 강화 실패... 등급이 하락했습니다. (-1강)`;
-                            resultMsg.style.color = "#DC2626";
-                        } else {
-                            resultMsg.innerText = `⚠️ 강화 실패! 다행히 등급은 유지되었습니다.`;
-                            resultMsg.style.color = "#D97706";
-                        }
+                    // 실패 시 보정치 1% 증가 (최대 10%)
+                    userEnhance.bonusProb = Math.min(10, (userEnhance.bonusProb || 0) + 1);
+
+                    if (info.canDrop && !useShield) {
+                        userEnhance.level = Math.max(0, userEnhance.level - 1);
+                        resultMsg.innerText = `💥 강화 실패! (-1강 하락 / 보정치 +1% 누적)`;
+                        resultMsg.style.color = "#DC2626";
                     } else if (useShield) {
-                        resultMsg.innerText = `🛡️ 강화 실패했으나 [보호권]으로 하락 방지!`;
+                        resultMsg.innerText = `🛡️ 강화 실패했으나 [보호권]으로 하락 방지! (+1% 누적)`;
                         resultMsg.style.color = "#0284C7";
                     } else {
-                        resultMsg.innerText = `⚠️ 강화 실패! (안전 구간으로 등급 유지)`;
+                        resultMsg.innerText = `⚠️ 강화 실패! (안전 구간 유지 / 보정치 +1% 누적)`;
                         resultMsg.style.color = "#D97706";
                     }
                 }
 
                 saveAppData();
-                updateEnhanceUI();
+                updateEnhancePageUI();
                 isEnhancing = false;
-            }, 750);
+            }, 650);
         }
 
         // --- 스와이프 애니메이션 ---
