@@ -82,7 +82,7 @@
             width: 100%; margin: 15px 0 10px 0; accent-color: var(--primary);
         }
         .learning-mode-btns {
-            display: flex; gap: 10px; margin-top: 10px;
+            display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;
         }
 
         .overlay-modal {
@@ -212,8 +212,9 @@
                 </div>
 
                 <div class="learning-mode-btns">
-                    <button class="modal-action-btn secondary" style="margin-bottom:0; flex:1;" onclick="startGlobalSequentialWords()">순서대로 학습</button>
-                    <button class="modal-action-btn primary" style="margin-bottom:0; flex:1;" onclick="startGlobalRandomWords()">랜덤 학습 🎲</button>
+                    <button class="modal-action-btn secondary" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem;" onclick="startGlobalSequentialWords()">순서 학습</button>
+                    <button class="modal-action-btn primary" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem;" onclick="startGlobalRandomWords()">랜덤 학습 🎲</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem; background:#E0F2FE; color:#0284C7; border: 1px solid #BAE6FD;" onclick="startGlobalListenWords()">듣기 학습 🎧</button>
                 </div>
                 
                 <button class="tool-btn highlight" style="width: 100%; margin-top: 10px; border-color: #FDE68A; background: #FFFBEB; color: #D97706;" onclick="startGlobalFavorites()">⭐ 선택한 단어장 즐겨찾기만 복습</button>
@@ -270,8 +271,9 @@
                 </div>
 
                 <div class="learning-mode-btns">
-                    <button class="modal-action-btn secondary" style="margin-bottom:0; flex:1;" onclick="startSequentialWords()">순서대로 학습</button>
-                    <button class="modal-action-btn primary" style="margin-bottom:0; flex:1;" onclick="startRandomWords()">랜덤 학습</button>
+                    <button class="modal-action-btn secondary" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem;" onclick="startSequentialWords()">순서 학습</button>
+                    <button class="modal-action-btn primary" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem;" onclick="startRandomWords()">랜덤 학습</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; flex:1; padding: 12px 2px; font-size:0.9rem; background:#E0F2FE; color:#0284C7; border: 1px solid #BAE6FD;" onclick="startListenWords()">듣기 학습 🎧</button>
                 </div>
             </div>
 
@@ -789,12 +791,13 @@
         let isFlipped = false;
         let isFavMode = false;
         let isKrFirst = false; 
+        let isListenMode = false;
 
         function saveSessionState() {
             if (isGlobalMode) {
-                localStorage.setItem('jpMasterGlobalSession', JSON.stringify({ queue: activeQueue, total: totalCount, isFav: isFavMode, isKrFirst: isKrFirst })); renderHomeUI();
+                localStorage.setItem('jpMasterGlobalSession', JSON.stringify({ queue: activeQueue, total: totalCount, isFav: isFavMode, isKrFirst: isKrFirst, isListenMode: isListenMode })); renderHomeUI();
             } else {
-                getDeck().session = { queue: activeQueue, total: totalCount, isFav: isFavMode, isKrFirst: isKrFirst }; saveAppData(); updateLobbyUI();
+                getDeck().session = { queue: activeQueue, total: totalCount, isFav: isFavMode, isKrFirst: isKrFirst, isListenMode: isListenMode }; saveAppData(); updateLobbyUI();
             }
         }
         function clearSessionState() {
@@ -806,7 +809,7 @@
         function startSequentialWords() {
             let targetWords = getLobbySelectedWords();
             if(targetWords.length === 0) { alert("선택된 시트(단어)가 없습니다."); return; }
-            isGlobalMode = false; isFavMode = false; isKrFirst = getDirectionPref();
+            isGlobalMode = false; isFavMode = false; isKrFirst = getDirectionPref(); isListenMode = false;
             let count = parseInt(document.getElementById('count-slider').value) || targetWords.length;
             activeQueue = [...targetWords].slice(0, count); totalCount = activeQueue.length;
             if(totalCount === 0) return; document.getElementById('stage-info').innerText = `순서대로 학습 (${totalCount}개)`; saveSessionState(); initGame();
@@ -814,41 +817,56 @@
         function startRandomWords() {
             let targetWords = getLobbySelectedWords();
             if(targetWords.length === 0) { alert("선택된 시트(단어)가 없습니다."); return; }
-            isGlobalMode = false; isFavMode = false; isKrFirst = getDirectionPref();
+            isGlobalMode = false; isFavMode = false; isKrFirst = getDirectionPref(); isListenMode = false;
             let count = parseInt(document.getElementById('count-slider').value) || targetWords.length;
             activeQueue = [...targetWords].sort(() => Math.random() - 0.5).slice(0, count); totalCount = activeQueue.length;
             if(totalCount === 0) return; document.getElementById('stage-info').innerText = `랜덤 학습 (${totalCount}개)`; saveSessionState(); initGame();
+        }
+        function startListenWords() {
+            let targetWords = getLobbySelectedWords();
+            if(targetWords.length === 0) { alert("선택된 시트(단어)가 없습니다."); return; }
+            isGlobalMode = false; isFavMode = false; isKrFirst = false; isListenMode = true;
+            let count = parseInt(document.getElementById('count-slider').value) || targetWords.length;
+            activeQueue = [...targetWords].sort(() => Math.random() - 0.5).slice(0, count); totalCount = activeQueue.length;
+            if(totalCount === 0) return; document.getElementById('stage-info').innerText = `듣기 학습 (${totalCount}개)`; saveSessionState(); initGame();
         }
         function startFavorites() {
             const deck = getDeck();
             if (deck.stars.length === 0) { alert("단어장에 즐겨찾기한 단어가 없습니다."); return; }
             let targetWords = getLobbySelectedWords().filter(w => deck.stars.includes(w.id));
             if(targetWords.length === 0) { alert("선택된 시트 내에 즐겨찾기한 단어가 없습니다."); return; }
-            isGlobalMode = false; isFavMode = true; isKrFirst = getDirectionPref();
+            isGlobalMode = false; isFavMode = true; isKrFirst = getDirectionPref(); isListenMode = false;
             activeQueue = targetWords.sort(() => Math.random() - 0.5); totalCount = activeQueue.length;
             document.getElementById('stage-info').innerText = "⭐ 복습 모드"; saveSessionState(); initGame();
         }
         function resumeSession() {
             isGlobalMode = false; const session = getDeck().session;
             if (!session || !session.queue || session.queue.length === 0) return;
-            activeQueue = session.queue; totalCount = session.total; isFavMode = session.isFav; isKrFirst = session.isKrFirst || false;
-            document.getElementById('stage-info').innerText = isFavMode ? "⭐ 복습 이어하기" : "학습 이어하기"; initGame();
+            activeQueue = session.queue; totalCount = session.total; isFavMode = session.isFav; isKrFirst = session.isKrFirst || false; isListenMode = session.isListenMode || false;
+            document.getElementById('stage-info').innerText = isListenMode ? "🎧 듣기 학습 이어하기" : (isFavMode ? "⭐ 복습 이어하기" : "학습 이어하기"); initGame();
         }
 
         // 글로벌 학습 (메인 화면)
         function startGlobalSequentialWords() {
             let selectedWords = getGlobalSelectedWords(); if(selectedWords.length === 0) { alert("선택된 단어장이 없습니다."); return; }
-            isGlobalMode = true; isFavMode = false; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp';
+            isGlobalMode = true; isFavMode = false; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp'; isListenMode = false;
             let count = parseInt(document.getElementById('global-count-slider').value) || selectedWords.length;
             activeQueue = [...selectedWords].slice(0, count); totalCount = activeQueue.length;
             if(totalCount === 0) return; document.getElementById('stage-info').innerText = `통합 순차 학습 (${totalCount}개)`; saveSessionState(); initGame();
         }
         function startGlobalRandomWords() {
             let selectedWords = getGlobalSelectedWords(); if(selectedWords.length === 0) { alert("선택된 단어장이 없습니다."); return; }
-            isGlobalMode = true; isFavMode = false; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp';
+            isGlobalMode = true; isFavMode = false; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp'; isListenMode = false;
             let count = parseInt(document.getElementById('global-count-slider').value) || selectedWords.length;
             activeQueue = [...selectedWords].sort(() => Math.random() - 0.5).slice(0, count); totalCount = activeQueue.length;
             if(totalCount === 0) return; document.getElementById('stage-info').innerText = `통합 랜덤 학습 (${totalCount}개)`; saveSessionState(); initGame();
+        }
+        function startGlobalListenWords() {
+            let selectedWords = getGlobalSelectedWords(); if(selectedWords.length === 0) { alert("선택된 단어장이 없습니다."); return; }
+            isGlobalMode = true; isFavMode = false; isKrFirst = false; isListenMode = true;
+            let count = parseInt(document.getElementById('global-count-slider').value) || selectedWords.length;
+            activeQueue = [...selectedWords].sort(() => Math.random() - 0.5).slice(0, count); totalCount = activeQueue.length;
+            if(totalCount === 0) return; document.getElementById('stage-info').innerText = `통합 듣기 학습 (${totalCount}개)`; saveSessionState(); initGame();
         }
         function startGlobalFavorites() {
             const checkedBoxes = document.querySelectorAll('input[name="selected-global-decks"]:checked');
@@ -860,36 +878,39 @@
                 }
             });
             if (allFavWords.length === 0) { alert("즐겨찾기한 단어가 없습니다."); return; }
-            isGlobalMode = true; isFavMode = true; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp';
+            isGlobalMode = true; isFavMode = true; isKrFirst = document.querySelector('input[name="global-card-dir"]:checked').value === 'kr-jp'; isListenMode = false;
             activeQueue = allFavWords.sort(() => Math.random() - 0.5); totalCount = activeQueue.length;
             document.getElementById('stage-info').innerText = "⭐ 통합 복습 모드"; saveSessionState(); initGame();
         }
         function resumeGlobalSession() {
             let globalSessionStr = localStorage.getItem('jpMasterGlobalSession'); if (!globalSessionStr) return;
             const session = JSON.parse(globalSessionStr); if (!session || !session.queue || session.queue.length === 0) return;
-            isGlobalMode = true; activeQueue = session.queue; totalCount = session.total; isFavMode = session.isFav; isKrFirst = session.isKrFirst || false;
-            document.getElementById('stage-info').innerText = "통합 학습 이어하기"; initGame();
+            isGlobalMode = true; activeQueue = session.queue; totalCount = session.total; isFavMode = session.isFav; isKrFirst = session.isKrFirst || false; isListenMode = session.isListenMode || false;
+            document.getElementById('stage-info').innerText = isListenMode ? "통합 듣기 학습 이어하기" : "통합 학습 이어하기"; initGame();
         }
 
         // --- 학습 시 UI 업데이트 & TTS 기능 ---
-        function playTTS(e) {
-            e.stopPropagation(); // 스와이프/플립 방지
+        function speakCurrentWord() {
             if (activeQueue.length === 0) return;
+            const textToSpeak = activeQueue[0].jp; // 영어 단어 추출
             
-            // 영어 단어 추출 (변수명 jp에 영어 단어가 할당되어 있음)
-            const textToSpeak = activeQueue[0].jp;
+            if (!('speechSynthesis' in window)) return;
             
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'en-US';
+            utterance.rate = 1.0;
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playTTS(e) {
+            if (e) e.stopPropagation(); // 스와이프/플립 방지
             if (!('speechSynthesis' in window)) {
                 alert("현재 브라우저는 음성 읽기(TTS) 기능을 지원하지 않습니다.");
                 return;
             }
-            
-            window.speechSynthesis.cancel(); // 진행 중인 음성 멈춤
-            const utterance = new SpeechSynthesisUtterance(textToSpeak);
-            utterance.lang = 'en-US'; // 오직 영어 발음 설정
-            utterance.rate = 1.0;
-            
-            window.speechSynthesis.speak(utterance);
+            speakCurrentWord();
         }
 
         function adjustFontSize(element, text, isFront) {
@@ -911,10 +932,21 @@
             if (!deck) { activeQueue.shift(); totalCount--; updateCard(); return; }
             
             const frontEl = document.getElementById('jpWord'); const backEl = document.getElementById('krMeaning');
-            if (isKrFirst) { frontEl.innerText = card.kr; backEl.innerText = card.jp; } 
-            else { frontEl.innerText = card.jp; backEl.innerText = card.kr; }
             
-            adjustFontSize(frontEl, frontEl.innerText, true); adjustFontSize(backEl, backEl.innerText, false);
+            if (isListenMode) {
+                // 듣기 모드: 앞면엔 아이콘과 힌트 텍스트, 뒷면엔 영어/뜻 동시 출력
+                frontEl.innerHTML = `<div style="font-size:4rem; margin-bottom:12px;">🎧</div><div style="font-size:1.1rem; color:#64748b; font-weight:700;">소리를 듣고 뜻을 맞춰보세요</div>`;
+                backEl.innerHTML = `<div style="font-size:2.2rem; font-weight:800; color:white; margin-bottom:15px; word-break: keep-all; overflow-wrap: anywhere;">${card.jp}</div><div style="font-size:1.6rem; font-weight:700; color:var(--star-color); word-break: keep-all; overflow-wrap: anywhere;">${card.kr}</div>`;
+                
+                // 카드 전환 시 자동 소리 재생
+                setTimeout(() => speakCurrentWord(), 150);
+            } else {
+                // 일반 모드
+                if (isKrFirst) { frontEl.innerText = card.kr; backEl.innerText = card.jp; } 
+                else { frontEl.innerText = card.jp; backEl.innerText = card.kr; }
+                
+                adjustFontSize(frontEl, frontEl.innerText, true); adjustFontSize(backEl, backEl.innerText, false);
+            }
             
             const isS = deck.stars.includes(card.id);
             document.getElementById('starFront').innerText = isS ? "★" : "☆"; document.getElementById('starBack').innerText = isS ? "★" : "☆";
