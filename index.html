@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -544,7 +543,7 @@
                     <img src="icon.png" style="width:40px; height:40px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.2); padding:2px;">
                     <div>
                         <div style="font-weight:900; font-size:1rem;">⚾ 한화 이글스 유니폼 강화소 (0~99강)</div>
-                        <div style="font-size:0.8rem; opacity:0.9;">25단어 완주 시 ⚡강화권 5장 / 50단어 시 🛡️보호권 2장!</div>
+                        <div style="font-size:0.8rem; opacity:0.9;">25단어 시 ⚡강화권 5장 / 50단어 시 🛡️보호권 2장 지급!</div>
                     </div>
                 </div>
                 <div style="font-weight:900; font-size:1.1rem;">입장 →</div>
@@ -732,7 +731,7 @@
                     <p id="enhanceDesc" style="font-size:0.9rem; color:var(--text-sub); margin:0 0 10px 0;">완주 학습을 통해 전설의 +99강 영구결번 유니폼을 완성하세요!</p>
                 </div>
 
-                <!-- 👉 오른쪽 컬럼: 강화 시스템 컨트롤러 -->
+                <!-- 👉 오른쪽 컬럼: 강화 시스템 컨트롤러 & 양방향 교환소 -->
                 <div style="text-align:center;">
                     <!-- 보유 재화 인벤토리 -->
                     <div class="inventory-panel">
@@ -746,13 +745,21 @@
                         </div>
                     </div>
 
-                    <!-- 티켓 교환소 박스 -->
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
-                        <div style="text-align:left;">
-                            <div style="font-weight:800; font-size:0.9rem; color:var(--text-main);">🔄 티켓 교환소</div>
-                            <div style="font-size:0.75rem; color:var(--text-sub);">⚡ 강화권 10장 ➔ 🛡️ 보호권 1장</div>
+                    <!-- 🔄 양방향 티켓 교환소 박스 -->
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:12px 14px; margin-bottom:12px; text-align:left;">
+                        <div style="font-weight:800; font-size:0.9rem; color:var(--text-main); margin-bottom:8px;">🔄 티켓 교환소</div>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <!-- 1. 강화권 10장 -> 보호권 1장 -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:#F9FAFB; padding:8px 10px; border-radius:8px; border:1px solid var(--border-color);">
+                                <span style="font-size:0.8rem; font-weight:700; color:var(--text-main);">⚡ 10장 ➔ 🛡️ 1장</span>
+                                <button onclick="exchangeTicketsToShield()" style="background:#0284C7; color:white; border:none; border-radius:6px; padding:6px 10px; font-weight:800; font-size:0.75rem; cursor:pointer;">교환</button>
+                            </div>
+                            <!-- 2. 보호권 1장 -> 강화권 7장 -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:#FFF7ED; padding:8px 10px; border-radius:8px; border:1px solid #FED7AA;">
+                                <span style="font-size:0.8rem; font-weight:700; color:#EA580C;">🛡️ 1장 ➔ ⚡ 7장</span>
+                                <button onclick="exchangeShieldToTickets()" style="background:#EA580C; color:white; border:none; border-radius:6px; padding:6px 10px; font-weight:800; font-size:0.75rem; cursor:pointer;">교환</button>
+                            </div>
                         </div>
-                        <button onclick="exchangeTickets()" style="background:#0284C7; color:white; border:none; border-radius:8px; padding:8px 14px; font-weight:800; font-size:0.85rem; cursor:pointer;">교환하기</button>
                     </div>
 
                     <!-- 강화 정보 & 확률 박스 -->
@@ -845,7 +852,7 @@
         };
 
         let enhancePreviousPage = 'home-page';
-        let isDataLoaded = false; // 🔒 데이터 동기화 완료 여부 플래그
+        let isDataLoaded = false;
 
         function applySettings() {
             if(isDarkMode) {
@@ -1036,7 +1043,7 @@
             updateHeaderEnhanceBadge();
         }
 
-        // ⚠️ 계정 완전 초기화 (단어장 + 강화 + 레벨 전체 영구 리셋)
+        // ⚠️ 계정 완전 초기화
         async function resetAllAccountData() {
             if (!currentUser) return;
             
@@ -1299,7 +1306,7 @@
             let wordsToStudy = document.querySelectorAll('input[name="selected-categories"]').length > 0 ? getLobbySelectedWords() : (getDeck() ? getDeck().words : []);
             const maxCount = wordsToStudy.length;
             
-            if(maxCount === 0) { display.innerText = "단어 없음"; slider.value = 0; } 
+            if(maxCount === 0) { display.innerText = "단어 없음"; slider.value = 0; slider.max = 1; } 
             else {
                 slider.max = maxCount;
                 if(parseInt(slider.value) >= maxCount || parseInt(slider.value) === 0) { slider.value = maxCount; display.innerText = `전체 (${maxCount}개)`; } 
@@ -1867,8 +1874,8 @@
             updateHeaderEnhanceBadge();
         }
 
-        // 🔄 강화권 10장 ➔ 보호권 1장 교환
-        function exchangeTickets() {
+        // 🔄 1. 강화권 10장 ➔ 보호권 1장 교환
+        function exchangeTicketsToShield() {
             if (userEnhance.tickets < 10) {
                 alert("강화권이 부족합니다! (최소 10장 필요)");
                 return;
@@ -1878,7 +1885,22 @@
                 userEnhance.shields += 1;
                 saveAppData();
                 updateEnhancePageUI();
-                alert("🛡️ 강화보호권 1장을 성공적으로 교환했습니다!");
+                alert("🛡️ 강화보호권 1장을 성공적으로 획득했습니다!");
+            }
+        }
+
+        // 🔄 2. 보호권 1장 ➔ 강화권 7장 교환 (신규 추가!)
+        function exchangeShieldToTickets() {
+            if (userEnhance.shields < 1) {
+                alert("보호권이 부족합니다! (최소 1장 필요)");
+                return;
+            }
+            if (confirm("🛡️ 강화보호권 1장을 ⚡ 강화권 7장으로 교환하시겠습니까?")) {
+                userEnhance.shields -= 1;
+                userEnhance.tickets += 7;
+                saveAppData();
+                updateEnhancePageUI();
+                alert("⚡ 강화권 7장을 성공적으로 획득했습니다!");
             }
         }
 
