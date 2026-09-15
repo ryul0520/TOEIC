@@ -706,7 +706,7 @@
             window.speechSynthesis.speak(u);
         }
 
-        // 통합 단일 시작 함수
+        // 🌟 통합 단일 시작 함수
         function startStudy(mode, isGlobal) {
             let targetWords = []; let count = 0; let isRandom = false;
 
@@ -720,7 +720,9 @@
                 isRandom = document.querySelector('input[name="lobby-order"]:checked').value === 'rand';
             }
 
-            window.isGlobalMode = isGlobal; window.isFavMode = false;
+            // [핵심 버그 픽스] 글로벌 스코프의 변수 확실히 할당
+            isGlobalMode = isGlobal; 
+            isFavMode = false; 
             
             // 셔플 및 잘라내기
             let shuffled = isRandom ? [...targetWords].sort(() => Math.random() - 0.5) : [...targetWords];
@@ -739,7 +741,7 @@
             saveSessionState(); initGame();
         }
 
-        // 즐겨찾기 시작 함수
+        // 🌟 즐겨찾기 시작 함수
         function startFavorites(isGlobal) {
             let targetWords = [];
             if (isGlobal) {
@@ -752,7 +754,9 @@
 
             if (targetWords.length === 0) { alert("선택된 영역 내에 즐겨찾기한 단어가 없습니다."); return; }
             
-            window.isGlobalMode = isGlobal; window.isFavMode = true;
+            // [핵심 버그 픽스] 글로벌 스코프의 변수 확실히 할당
+            isGlobalMode = isGlobal; 
+            isFavMode = true; 
             isKrFirst = false; isListenMode = false; isAutoMode = false;
 
             let isRandom = isGlobal 
@@ -797,7 +801,7 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // 🚀 대기 시간이 줄어든 자동 재생 로직 
+        // 🚀 자동 재생 로직 (시간 단축 적용 유지)
         function autoPlaySequence(card) {
             clearAutoPlay();
             if (!('speechSynthesis' in window)) { setTimeout(() => { markOk(); }, 2000); return; }
@@ -813,9 +817,9 @@
                     ci.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                     ci.classList.add('flipped');
                     
-                    // 뒤집히고 나서 뜻을 읽을 시간(1.2초)만 준 뒤 다음 카드 진행
+                    // 카드가 뒤집히고 뜻을 볼 시간(1.2초)만 준 뒤 다음 단어로 쾌속 진행
                     autoPlayTimer2 = setTimeout(() => { markOk(); }, 1200);
-                }, 400); // 음성이 끝나고 0.4초 만에 바로 카드를 뒤집음
+                }, 400); // 음성이 끝나면 0.4초 만에 바로 뒤집음
             };
 
             utterance.onend = proceedToFlip; utterance.onerror = proceedToFlip;
