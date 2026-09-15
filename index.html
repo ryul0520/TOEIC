@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TOEIC MASTER</title>
+    <title>TOEIC MASTER - Hanwha Edition</title>
 
     <!-- ⚡ PWA & 전체화면 앱 설정 -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
-    <meta name="theme-color" content="#2563EB">
+    <meta name="theme-color" content="#FC4E00">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TOEIC MASTER">
@@ -29,9 +29,16 @@
 
     <style>
         :root {
-            --primary: #2563EB; 
-            --bg: #F8FAFC;
-            --card-dark: #1E293B;
+            /* 한화 라이트 모드 (화이트 + 한화 오렌지 + 블랙) */
+            --primary: #FC4E00; 
+            --primary-hover: #E04500;
+            --primary-soft: #FFF1EB;
+            --bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text-main: #111827;
+            --text-sub: #6B7280;
+            --border-color: #E5E7EB;
+            --card-dark: #0E1A30;
             --star-color: #F59E0B;
         }
 
@@ -39,6 +46,7 @@
         
         html, body {
             margin: 0; padding: 0; background-color: var(--bg);
+            color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard", sans-serif;
             height: 100vh; height: 100dvh; overflow: hidden;
             user-select: none; -webkit-user-select: none;
@@ -47,58 +55,75 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- 다크 모드 CSS --- */
+        /* --- 🦅 한화 다크 모드 (딥 네이비 + 한화 오렌지 + 화이트) --- */
         body.dark-mode {
-            --bg: #0F172A;
-            --card-dark: #1E293B;
+            --bg: #0A1124;
+            --card-bg: #131F3B;
+            --text-main: #FFFFFF;
+            --text-sub: #94A3B8;
+            --border-color: #1E2E52;
+            --card-dark: #0A1124;
+            --primary-soft: #2D1A14;
             background-color: var(--bg);
-            color: #F8FAFC;
+            color: var(--text-main);
         }
-        body.dark-mode .header { background: #1E293B; border-bottom: 1px solid #334155; color: #F8FAFC; }
-        body.dark-mode .header span#current-deck-title, body.dark-mode .header span#queue-count { color: #60A5FA !important; }
-        body.dark-mode .header span#total-stars { background: #451A03 !important; color: #FBBF24 !important; }
-        body.dark-mode .deck-card, body.dark-mode .auth-card { background: #1E293B; border: 1px solid #334155; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        body.dark-mode .deck-title { color: #F8FAFC; }
+        body.dark-mode .header { background: #101B35; border-bottom: 1px solid #1E2E52; color: #FFFFFF; }
+        body.dark-mode .header span#current-deck-title, body.dark-mode .header span#queue-count { color: #FC4E00 !important; }
+        body.dark-mode .header span#total-stars { background: #381E11 !important; color: #FBBF24 !important; }
+        body.dark-mode .deck-card, body.dark-mode .auth-card { background: #131F3B; border: 1px solid #1E2E52; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        body.dark-mode .deck-title { color: #FFFFFF; }
         body.dark-mode .deck-info { color: #94A3B8; }
-        body.dark-mode .btn-icon { background: #334155; color: #CBD5E1; }
+        body.dark-mode .btn-icon { background: #1C2C4E; color: #CBD5E1; }
         body.dark-mode .btn-icon.danger { background: #7F1D1D; color: #FCA5A5; }
-        body.dark-mode .tool-btn { background: #1E293B; border: 1px solid #334155; color: #F8FAFC; }
-        body.dark-mode .tool-btn.highlight { background: #1E3A8A; border-color: #2563EB; color: #93C5FD; }
-        body.dark-mode .tool-btn.highlight[style*="background:#E0F2FE"] { background: #0C4A6E !important; border-color: #0284C7 !important; color: #38BDF8 !important; }
-        body.dark-mode .tool-btn.highlight[style*="background:#FFFBEB"] { background: #78350F !important; border-color: #B45309 !important; color: #FCD34D !important; }
-        body.dark-mode .session-config { background: #1E293B; border: 1px solid #334155; }
-        body.dark-mode .session-config h3 { color: #60A5FA !important; }
-        body.dark-mode .session-config div[style*="background:#f8fafc"] { background: #0F172A !important; border-color: #334155 !important; }
+        body.dark-mode .tool-btn { background: #131F3B; border: 1px solid #1E2E52; color: #FFFFFF; }
+        body.dark-mode .tool-btn.highlight { background: #381B10; border-color: #FC4E00; color: #FF9466; }
+        body.dark-mode .session-config { background: #131F3B; border: 1px solid #1E2E52; }
+        body.dark-mode .session-config h3 { color: #FC4E00 !important; }
+        body.dark-mode .session-config div[style*="background:#f8fafc"],
+        body.dark-mode .session-config div[style*="background:#F9FAFB"] { background: #0A1124 !important; border-color: #1E2E52 !important; }
         body.dark-mode span[style*="color:#475569"], body.dark-mode label { color: #CBD5E1 !important; }
-        body.dark-mode #val-display, body.dark-mode #global-val-display { color: #60A5FA !important; }
-        body.dark-mode .card-front { background: #1E293B; color: #F8FAFC; border: 1px solid #334155; }
-        body.dark-mode .card-back { background: #0F172A; border: 1px solid #334155; }
-        body.dark-mode .nav-btn { background: #1E293B; border: 2px solid #334155; color: #CBD5E1; }
-        body.dark-mode .modal-card { background: #1E293B; color: #F8FAFC; }
-        body.dark-mode .modal-card h2 { color: #F8FAFC; }
-        body.dark-mode .modal-action-btn.secondary { background: #334155; color: #F8FAFC; }
-        body.dark-mode .modal-action-btn[style*="background:#E0F2FE"] { background: #0C4A6E !important; border-color: #0284C7 !important; color: #38BDF8 !important; }
-        body.dark-mode .hint-pill { background: #1E293B; color: #94A3B8; }
-        body.dark-mode .speed-btn { background: #312E81 !important; color: #A5B4FC !important; border-color: #4338CA !important; }
+        body.dark-mode #val-display, body.dark-mode #global-val-display { color: #FC4E00 !important; }
+        body.dark-mode .card-front { background: #131F3B; color: #FFFFFF; border: 1px solid #1E2E52; }
+        body.dark-mode .card-back { background: #070D1E; border: 1px solid #FC4E00; }
+        body.dark-mode .nav-btn { background: #131F3B; border: 2px solid #1E2E52; color: #CBD5E1; }
+        body.dark-mode .modal-card { background: #131F3B; color: #FFFFFF; }
+        body.dark-mode .modal-card h2 { color: #FFFFFF; }
+        body.dark-mode .modal-action-btn.secondary { background: #1C2C4E; color: #FFFFFF; }
+        body.dark-mode .hint-pill { background: #131F3B; color: #94A3B8; }
+        body.dark-mode .speed-btn { background: #381B10 !important; color: #FF9466 !important; border-color: #FC4E00 !important; }
 
-        /* --- 기본 CSS --- */
+        /* --- 기본 UI --- */
         #intro-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary); z-index: 10000;
+            background: linear-gradient(135deg, #FC4E00 0%, #BA3800 100%); z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; transition: opacity 0.4s ease-out, visibility 0.4s;
         }
         #intro-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
+        /* 🔥 로딩 인디케이터 오버레이 */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 17, 36, 0.7); backdrop-filter: blur(4px); z-index: 9999;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            color: white; font-weight: 800; gap: 14px;
+        }
+        #loading-overlay.visible { display: flex; }
+        .spinner {
+            width: 48px; height: 48px; border: 5px solid rgba(252, 78, 0, 0.25);
+            border-top-color: #FC4E00; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         .page { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; z-index: 10; background: transparent; }
         .page.active { display: flex; }
 
-        /* 노치/상태표시줄 안전구역 대응 헤더 */
         .header {
             padding: max(12px, env(safe-area-inset-top)) 16px 12px 16px; 
             background: white; display: flex; 
             justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid #e2e8f0; font-weight: 800;
+            border-bottom: 1px solid var(--border-color); font-weight: 800;
             flex-shrink: 0; transition: background-color 0.3s, border-color 0.3s;
         }
 
@@ -109,64 +134,63 @@
             touch-action: pan-y;
         }
 
-        /* 속도 조절 버튼 스타일 */
         .speed-btn {
-            background: #EEF2FF; color: #4F46E5;
-            border: 1px solid #C7D2FE; border-radius: 8px;
-            padding: 4px 7px; font-weight: 800; font-size: 0.78rem;
+            background: var(--primary-soft); color: var(--primary);
+            border: 1px solid #FFC9B3; border-radius: 8px;
+            padding: 5px 8px; font-weight: 800; font-size: 0.8rem;
             cursor: pointer; transition: background-color 0.2s, transform 0.1s;
         }
         .speed-btn:active { transform: scale(0.95); }
 
-        /* 로그인 전용 카드 */
         .auth-container {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             height: 100%; padding: 20px; text-align: center;
         }
         .auth-card {
-            background: white; border: 1px solid #e2e8f0; border-radius: 24px;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px;
             padding: 40px 24px; max-width: 400px; width: 100%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
         .btn-google-login {
-            width: 100%; padding: 14px 20px; background: #2563EB; color: white;
+            width: 100%; padding: 14px 20px; background: var(--primary); color: white;
             border: none; border-radius: 12px; font-size: 1rem; font-weight: 800;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); transition: transform 0.1s, background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(252, 78, 0, 0.3); transition: transform 0.1s, background-color 0.2s;
         }
-        .btn-google-login:active { transform: scale(0.98); background: #1D4ED8; }
+        .btn-google-login:active { transform: scale(0.98); background: var(--primary-hover); }
 
         .deck-list { display: flex; flex-direction: column; gap: 15px; }
         .deck-card {
-            background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 15px;
             transition: background-color 0.3s, border-color 0.3s;
         }
         .deck-card-header { display: flex; justify-content: space-between; align-items: center; }
-        .deck-title { font-size: 1.2rem; font-weight: 800; color: #1e293b; margin: 0; display:flex; align-items:center; gap:8px;}
-        .deck-info { font-size: 0.9rem; color: #64748b; margin: 0; }
+        .deck-title { font-size: 1.2rem; font-weight: 800; margin: 0; display:flex; align-items:center; gap:8px;}
+        .deck-info { font-size: 0.9rem; color: var(--text-sub); margin: 0; }
         
         .deck-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .btn-open { flex: 1; min-width: 80px; background: var(--primary); color: white; border: none; border-radius: 8px; padding: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; text-align: center;}
-        .btn-icon { background: #f1f5f9; color: #475569; border: none; border-radius: 8px; width: 40px; height: 40px; display:flex; justify-content:center; align-items:center; font-size: 1.1rem; cursor: pointer; flex-shrink: 0; padding: 0; transition: background-color 0.3s; }
+        .btn-open:active { background: var(--primary-hover); }
+        .btn-icon { background: #F3F4F6; color: #374151; border: none; border-radius: 8px; width: 40px; height: 40px; display:flex; justify-content:center; align-items:center; font-size: 1.1rem; cursor: pointer; flex-shrink: 0; padding: 0; transition: background-color 0.3s; }
         .btn-icon.danger { color: #DC2626; background: #FEE2E2; }
         .btn-icon:disabled { opacity: 0.4; cursor: not-allowed; }
         
         .tool-btn-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
         .tool-btn {
-            background: white; border: 1px solid #e2e8f0; border-radius: 12px;
-            padding: 16px 10px; font-weight: 800; font-size: 0.9rem; color: #334155;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 16px 10px; font-weight: 800; font-size: 0.9rem; color: var(--text-main);
             cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; text-align: center;
             transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
         .tool-btn:active { transform: scale(0.98); }
-        .tool-btn.highlight { border-color: var(--primary); color: var(--primary); background: #EFF6FF; }
+        .tool-btn.highlight { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
         .tool-btn.full-width { grid-column: 1 / -1; font-size: 1.1rem; padding: 18px 10px; }
         .tool-btn.continue { background: #10B981; color: white; border: none; display: none; } 
 
         .session-config {
-            background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px;
-            border: 1px solid #e2e8f0; text-align: center; transition: background-color 0.3s, border-color 0.3s;
+            background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px;
+            border: 1px solid var(--border-color); text-align: center; transition: background-color 0.3s, border-color 0.3s;
         }
         .session-config input[type="range"] { width: 100%; margin: 15px 0 10px 0; accent-color: var(--primary); }
         
@@ -179,18 +203,18 @@
         }
         .overlay-modal.visible { display: flex; }
         .modal-card {
-            background: white; width: 85%; max-width: 380px;
+            background: var(--card-bg); width: 85%; max-width: 380px;
             border-radius: 24px; padding: 36px 28px; text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: background-color 0.3s;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .modal-card .emoji { font-size: 4rem; margin-bottom: 12px; }
-        .modal-card h2 { margin: 0 0 8px; font-size: 1.6rem; color: #1e293b; }
-        .modal-card p { color: #64748b; font-size: 0.95rem; margin: 0 0 24px; }
+        .modal-card h2 { margin: 0 0 8px; font-size: 1.6rem; color: var(--text-main); }
+        .modal-card p { color: var(--text-sub); font-size: 0.95rem; margin: 0 0 24px; }
         .modal-action-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-size: 1rem; font-weight: 800; cursor: pointer; margin-bottom: 10px; transition: background-color 0.3s; }
         .modal-action-btn.primary { background: var(--primary); color: white; }
-        .modal-action-btn.secondary { background: #f1f5f9; color: #334155; }
+        .modal-action-btn.secondary { background: #F3F4F6; color: #1F2937; }
         .modal-action-btn.danger { background: #FEE2E2; color: #DC2626; }
 
         #game-page { touch-action: none; }
@@ -201,7 +225,7 @@
         }
         #bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0; display: flex; justify-content: center; align-items: center; transition: opacity 0.15s; }
         #bg-icon { font-size: 15rem; font-weight: 900; opacity: 0.35; color: white; transform: scale(0.5); transition: transform 0.15s; }
-        .progress-bar-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #e2e8f0; z-index: 10; }
+        .progress-bar-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--border-color); z-index: 10; }
         .progress-bar-fill { height: 100%; background: var(--primary); transition: width 0.3s ease; border-radius: 0 2px 2px 0; }
 
         .card-wrapper { width: 85%; max-width: 360px; height: 50vh; max-height: 450px; transform-style: preserve-3d; z-index: 5; touch-action: none; }
@@ -209,18 +233,18 @@
         .card-inner.flipped { transform: rotateY(180deg); }
         .card-face { 
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; 
-            border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--border-color);
             transition: background-color 0.3s, border-color 0.3s;
         }
-        .card-front { background: white; color: #1E293B; pointer-events: auto; }
+        .card-front { background: var(--card-bg); color: var(--text-main); pointer-events: auto; }
         .card-back { background: var(--card-dark); color: white; transform: rotateY(180deg); pointer-events: none; }
         .card-inner.flipped .card-front { pointer-events: none; }
         .card-inner.flipped .card-back { pointer-events: auto; }
         
         .word { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; word-break: keep-all; overflow-wrap: anywhere; transition: font-size 0.2s; }
-        .meaning { font-size: 1.8rem; font-weight: 700; color: var(--star-color); word-break: keep-all; overflow-wrap: anywhere; transition: font-size 0.2s; }
+        .meaning { font-size: 1.8rem; font-weight: 700; color: #FC4E00; word-break: keep-all; overflow-wrap: anywhere; transition: font-size 0.2s; }
         
-        .star-toggle { position: absolute; top: 20px; right: 20px; font-size: 2.2rem; color: #E2E8F0; z-index: 100; padding: 10px; cursor: pointer; }
+        .star-toggle { position: absolute; top: 20px; right: 20px; font-size: 2.2rem; color: #CBD5E1; z-index: 100; padding: 10px; cursor: pointer; }
         .star-toggle.active { color: var(--star-color); }
         
         .tts-btn { position: absolute; top: 20px; left: 20px; font-size: 1.6rem; z-index: 100; padding: 10px; cursor: pointer; transition: transform 0.1s; }
@@ -229,33 +253,40 @@
         .card-back .tts-btn { color: white; opacity: 0.9; }
 
         .swipe-hint { position: absolute; bottom: 100px; display: flex; gap: 30px; z-index: 10; pointer-events: none; }
-        .hint-pill { display: flex; align-items: center; gap: 6px; background: white; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 700; color: #94a3b8; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background-color 0.3s; }
-        .hint-pill.ok { color: #8BC34A; }
-        .hint-pill.no { color: #EF5350; }
+        .hint-pill { display: flex; align-items: center; gap: 6px; background: var(--card-bg); border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background-color 0.3s; }
+        .hint-pill.ok { color: #10B981; }
+        .hint-pill.no { color: #EF4444; }
 
         .nav-bar { 
             position: absolute; bottom: max(30px, env(safe-area-inset-bottom)); 
             width: 100%; max-width: 400px; display: flex; justify-content: space-between; padding: 0 30px; 
         }
-        .nav-btn { background: white; border: 2px solid #e2e8f0; color: #64748b; padding: 12px 20px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.1s, background-color 0.3s; }
-        .nav-btn.ok { border-color: #8BC34A; color: #8BC34A; }
-        .nav-btn.no { border-color: #EF5350; color: #EF5350; }
+        .nav-btn { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-sub); padding: 12px 20px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.1s, background-color 0.3s; }
+        .nav-btn.ok { border-color: #10B981; color: #10B981; }
+        .nav-btn.no { border-color: #EF4444; color: #EF4444; }
         .nav-btn:active { transform: scale(0.95); }
-        .nav-btn.ok:active { background: #8BC34A; color: white; }
-        .nav-btn.no:active { background: #EF5350; color: white; }
+        .nav-btn.ok:active { background: #10B981; color: white; }
+        .nav-btn.no:active { background: #EF4444; color: white; }
     </style>
 </head>
 <body>
 
     <div id="intro-screen">
-        <div style="font-size: 4rem; margin-bottom: 10px;">📘</div>
-        <div style="font-size: 2rem; font-weight: 900;">TOEIC MASTER</div>
+        <div style="font-size: 4rem; margin-bottom: 10px;">🦅</div>
+        <div style="font-size: 2.2rem; font-weight: 900; letter-spacing: 1px;">TOEIC MASTER</div>
+        <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 6px;">Hanwha Edition</div>
+    </div>
+
+    <!-- 로딩 스피너 오버레이 -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <span id="loading-text" style="font-size:1rem; letter-spacing:0.5px;">단어장 동기화 중...</span>
     </div>
 
     <!-- 0. 로그인 전용 화면 -->
     <div id="login-page" class="page active">
         <div class="header">
-            <span style="color:var(--primary)">TOEIC MASTER</span>
+            <span style="color:var(--primary); font-size:1.1rem;">🦅 TOEIC MASTER</span>
             <div style="display: flex; align-items: center; gap: 8px;">
                 <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
                 <button class="accent-btn" onclick="toggleAccent()" style="background:none; border:none; font-size:1.3rem; padding:0; cursor:pointer;" title="발음 선택">🇺🇸</button>
@@ -264,13 +295,13 @@
         </div>
         <div class="auth-container">
             <div class="auth-card">
-                <img src="icon.png" alt="TOEIC MASTER" style="width: 80px; height: 80px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onerror="this.outerHTML='<div style=\'font-size: 3.5rem;\'>📘</div>'">
+                <div style="font-size: 3.5rem;">🦅</div>
                 <h2 style="margin: 0; font-size: 1.6rem; font-weight: 900;">TOEIC MASTER</h2>
-                <p style="margin: 0; font-size: 0.95rem; color: #64748B; line-height: 1.5;">
-                    로그인 후 단어장 생성 및 학습,<br>클라우드 실시간 자동 동기화를 이용해보세요!
+                <p style="margin: 0; font-size: 0.95rem; color: var(--text-sub); line-height: 1.5;">
+                    로그인 후 초고속 로컬 캐싱과<br>클라우드 실시간 자동 동기화를 경험하세요!
                 </p>
                 <button class="btn-google-login" onclick="loginWithGoogle()">
-                    <span>🌐 Google 계정으로 로그인</span>
+                    <span>🌐 Google 계정으로 시작하기</span>
                 </button>
             </div>
         </div>
@@ -279,7 +310,7 @@
     <!-- 1. 메인 화면 (단어장 관리) -->
     <div id="home-page" class="page">
         <div class="header">
-            <span style="color:var(--primary)">내 단어장 목록</span>
+            <span style="color:var(--primary); font-size:1.1rem;">내 단어장 목록</span>
             <div style="display: flex; align-items: center; gap: 8px;">
                 <button id="auth-btn" onclick="toggleAuth()" style="background:#DC2626; color:white; border:none; border-radius:8px; padding:6px 10px; font-weight:bold; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
                     로그아웃
@@ -294,7 +325,7 @@
             
             <div class="tool-btn-group" style="margin-bottom: 20px;">
                 <button class="tool-btn highlight" onclick="createNewDeck()">➕ 새 단어장</button>
-                <button class="tool-btn highlight" onclick="document.getElementById('excel-upload').click()" style="background:#E0F2FE; border-color:#BAE6FD; color:#0284C7;">📊 엑셀 파일 추가</button>
+                <button class="tool-btn highlight" onclick="document.getElementById('excel-upload').click()" style="background:var(--primary-soft); border-color:#FFC9B3; color:var(--primary);">📊 엑셀 파일 추가</button>
                 <input type="file" id="excel-upload" accept=".xls,.xlsx,.csv" style="display: none;" onchange="importExcel(event)">
 
                 <button class="tool-btn" onclick="document.getElementById('import-deck-upload').click()">📂 백업 불러오기</button>
@@ -308,18 +339,18 @@
                     <span>🌟</span> 다중 단어장 묶음 학습
                 </h3>
                 
-                <div style="margin-bottom: 15px; text-align: left; background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
-                    <span style="font-weight: 700; color:#475569; font-size: 0.85rem; display: block; margin-bottom: 8px;">📚 대상 단어장 다중 선택:</span>
+                <div style="margin-bottom: 15px; text-align: left; background:#F9FAFB; padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+                    <span style="font-weight: 700; color:var(--text-sub); font-size: 0.85rem; display: block; margin-bottom: 8px;">📚 대상 단어장 다중 선택:</span>
                     <div id="global-deck-checkboxes" style="display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; padding: 2px;">
                     </div>
                 </div>
 
-                <div style="font-weight:700; color:#334155; font-size:1rem; margin-bottom:10px; text-align:center;">
+                <div style="font-weight:700; color:var(--text-main); font-size:1rem; margin-bottom:10px; text-align:center;">
                     🎯 학습 목표: <span id="global-val-display" style="color:var(--primary)">전체</span>
                 </div>
                 <input type="range" id="global-count-slider" min="0" max="100" step="1" oninput="updateGlobalSliderUI()">
                 
-                <div class="order-toggle" style="margin: 15px 0 10px 0; display: flex; justify-content: center; gap: 20px; font-weight: 700; color: #334155; font-size: 0.95rem;">
+                <div class="order-toggle" style="margin: 15px 0 10px 0; display: flex; justify-content: center; gap: 20px; font-weight: 700; color: var(--text-main); font-size: 0.95rem;">
                     <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
                         <input type="radio" name="global-order" value="seq" checked style="accent-color: var(--primary); width:18px; height:18px;">
                         ⬇️ 순서대로
@@ -333,8 +364,8 @@
                 <div class="learning-mode-btns">
                     <button class="modal-action-btn secondary" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem;" onclick="startStudy('en', true)">영어로 학습</button>
                     <button class="modal-action-btn secondary" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem;" onclick="startStudy('kr', true)">한국어로 학습</button>
-                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:#E0F2FE; color:#0284C7; border: 1px solid #BAE6FD;" onclick="unlockAudio(); startStudy('listen', true)">소리로 학습 🎧</button>
-                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:#10B981; color:white; border:none;" onclick="unlockAudio(); startStudy('auto', true)">자동 재생 학습 🚀</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:var(--primary-soft); color:var(--primary); border: 1px solid #FFC9B3;" onclick="unlockAudio(); startStudy('listen', true)">소리로 학습 🎧</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:var(--primary); color:white; border:none;" onclick="unlockAudio(); startStudy('auto', true)">자동 재생 학습 🚀</button>
                 </div>
                 
                 <button class="tool-btn highlight" style="width: 100%; margin-top: 10px; border-color: #FDE68A; background: #FFFBEB; color: #D97706;" onclick="startFavorites(true)">⭐ 선택한 단어장 즐겨찾기만 복습</button>
@@ -348,7 +379,7 @@
     <!-- 2. 단어장 내부(로비) -->
     <div id="lobby-page" class="page">
         <div class="header">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.2rem; color:#64748B; padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
+            <button onclick="goHome()" style="background:none; border:none; font-size:1.2rem; color:var(--text-sub); padding:0; cursor:pointer; font-weight:bold;">← 뒤로</button>
             <span id="current-deck-title" style="color:var(--primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:35%;">단어장</span>
             <div style="display: flex; align-items: center; gap: 8px;">
                 <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
@@ -367,18 +398,18 @@
                     <span>🎯</span> 단어장 내 학습 설정
                 </h3>
                 
-                <div style="margin-bottom: 15px; text-align: left; background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
-                    <span style="font-weight: 700; color:#475569; font-size: 0.85rem; display: block; margin-bottom: 8px;">📚 대상 시트(Day) 선택:</span>
+                <div style="margin-bottom: 15px; text-align: left; background:#F9FAFB; padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+                    <span style="font-weight: 700; color:var(--text-sub); font-size: 0.85rem; display: block; margin-bottom: 8px;">📚 대상 시트(Day) 선택:</span>
                     <div id="lobby-category-checkboxes" style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; padding: 2px;">
                     </div>
                 </div>
 
-                <div style="font-weight:700; color:#334155; font-size:1.1rem; margin-bottom: 10px;">
+                <div style="font-weight:700; color:var(--text-main); font-size:1.1rem; margin-bottom: 10px;">
                     🎯 선택된 단어 수: <span id="val-display" style="color:var(--primary)">전체</span>
                 </div>
                 <input type="range" id="count-slider" min="0" max="100" step="1" oninput="updateSliderUI()">
                 
-                <div class="order-toggle" style="margin: 15px 0 10px 0; display: flex; justify-content: center; gap: 20px; font-weight: 700; color: #334155; font-size: 0.95rem;">
+                <div class="order-toggle" style="margin: 15px 0 10px 0; display: flex; justify-content: center; gap: 20px; font-weight: 700; color: var(--text-main); font-size: 0.95rem;">
                     <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
                         <input type="radio" name="lobby-order" value="seq" checked style="accent-color: var(--primary); width:18px; height:18px;">
                         ⬇️ 순서대로
@@ -392,8 +423,8 @@
                 <div class="learning-mode-btns">
                     <button class="modal-action-btn secondary" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem;" onclick="startStudy('en', false)">영어로 학습</button>
                     <button class="modal-action-btn secondary" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem;" onclick="startStudy('kr', false)">한국어로 학습</button>
-                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:#E0F2FE; color:#0284C7; border: 1px solid #BAE6FD;" onclick="unlockAudio(); startStudy('listen', false)">소리로 학습 🎧</button>
-                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:#10B981; color:white; border:none;" onclick="unlockAudio(); startStudy('auto', false)">자동 재생 학습 🚀</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:var(--primary-soft); color:var(--primary); border: 1px solid #FFC9B3;" onclick="unlockAudio(); startStudy('listen', false)">소리로 학습 🎧</button>
+                    <button class="modal-action-btn" style="margin-bottom:0; padding: 12px 2px; font-size:0.9rem; background:var(--primary); color:white; border:none;" onclick="unlockAudio(); startStudy('auto', false)">자동 재생 학습 🚀</button>
                 </div>
             </div>
 
@@ -406,7 +437,7 @@
     <!-- 3. 게임(학습) -->
     <div id="game-page" class="page">
         <div class="header">
-            <button onclick="openPauseModal()" style="background:none; border:none; font-size:1.4rem; color:#64748B; padding:0 10px; cursor:pointer;">⏸</button>
+            <button onclick="openPauseModal()" style="background:none; border:none; font-size:1.4rem; color:var(--text-sub); padding:0 10px; cursor:pointer;">⏸</button>
             <div id="stage-info" style="font-size:0.95rem; font-weight:800;">단어 학습</div>
             <div style="display: flex; align-items: center; gap: 8px;">
                 <button class="speed-btn" onclick="toggleAutoSpeed()" title="재생 속도 조절">⚡ 1.0x</button>
@@ -428,7 +459,7 @@
                         <div class="tts-btn" onclick="playTTS(event)" title="영어 발음 듣기">🔊</div>
                         <div class="star-toggle" id="starFront" onclick="toggleStar(event)">☆</div>
                         <div class="word" id="jpWord">단어</div>
-                        <div style="margin-top:15px; color:#CBD5E1; font-size:0.8rem;">Tap to flip</div>
+                        <div style="margin-top:15px; color:#94A3B8; font-size:0.8rem;">Tap to flip</div>
                     </div>
                     <!-- 카드 뒷면 -->
                     <div class="card-face card-back">
@@ -523,6 +554,19 @@
             }
         }
 
+        // --- ⏳ 로딩 화면 제어 ---
+        function showLoading(text = "단어장 동기화 중...") {
+            const overlay = document.getElementById('loading-overlay');
+            const txt = document.getElementById('loading-text');
+            if (txt) txt.innerText = text;
+            if (overlay) overlay.classList.add('visible');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.classList.remove('visible');
+        }
+
         // --- 🔥 Firebase 설정 및 로그인 제어 ---
         const firebaseConfig = {
             apiKey: "AIzaSyA5jIVHnTYLzHCCvdgmgV46E4zXSW-Ex8U",
@@ -549,8 +593,10 @@
         let isGlobalMode = false;
 
         function loginWithGoogle() {
+            showLoading("로그인 진행 중...");
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).catch(error => {
+                hideLoading();
                 console.error("로그인 에러:", error);
                 alert("로그인 중 오류가 발생했습니다: " + error.message);
             });
@@ -559,7 +605,8 @@
         function toggleAuth() {
             if (currentUser) {
                 if (confirm("로그아웃 하시겠습니까?")) {
-                    auth.signOut();
+                    showLoading("로그아웃 중...");
+                    auth.signOut().then(() => hideLoading());
                 }
             } else {
                 loginWithGoogle();
@@ -572,24 +619,41 @@
                 currentUser = user;
                 const name = user.displayName ? user.displayName.split(' ')[0] : '회원';
                 if (authBtn) authBtn.innerHTML = `👋 ${name} (로그아웃)`;
+                
+                // ⚡ 1단계: 브라우저 로컬 캐시에서 0초 즉시 렌더링!
+                const localCache = localStorage.getItem('toeicAppData_' + currentUser.uid);
+                if (localCache) {
+                    try {
+                        appData = JSON.parse(localCache);
+                        renderHomeUI();
+                        applySettings();
+                        showPage('home-page');
+                    } catch(e) {}
+                }
+                
+                // ⚡ 2단계: 백그라운드에서 최신 클라우드 데이터 동기화
                 loadDataFromFirebase();
                 showPage('home-page');
             } else {
                 currentUser = null;
                 appData = [];
                 currentDeckIndex = -1;
+                hideLoading();
                 showPage('login-page');
             }
         });
 
-        // --- 💾 파이어베이스 데이터 로드 & 저장 ---
+        // --- 💾 파이어베이스 데이터 로드 & 초고속 캐시 저장 ---
         async function loadDataFromFirebase() {
             if (!currentUser) return;
+            if (appData.length === 0) showLoading("단어장을 불러오는 중...");
             try {
                 const docRef = db.collection("users").doc(currentUser.uid);
                 const docSnap = await docRef.get();
                 if (docSnap.exists) {
                     appData = docSnap.data().appData || [];
+                    // 로컬 스토리지에 캐시 백업
+                    localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
                 } else {
                     appData = [];
                 }
@@ -597,12 +661,17 @@
                 applySettings();
             } catch (error) {
                 console.error("클라우드 데이터 로드 오류:", error);
-                alert("데이터를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.");
+            } finally {
+                hideLoading();
             }
         }
 
         function saveAppData() { 
             if (!currentUser) return;
+            // 로컬 캐시 즉시 업데이트
+            localStorage.setItem('toeicAppData_' + currentUser.uid, JSON.stringify(appData));
+            
+            // 클라우드 비동기 저장
             db.collection("users").doc(currentUser.uid).set({
                 appData: appData,
                 lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
@@ -619,7 +688,7 @@
             return null;
         }
 
-        setTimeout(() => document.getElementById('intro-screen').classList.add('hidden'), 1000);
+        setTimeout(() => document.getElementById('intro-screen').classList.add('hidden'), 900);
         window.onload = function() { applySettings(); };
 
         function showPage(id) {
@@ -644,57 +713,68 @@
             let deckName = file.name.replace(/\.[^/.]+$/, "");
             if (!deckName) deckName = "새 엑셀 단어장";
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const isKorean = (str) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(str);
-                
-                let allWords = [];
-                let importedSheetCount = 0;
+            showLoading("엑셀 데이터를 분석하고 있습니다...");
 
-                workbook.SheetNames.forEach(sheetName => {
-                    if (sheetName.toLowerCase().includes('test')) return;
+            setTimeout(() => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const isKorean = (str) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(str);
+                        
+                        let allWords = [];
+                        let importedSheetCount = 0;
 
-                    const sheet = workbook.Sheets[sheetName];
-                    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                        workbook.SheetNames.forEach(sheetName => {
+                            if (sheetName.toLowerCase().includes('test')) return;
 
-                    let sheetWordsCount = 0;
-                    rows.forEach(row => {
-                        if (!row || !Array.isArray(row)) return;
-                        for (let i = 0; i < row.length - 1; i++) {
-                            let cell1 = row[i] ? String(row[i]).trim() : '';
-                            let cell2 = row[i+1] ? String(row[i+1]).trim() : '';
+                            const sheet = workbook.Sheets[sheetName];
+                            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-                            if (cell1 && cell2) {
-                                if (isNaN(cell1) && !isKorean(cell1) && isKorean(cell2)) {
-                                    allWords.push({
-                                        id: 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                                        jp: cell1,
-                                        kr: cell2,
-                                        category: sheetName
-                                    });
-                                    sheetWordsCount++;
-                                    i++; 
+                            let sheetWordsCount = 0;
+                            rows.forEach(row => {
+                                if (!row || !Array.isArray(row)) return;
+                                for (let i = 0; i < row.length - 1; i++) {
+                                    let cell1 = row[i] ? String(row[i]).trim() : '';
+                                    let cell2 = row[i+1] ? String(row[i+1]).trim() : '';
+
+                                    if (cell1 && cell2) {
+                                        if (isNaN(cell1) && !isKorean(cell1) && isKorean(cell2)) {
+                                            allWords.push({
+                                                id: 'w_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                                                jp: cell1,
+                                                kr: cell2,
+                                                category: sheetName
+                                            });
+                                            sheetWordsCount++;
+                                            i++; 
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    });
-                    if (sheetWordsCount > 0) importedSheetCount++;
-                });
+                            });
+                            if (sheetWordsCount > 0) importedSheetCount++;
+                        });
 
-                if (allWords.length > 0) {
-                    let newDeck = { id: 'deck_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), name: deckName, words: allWords, stars: [], session: null, trash: [] };
-                    appData.unshift(newDeck); 
-                    saveAppData(); 
-                    renderHomeUI();
-                    alert(`"${deckName}" 단어장에 ${importedSheetCount}개의 시트(Day)가 통합 생성되었습니다!\n(Test 시트는 자동으로 제외됨)`);
-                } else { 
-                    alert("추출할 영어 단어가 없거나 엑셀 구조를 인식할 수 없습니다."); 
-                }
-            }; 
-            reader.readAsArrayBuffer(file); 
-            event.target.value = ''; 
+                        if (allWords.length > 0) {
+                            let newDeck = { id: 'deck_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), name: deckName, words: allWords, stars: [], session: null, trash: [] };
+                            appData.unshift(newDeck); 
+                            saveAppData(); 
+                            renderHomeUI();
+                            hideLoading();
+                            alert(`"${deckName}" 단어장에 ${importedSheetCount}개의 시트(Day)가 통합 생성되었습니다!\n(총 ${allWords.length}개 단어)`);
+                        } else { 
+                            hideLoading();
+                            alert("추출할 영어 단어가 없거나 엑셀 구조를 인식할 수 없습니다."); 
+                        }
+                    } catch(err) {
+                        hideLoading();
+                        alert("엑셀 파일을 읽는 도중 오류가 발생했습니다.");
+                    }
+                }; 
+                reader.readAsArrayBuffer(file); 
+                event.target.value = ''; 
+            }, 100);
         }
 
         // --- 글로벌 다중 단어장 선택 로직 (메인 홈) ---
@@ -725,7 +805,7 @@
             container.querySelectorAll('input[type="checkbox"]').forEach(cb => { previouslyChecked[cb.value] = cb.checked; });
 
             container.innerHTML = '';
-            if (appData.length === 0) { container.innerHTML = '<span style="font-size:0.85rem; color:#94a3b8; padding:5px 0;">단어장이 없습니다. 엑셀을 추가해보세요.</span>'; return; }
+            if (appData.length === 0) { container.innerHTML = '<span style="font-size:0.85rem; color:var(--text-sub); padding:5px 0;">단어장이 없습니다. 엑셀을 추가해보세요.</span>'; return; }
 
             appData.forEach(deck => {
                 const isChecked = previouslyChecked[deck.id] !== undefined ? previouslyChecked[deck.id] : true;
@@ -751,7 +831,7 @@
                 else { btnGlobalContinue.style.display = 'none'; }
             }
 
-            if (appData.length === 0) { container.innerHTML = '<div style="text-align:center; padding: 40px 20px; color:#94a3b8;">생성된 단어장이 없습니다.<br>엑셀 파일 추가 버튼을 눌러보세요!</div>'; return; }
+            if (appData.length === 0) { container.innerHTML = '<div style="text-align:center; padding: 40px 20px; color:var(--text-sub);">생성된 단어장이 없습니다.<br>엑셀 파일 추가 버튼을 눌러보세요!</div>'; return; }
 
             appData.forEach((deck, index) => {
                 const wCount = deck.words ? deck.words.length : 0; const sCount = deck.stars ? deck.stars.length : 0;
@@ -759,7 +839,7 @@
                 card.innerHTML = `
                     <div class="deck-card-header">
                         <div>
-                            <h3 class="deck-title" onclick="renameDeck(${index})" style="cursor:pointer;" title="이름 변경">📚 ${deck.name} <span style="font-size:0.8rem; color:#94a3b8;">✏️</span></h3>
+                            <h3 class="deck-title" onclick="renameDeck(${index})" style="cursor:pointer;" title="이름 변경">📚 ${deck.name} <span style="font-size:0.8rem; color:var(--text-sub);">✏️</span></h3>
                             <p class="deck-info">단어 ${wCount}개 · ⭐ ${sCount}개</p>
                         </div>
                     </div>
@@ -792,11 +872,11 @@
             deck.words.forEach(w => { if (w.category) categoryCounts[w.category] = (categoryCounts[w.category] || 0) + 1; else noCategoryCount++; });
 
             container.innerHTML = '';
-            if (Object.keys(categoryCounts).length === 0 && noCategoryCount === 0) { container.innerHTML = '<span style="font-size:0.85rem; color:#94a3b8; padding:5px 0;">단어가 없습니다.</span>'; return; }
+            if (Object.keys(categoryCounts).length === 0 && noCategoryCount === 0) { container.innerHTML = '<span style="font-size:0.85rem; color:var(--text-sub); padding:5px 0;">단어가 없습니다.</span>'; return; }
 
             if (Object.keys(categoryCounts).length > 0) {
                 const selectAllLabel = document.createElement('label');
-                selectAllLabel.style = "display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer; font-weight:800; padding:5px 0; border-bottom:1px solid #e2e8f0; margin-bottom:4px;";
+                selectAllLabel.style = "display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer; font-weight:800; padding:5px 0; border-bottom:1px solid var(--border-color); margin-bottom:4px;";
                 selectAllLabel.innerHTML = `<input type="checkbox" id="lobby-select-all" checked onchange="toggleLobbyAllCategories(this)" style="accent-color:var(--primary); width:18px; height:18px;"> 전체 시트(Day) 선택`;
                 container.appendChild(selectAllLabel);
 
@@ -856,7 +936,9 @@
         function exportAllDecks() { if (appData.length === 0) { alert("백업할 단어장이 없습니다."); return; } const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' })); a.download = `TOEIC_AllDecks_${new Date().toISOString().slice(0,10)}.json`; a.click(); }
         function importDeck(event) {
             if (!currentUser) { alert("로그인이 필요합니다."); return; }
-            const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
+            const file = event.target.files[0]; if (!file) return; 
+            showLoading("백업 파일을 불러오는 중입니다...");
+            const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
@@ -864,6 +946,7 @@
                     else { addImportedDeck(data, data.name ? data.name : (file.name.replace('.json', '') || '불러온 단어장')); alert("단어장을 성공적으로 불러왔습니다!"); }
                     saveAppData(); renderHomeUI();
                 } catch (err) { alert("파일 형식을 확인해주세요."); }
+                finally { hideLoading(); }
             }; reader.readAsText(file); event.target.value = ''; 
         }
         function addImportedDeck(data, defaultName) {
@@ -989,10 +1072,10 @@
         function autoPlaySequence(card) {
             clearAutoPlay();
             
-            // 배속에 따른 전환 및 대기 시간 계산
-            const waitBeforeFlip = Math.max(200, Math.round(400 / autoPlaySpeed));
-            const waitAfterFlip = Math.max(400, Math.round(1200 / autoPlaySpeed));
-            const fallbackTimeout = Math.max(1500, Math.round(4000 / autoPlaySpeed));
+            // 배속에 비례한 딜레이 계산
+            const waitBeforeFlip = Math.max(180, Math.round(380 / autoPlaySpeed));
+            const waitAfterFlip = Math.max(380, Math.round(1150 / autoPlaySpeed));
+            const fallbackTimeout = Math.max(1500, Math.round(3800 / autoPlaySpeed));
 
             if (!('speechSynthesis' in window)) { 
                 setTimeout(() => { markOk(); }, waitAfterFlip + waitBeforeFlip); 
@@ -1042,8 +1125,8 @@
             const frontEl = document.getElementById('jpWord'); const backEl = document.getElementById('krMeaning');
             
             if (isListenMode) {
-                frontEl.innerHTML = `<div style="font-size:4rem; margin-bottom:12px;">🎧</div><div style="font-size:1.1rem; color:#64748b; font-weight:700;">소리를 듣고 뜻을 맞춰보세요</div>`;
-                backEl.innerHTML = `<div style="font-size:2.2rem; font-weight:800; color:white; margin-bottom:15px; word-break: keep-all; overflow-wrap: anywhere;">${card.jp}</div><div style="font-size:1.6rem; font-weight:700; color:var(--star-color); word-break: keep-all; overflow-wrap: anywhere;">${card.kr}</div>`;
+                frontEl.innerHTML = `<div style="font-size:4rem; margin-bottom:12px;">🎧</div><div style="font-size:1.1rem; color:var(--text-sub); font-weight:700;">소리를 듣고 뜻을 맞춰보세요</div>`;
+                backEl.innerHTML = `<div style="font-size:2.2rem; font-weight:800; color:white; margin-bottom:15px; word-break: keep-all; overflow-wrap: anywhere;">${card.jp}</div><div style="font-size:1.6rem; font-weight:700; color:var(--primary); word-break: keep-all; overflow-wrap: anywhere;">${card.kr}</div>`;
                 setTimeout(() => speakCurrentWord(), 150);
             } else if (isAutoMode) {
                 frontEl.innerText = card.jp; backEl.innerText = card.kr;
@@ -1060,7 +1143,7 @@
             resetCardUI();
         }
 
-        function showComplete() { document.getElementById('complete-msg').innerText = `총 ${totalCount}개 학습 완료! 🎓`; document.getElementById('complete-modal').classList.add('visible'); }
+        function showComplete() { document.getElementById('complete-msg').innerText = `총 ${totalCount}개 학습 완료! 🦅`; document.getElementById('complete-modal').classList.add('visible'); }
         function openPauseModal() { clearAutoPlay(); saveSessionState(); document.getElementById('pause-modal').classList.add('visible'); }
         function closePauseModal() { document.getElementById('pause-modal').classList.remove('visible'); if(isAutoMode) updateCard(); }
         function markOk() { clearAutoPlay(); if (activeQueue.length === 0) return; activeQueue.shift(); saveSessionState(); updateProgress(); animateCardChange('ok'); }
@@ -1099,7 +1182,7 @@
             if (!isDragging) return; e.preventDefault(); currentX = e.touches[0].clientX; let dx = currentX - startX;
             cw.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
             const prog = Math.min(Math.abs(dx) / (window.innerWidth * 0.4), 1); bgOverlay.style.opacity = 1;
-            if (dx > 0) { bgOverlay.style.backgroundColor = `rgba(139, 195, 74, ${prog * 0.8})`; bgIcon.innerText = "O"; } else { bgOverlay.style.backgroundColor = `rgba(239, 83, 80, ${prog * 0.8})`; bgIcon.innerText = "X"; }
+            if (dx > 0) { bgOverlay.style.backgroundColor = `rgba(16, 185, 129, ${prog * 0.8})`; bgIcon.innerText = "O"; } else { bgOverlay.style.backgroundColor = `rgba(239, 68, 68, ${prog * 0.8})`; bgIcon.innerText = "X"; }
             bgIcon.style.transform = `scale(${0.5 + prog * 0.5})`;
         }, { passive: false });
         
